@@ -471,22 +471,14 @@ function abrirCategoria(id) {
 
     if (!menu) return;
 
-    // Se já estiver aberta, fecha
-    if (menu.classList.contains("ativo")) {
-        menu.classList.remove("ativo");
+    const categoria = document.querySelector(
+        `.categoria[onclick*="${id}"]`
+    );
 
-        const categoria = document.querySelector(
-            `.categoria[onclick*="${id}"]`
-        );
+    // Alterna abrir/fechar
+    const abrir = !menu.classList.contains("ativo");
 
-        if (categoria) {
-            categoria.classList.remove("aberta");
-        }
-
-        return;
-    }
-
-    // Fecha as outras categorias
+    // Fecha todas
     document.querySelectorAll(".subcategorias").forEach(item => {
         item.classList.remove("ativo");
     });
@@ -495,37 +487,12 @@ function abrirCategoria(id) {
         item.classList.remove("aberta");
     });
 
-    // Abre a categoria escolhida
-    menu.classList.add("ativo");
-
-    const categoria = document.querySelector(
-        `.categoria[onclick*="${id}"]`
-    );
-
-    if (categoria) {
-        categoria.classList.add("aberta");
+    // Se estava fechada, abre
+    if (abrir) {
+        menu.classList.add("ativo");
+        if (categoria) categoria.classList.add("aberta");
     }
 }
-</div>
-
-
-<!-- LOGO -->
-
-<div class="menu">
-
-<div class="logo">
-DIVA <span>MAKE</span> 10
-</div>
-
-<div class="slogan">
-Beleza, variedade e preço incrível!
-</div>
-
-</div>
-
-
-<!-- BANNER -->
-
 <section class="banner">
 
 <h2>✨ BELEZA AO SEU ALCANCE ✨</h2>
