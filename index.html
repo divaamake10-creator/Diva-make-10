@@ -9,229 +9,396 @@
 <style>
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background: #fff5f8;
-  color: #333;
-  text-align: center;
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+    color: #333;
 }
 
-header {
-  background: linear-gradient(135deg, #e91e63, #c2185b);
-  color: white;
-  padding: 35px 20px;
+/* TOPO */
+
+.topo {
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-header h1 {
-  font-size: 38px;
+/* MENU */
+
+.menu {
+    background: white;
+    padding: 25px 15px;
+    text-align: center;
+    border-bottom: 2px solid #f3c0d5;
 }
 
-header p {
-  margin-top: 15px;
-  font-size: 20px;
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #e60073;
 }
 
-button {
-  border: none;
-  cursor: pointer;
+.logo span {
+    color: #333;
 }
 
-/* BOTÕES */
-
-.botao {
-  background: #e91e63;
-  color: white;
-  padding: 18px 30px;
-  border-radius: 40px;
-  font-size: 20px;
-  font-weight: bold;
-  margin: 10px;
+.slogan {
+    margin-top: 5px;
+    color: #777;
+    font-size: 14px;
 }
 
-/* PÁGINAS */
+/* BANNER */
 
-.pagina {
-  display: none;
-  padding: 50px 20px;
-  min-height: 600px;
+.banner {
+    background: linear-gradient(135deg, #ff4f9a, #e60073, #ff0080);
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-.ativa {
-  display: block;
+.banner h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
 }
 
-/* LOJA */
-
-.destaque h2 {
-  color: #c2185b;
-  font-size: 34px;
-  margin-bottom: 25px;
+.banner h1 {
+    font-size: 42px;
+    line-height: 1;
+    margin-bottom: 15px;
 }
 
 .preco {
-  background: #d81b60;
-  color: white;
-  padding: 25px;
-  font-size: 40px;
-  font-weight: bold;
-  border-radius: 40px;
-  max-width: 500px;
-  margin: auto;
+    background: white;
+    color: #e60073;
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 20px;
+    font-size: 38px;
+    font-weight: bold;
+    margin: 15px 0;
 }
+
+.banner p {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.botao-comprar {
+    display: inline-block;
+    margin-top: 25px;
+    background: #222;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* BENEFÍCIOS */
+
+.beneficios {
+    background: white;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.beneficio {
+    width: 30%;
+    min-width: 100px;
+    margin: 10px 0;
+}
+
+.beneficio h3 {
+    color: #e60073;
+    font-size: 14px;
+}
+
+.beneficio p {
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* CATEGORIAS */
+
+.titulo {
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    color: #d90068;
+    font-size: 25px;
+}
+
+.categorias {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
+}
+
+.categoria {
+    background: white;
+    border-radius: 18px;
+    padding: 25px 10px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 2px solid #ffd1e3;
+}
+
+.categoria .icone {
+    font-size: 35px;
+}
+
+.categoria h3 {
+    margin-top: 10px;
+    color: #d90068;
+    font-size: 16px;
+}
+
+/* DESTAQUE */
+
+.destaque {
+    margin: 30px 15px;
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #ff0080, #ff6aa7);
+    color: white;
+}
+
+.destaque h2 {
+    font-size: 25px;
+}
+
+.destaque h1 {
+    font-size: 45px;
+    margin: 10px 0;
+}
+
+.destaque p {
+    font-size: 16px;
+}
+
+/* PRODUTOS */
 
 .produtos {
-  margin-top: 50px;
-}
-
-.produtos h2 {
-  color: #c2185b;
-  font-size: 32px;
+    padding: 15px;
 }
 
 .produto {
-  background: #f8e6ee;
-  margin: 25px auto;
-  padding: 25px;
-  border-radius: 25px;
-  max-width: 600px;
-  text-align: left;
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
 }
 
 .produto h3 {
-  font-size: 25px;
+    color: #333;
 }
 
 .produto p {
-  font-size: 20px;
-  margin-top: 10px;
+    color: #e60073;
+    font-weight: bold;
+    margin: 10px;
+    font-size: 18px;
 }
 
-/* CARRINHO */
-
-.carrinho-topo {
-  margin-top: 20px;
-  font-size: 18px;
+.produto button {
+    background: #e60073;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.item-carrinho {
-  background: #f8e6ee;
-  max-width: 700px;
-  margin: 20px auto;
-  padding: 25px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: left;
-}
-
-.controle {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.quantidade {
-  font-size: 22px;
-}
-
-.menor {
-  background: #e91e63;
-  color: white;
-  font-size: 25px;
-  width: 55px;
-  height: 55px;
-  border-radius: 15px;
-}
-
-/* FINALIZAR */
-
-input, select {
-  width: 100%;
-  max-width: 750px;
-  padding: 25px;
-  margin: 15px auto;
-  display: block;
-  font-size: 20px;
-  border-radius: 20px;
-  border: 1px solid #ccc;
-}
-
-/* AGRADECIMENTO */
-
-.agradecimento {
-  max-width: 700px;
-  margin: auto;
-  padding: 40px 20px;
-}
-
-.agradecimento h2 {
-  color: #c2185b;
-  font-size: 38px;
-  margin-bottom: 25px;
-}
-
-.agradecimento p {
-  font-size: 22px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
+/* RODAPÉ */
 
 footer {
-  background: #e91e63;
-  color: white;
-  padding: 35px 20px;
-  font-size: 20px;
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
 }
 
 </style>
-
 </head>
 
 <body>
 
-<header>
-  <h1>💗 Diva Make 10</h1>
-  <p>Produtos de beleza por apenas R$ 10,00</p>
+<!-- TOPO -->
 
-  <div class="carrinho-topo">
-    🛒 Carrinho (<span id="contador">0</span>)
-  </div>
-</header>
+<div class="topo">
+🚚 PRONTA ENTREGA • 🩷 PRODUTOS POR APENAS R$10 • 📦 ENVIO RÁPIDO
+</div>
 
 
-<!-- LOJA -->
+<!-- LOGO -->
 
-<div id="loja" class="pagina ativa">
+<div class="menu">
 
-<section class="destaque">
+<div class="logo">
+DIVA <span>MAKE</span> 10
+</div>
 
-<h2>💗 Beleza ao seu alcance!</h2>
+<div class="slogan">
+Beleza, variedade e preço incrível!
+</div>
+
+</div>
+
+
+<!-- BANNER -->
+
+<section class="banner">
+
+<h2>✨ BELEZA AO SEU ALCANCE ✨</h2>
+
+<h1>
+TUDO POR<br>
+APENAS
+</h1>
 
 <div class="preco">
-R$ 10,00
+R$10,00
 </div>
+
+<p>
+💄 Maquiagem • 🧴 Skincare • 💇‍♀️ Cabelos
+</p>
+
+<p>
+🎀 Acessórios • 🧸 Linha Infantil
+</p>
+
+<a href="#produtos" class="botao-comprar">
+🛍️ COMPRAR AGORA
+</a>
 
 </section>
 
 
-<section class="produtos">
+<!-- BENEFÍCIOS -->
 
-<h2>🛍️ Produtos</h2>
+<div class="beneficios">
+
+<div class="beneficio">
+<h3>🚚 ENVIO RÁPIDO</h3>
+<p>Produtos à pronta entrega</p>
+</div>
+
+<div class="beneficio">
+<h3>🩷 PREÇO INCRÍVEL</h3>
+<p>Tudo por apenas R$10</p>
+</div>
+
+<div class="beneficio">
+<h3>✨ VARIEDADE</h3>
+<p>Produtos para todos</p>
+</div>
+
+</div>
+
+
+<!-- CATEGORIAS -->
+
+<h2 class="titulo">
+🩷 NOSSAS CATEGORIAS 🩷
+</h2>
+
+
+<div class="categorias">
+
+<div class="categoria">
+<div class="icone">💄</div>
+<h3>Maquiagem</h3>
+</div>
+
+
+<div class="categoria">
+<div class="icone">🧴</div>
+<h3>Skincare</h3>
+</div>
+
+
+<div class="categoria">
+<div class="icone">💇‍♀️</div>
+<h3>Cabelos</h3>
+</div>
+
+
+<div class="categoria">
+<div class="icone">🎀</div>
+<h3>Acessórios</h3>
+</div>
+
+
+<div class="categoria">
+<div class="icone">🧸</div>
+<h3>Linha Infantil</h3>
+</div>
+
+
+<div class="categoria">
+<div class="icone">🎁</div>
+<h3>Novidades</h3>
+</div>
+
+</div>
+
+
+<!-- DESTAQUE -->
+
+<div class="destaque">
+
+<h2>🩷 DIVA MAKE 10 🩷</h2>
+
+<h1>R$10,00</h1>
+
+<p>
+Produtos incríveis com preços que cabem no seu bolso!
+</p>
+
+</div>
+
+
+<!-- PRODUTOS -->
+
+<section id="produtos">
+
+<h2 class="titulo">
+✨ PRODUTOS ✨
+</h2>
+
+
+<div class="produtos">
 
 <div class="produto">
 
 <h3>💄 Batom</h3>
 
-<p>R$ 10,00</p>
+<p>R$10,00</p>
 
-<button class="botao" onclick="adicionarProduto('Batom')">
-Adicionar ao carrinho 🛒
+<button>
+Adicionar ao carrinho
 </button>
 
 </div>
@@ -239,347 +406,36 @@ Adicionar ao carrinho 🛒
 
 <div class="produto">
 
-<h3>🧴 Hidratante</h3>
+<h3>✨ Produto de Beleza</h3>
 
-<p>R$ 10,00</p>
+<p>R$10,00</p>
 
-<button class="botao" onclick="adicionarProduto('Hidratante')">
-Adicionar ao carrinho 🛒
+<button>
+Adicionar ao carrinho
 </button>
+
+</div>
 
 </div>
 
 </section>
 
-<button class="botao" onclick="abrirCarrinho()">
-🛒 Ver carrinho
-</button>
 
-</div>
-
-
-<!-- CARRINHO -->
-
-<div id="carrinho" class="pagina">
-
-<h2>🛒 Meu Carrinho</h2>
-
-<div id="itensCarrinho"></div>
-
-<h2 id="total">
-Total: R$ 0,00
-</h2>
-
-<button class="botao" onclick="abrirFinalizar()">
-💗 Finalizar compra
-</button>
-
-<br>
-
-<button class="botao" onclick="mostrarPagina('loja')">
-Continuar comprando
-</button>
-
-</div>
-
-
-<!-- FINALIZAR -->
-
-<div id="finalizar" class="pagina">
-
-<h2 style="color:#c2185b; font-size:38px;">
-💗 Finalizar Pedido
-</h2>
-
-<input type="text" id="nome" placeholder="Seu nome completo">
-
-<input type="tel" id="telefone" placeholder="Seu telefone">
-
-<input type="text" id="endereco" placeholder="Endereço de entrega">
-
-
-<select id="pagamento">
-
-<option value="Pix">Pix</option>
-
-<option value="Dinheiro">Dinheiro</option>
-
-<option value="Cartão">Cartão</option>
-
-</select>
-
-
-<button class="botao" onclick="confirmarPedido()">
-Confirmar Pedido 🛍️
-</button>
-
-</div>
-
-
-<!-- AGRADECIMENTO -->
-
-<div id="agradecimento" class="pagina">
-
-<div class="agradecimento">
-
-<h2>💗 Pedido realizado com sucesso! 🎉</h2>
-
-<p>
-🛍️ <strong>Muito obrigada pela sua compra!</strong> 💕
-</p>
-
-<p>
-Seu pedido foi recebido com muito carinho e em breve entraremos em contato para confirmar todos os detalhes. ✨
-</p>
-
-<p>
-💗 <strong>A Diva Make 10 agradece a sua preferência!</strong>
-</p>
-
-<p>
-Esperamos você novamente em nossa loja! 🥰
-</p>
-
-<button class="botao" onclick="voltarLoja()">
-🛍️ Continuar comprando
-</button>
-
-</div>
-
-</div>
-
+<!-- RODAPÉ -->
 
 <footer>
 
-💗 Diva Make 10 - Produtos de beleza por apenas R$ 10,00
+<h3>DIVA MAKE 10 🩷</h3>
+
+<p>
+Beleza, variedade e preço incrível!
+</p>
+
+<p style="margin-top:10px;">
+🚚 Produtos à pronta entrega
+</p>
 
 </footer>
-
-
-<script>
-
-let carrinho = [];
-
-
-function mostrarPagina(pagina) {
-
-document.querySelectorAll('.pagina').forEach(function(p) {
-
-p.classList.remove('ativa');
-
-});
-
-document.getElementById(pagina).classList.add('ativa');
-
-window.scrollTo(0,0);
-
-}
-
-
-function adicionarProduto(nome) {
-
-let produto = carrinho.find(function(item) {
-
-return item.nome === nome;
-
-});
-
-if(produto) {
-
-produto.quantidade++;
-
-} else {
-
-carrinho.push({
-
-nome: nome,
-
-preco: 10,
-
-quantidade: 1
-
-});
-
-}
-
-atualizarContador();
-
-alert(nome + " adicionado ao carrinho! 🛒💗");
-
-}
-
-
-function atualizarContador() {
-
-let quantidade = 0;
-
-carrinho.forEach(function(item) {
-
-quantidade += item.quantidade;
-
-});
-
-document.getElementById("contador").innerText = quantidade;
-
-}
-
-
-function abrirCarrinho() {
-
-renderizarCarrinho();
-
-mostrarPagina("carrinho");
-
-}
-
-
-function renderizarCarrinho() {
-
-let lista = document.getElementById("itensCarrinho");
-
-lista.innerHTML = "";
-
-let total = 0;
-
-
-if(carrinho.length === 0) {
-
-lista.innerHTML = "<p>Seu carrinho está vazio 🛒</p>";
-
-}
-
-
-carrinho.forEach(function(item, index) {
-
-total += item.preco * item.quantidade;
-
-
-lista.innerHTML += `
-
-<div class="item-carrinho">
-
-<div>
-
-<h3>${item.nome}</h3>
-
-<p>R$ ${item.preco.toFixed(2)}</p>
-
-</div>
-
-
-<div class="controle">
-
-<button class="menor" onclick="diminuir(${index})">
--
-</button>
-
-<span class="quantidade">
-${item.quantidade}
-</span>
-
-<button class="menor" onclick="aumentar(${index})">
-+
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById("total").innerText =
-"Total: R$ " + total.toFixed(2);
-
-}
-
-
-function aumentar(index) {
-
-carrinho[index].quantidade++;
-
-renderizarCarrinho();
-
-atualizarContador();
-
-}
-
-
-function diminuir(index) {
-
-carrinho[index].quantidade--;
-
-
-if(carrinho[index].quantidade <= 0) {
-
-carrinho.splice(index, 1);
-
-}
-
-renderizarCarrinho();
-
-atualizarContador();
-
-}
-
-
-function abrirFinalizar() {
-
-if(carrinho.length === 0) {
-
-alert("Seu carrinho está vazio! 🛒");
-
-return;
-
-}
-
-mostrarPagina("finalizar");
-
-}
-
-
-function confirmarPedido() {
-
-let nome = document.getElementById("nome").value;
-
-let telefone = document.getElementById("telefone").value;
-
-let endereco = document.getElementById("endereco").value;
-
-
-if(nome === "" || telefone === "" || endereco === "") {
-
-alert("Por favor, preencha todos os dados 💗");
-
-return;
-
-}
-
-
-mostrarPagina("agradecimento");
-
-carrinho = [];
-
-atualizarContador();
-
-document.getElementById("nome").value = "";
-
-document.getElementById("telefone").value = "";
-
-document.getElementById("endereco").value = "";
-
-}
-
-
-function voltarLoja() {
-
-mostrarPagina("loja");
-
-}
-
-</script>
 
 
 </body>
