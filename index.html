@@ -493,11 +493,32 @@ function abrirCategoria(id) {
         if (categoria) categoria.classList.add("aberta");
     }
 }
-     function abrirSubcategoria(nome) {
+     let subcategoriaAtual = null;
+
+function abrirSubcategoria(nome) {
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
+        menu.style.display = "none";
+    });
+
+    const menu = document.getElementById(nome);
+
+    if (menu) {
+        menu.style.display = "block";
+        subcategoriaAtual = nome;
+    }
+}
+
+function mostrarProdutos(tipo) {
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
+        menu.style.display = "none";
+    });
+
     document.querySelector(".categorias").style.display = "none";
+
     document.getElementById("produtos").style.display = "block";
 
-    document.getElementById("titulo-produtos").innerText = nome;
+    document.getElementById("titulo-produtos").innerText =
+        tipo.charAt(0).toUpperCase() + tipo.slice(1);
 
     document.getElementById("lista-produtos").innerHTML =
         "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
@@ -505,28 +526,10 @@ function abrirCategoria(id) {
 
 function voltarSubcategoria() {
     document.getElementById("produtos").style.display = "none";
-    document.querySelector(".categorias").style.display = "grid";
-}
-     function mostrarProdutos(tipo) {
-    document.querySelector(".categorias").style.display = "none";
 
-    document.querySelectorAll(".subcategorias").forEach(menu => {
-        menu.classList.remove("ativo");
-    });
-
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.style.display = "none";
-    });
-
-    document.getElementById("produtos").style.display = "block";
-
-    const titulo = document.getElementById("titulo-produtos");
-    const lista = document.getElementById("lista-produtos");
-
-    titulo.innerText = tipo.charAt(0).toUpperCase() + tipo.slice(1);
-
-    lista.innerHTML =
-        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
+    if (subcategoriaAtual) {
+        document.getElementById(subcategoriaAtual).style.display = "block";
+    }
 }
      </script>
 <section class="banner-principal">
