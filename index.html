@@ -335,13 +335,17 @@ footer {
 function abrirCategoria(id) {
 
     document.querySelectorAll('.subcategorias').forEach(function(categoria) {
-        categoria.classList.remove('ativo');
+        if (categoria.id !== id) {
+            categoria.classList.remove('ativo');
+        }
     });
 
-    document.getElementById(id).classList.add('ativo');
+    const menu = document.getElementById(id);
 
+    if (menu) {
+        menu.classList.toggle('ativo');
+    }
 }
-
 function abrirProdutos(nome) {
     document.getElementById("produtos").scrollIntoView({
         behavior: "smooth"
