@@ -429,23 +429,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function abrirCategoria(id) {
 
-    // Fecha todas as categorias abertas
-    document.querySelectorAll('.subcategorias').forEach(function(menu) {
-
-        if (menu.id !== id) {
-            menu.classList.remove('ativo');
-        }
-
+    // Fecha todas as categorias
+    document.querySelectorAll('.subcategorias').forEach(menu => {
+        menu.classList.remove('ativo');
     });
 
-    // Abre ou fecha a categoria escolhida
+    // Fecha o estado "aberta" de todas as categorias
+    document.querySelectorAll('.categoria').forEach(item => {
+        item.classList.remove('aberta');
+    });
+
+    // Encontra a categoria escolhida
     const menu = document.getElementById(id);
 
     if (menu) {
-        menu.classList.toggle('ativo');
+        // Abre a categoria
+        menu.classList.add('ativo');
+
+        // Marca a categoria como aberta
+        const categoria = menu.previousElementSibling;
+
+        if (categoria) {
+            categoria.classList.add('aberta');
+        }
     }
 }
-
 
 function abrirSubcategoria(id) {
 
