@@ -254,21 +254,47 @@ footer {
     padding: 25px;
     margin-top: 30px;
 }
-    /* SUBCATEGORIAS */
+  /* =========================
+   MENU DE CATEGORIAS
+   ========================= */
 
 .categoria {
+    width: 100%;
+    padding: 22px 30px;
+    box-sizing: border-box;
+    background: #fff8fc;
+    border-bottom: 1px solid #eadfe5;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ec008c;
     transition: 0.3s;
 }
 
 .categoria:hover {
-    transform: scale(1.03);
+    background: #fff0f7;
 }
+
+.categoria h3 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.categoria .icon {
+    font-size: 25px;
+    margin-right: 15px;
+}
+
+/* Área que abre abaixo da categoria */
 
 .subcategorias {
     display: none;
     width: 100%;
-    padding: 15px;
+    padding: 0;
+    margin: 0;
+    background: #eee9ed;
     box-sizing: border-box;
 }
 
@@ -276,23 +302,32 @@ footer {
     display: block;
 }
 
+/* Cada subcategoria */
+
 .subcategoria {
-    background: white;
-    border: 2px solid #ffd1e3;
-    border-radius: 15px;
-    padding: 15px;
-    margin: 10px 0;
-    text-align: left;
-    color: #d90068;
-    font-weight: bold;
+    width: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #d8d1d6;
+    color: #ec008c;
+    background: #eee9ed;
     font-size: 18px;
+    font-weight: 400;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .subcategoria:hover {
-    background: #fff0f6;
+    background: #e4dfe3;
 }
 
+/* Primeiro item da subcategoria */
+
+.subcategoria.principal {
+    font-size: 20px;
+    font-weight: bold;
+    background: #eee9ed;
+}
 </style>
 </head>
 <script>
