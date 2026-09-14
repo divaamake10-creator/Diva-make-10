@@ -468,62 +468,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function abrirCategoria(id) {
 
-    // Fecha todas as categorias
-    document.querySelectorAll('.subcategorias').forEach(menu => {
-        menu.classList.remove('ativo');
-    });
-
-    // Fecha o estado "aberta" de todas as categorias
-    document.querySelectorAll('.categoria').forEach(item => {
-        item.classList.remove('aberta');
-    });
-
-    // Encontra a categoria escolhida
-    const menu = document.getElementById(id);
-
-    if (menu) {
-        // Abre a categoria
-        menu.classList.add('ativo');
-
-        // Marca a categoria como aberta
-        const categoria = menu.previousElementSibling;
-
-        if (categoria) {
-            categoria.classList.add('aberta');
-        }
-    }
-}
-
-function abrirSubcategoria(id) {
-
-    // Encontra o menu que será aberto
     const menu = document.getElementById(id);
 
     if (!menu) return;
 
-    // Encontra o botão da subcategoria
-    const categoria = menu.previousElementSibling;
+    // Se a categoria já estiver aberta, fecha
+    if (menu.classList.contains("ativo")) {
+        menu.classList.remove("ativo");
 
-    // Fecha outras subcategorias
-    document.querySelectorAll('.subcategorias-nivel-2').forEach(function(item) {
+        const categoria = document.querySelector(
+            `.categoria[onclick*="'${id}'"]`
+        );
 
-        if (item !== menu) {
-
-            item.classList.remove('ativo');
-
-            if (item.previousElementSibling) {
-                item.previousElementSibling.classList.remove('aberta');
-            }
-
+        if (categoria) {
+            categoria.classList.remove("aberta");
         }
 
+        return;
+    }
+
+    // Fecha todas as outras categorias
+    document.querySelectorAll(".subcategorias").forEach(function(item) {
+        item.classList.remove("ativo");
     });
 
-    // Abre ou fecha a escolhida
-    menu.classList.toggle('ativo');
+    document.querySelectorAll(".categoria").forEach(function(item) {
+        item.classList.remove("aberta");
+    });
+
+    // Abre a categoria escolhida
+    menu.classList.add("ativo");
+
+    const categoria = document.querySelector(
+        `.categoria[onclick*="'${id}'"]`
+    );
 
     if (categoria) {
-        categoria.classList.toggle('aberta');
+        categoria.classList.add("aberta");
     }
 }
 
