@@ -467,17 +467,16 @@ document.addEventListener("DOMContentLoaded", function () {
 });   
 
 function abrirCategoria(id) {
-
     const menu = document.getElementById(id);
 
     if (!menu) return;
 
-    // Se a categoria já estiver aberta, fecha
+    // Se já estiver aberta, fecha
     if (menu.classList.contains("ativo")) {
         menu.classList.remove("ativo");
 
         const categoria = document.querySelector(
-            `.categoria[onclick*="'${id}'"]`
+            `.categoria[onclick*="${id}"]`
         );
 
         if (categoria) {
@@ -487,12 +486,12 @@ function abrirCategoria(id) {
         return;
     }
 
-    // Fecha todas as outras categorias
-    document.querySelectorAll(".subcategorias").forEach(function(item) {
+    // Fecha as outras categorias
+    document.querySelectorAll(".subcategorias").forEach(item => {
         item.classList.remove("ativo");
     });
 
-    document.querySelectorAll(".categoria").forEach(function(item) {
+    document.querySelectorAll(".categoria").forEach(item => {
         item.classList.remove("aberta");
     });
 
@@ -500,32 +499,13 @@ function abrirCategoria(id) {
     menu.classList.add("ativo");
 
     const categoria = document.querySelector(
-        `.categoria[onclick*="'${id}'"]`
+        `.categoria[onclick*="${id}"]`
     );
 
     if (categoria) {
         categoria.classList.add("aberta");
     }
 }
-
-
-function abrirProdutos(nome) {
-
-    document.getElementById("produtos").scrollIntoView({
-        behavior: "smooth"
-    });
-
-}
-
-</script>
-<body>
-<!-- BANNER PRINCIPAL -->
-<div class="banner-principal">
-<img src="B40F7D08-A600-4130-801C-0BAB4B99E946.png" class="banner-imagem" alt="Diva Make 10">
-
-
-<div class="topo">
-🚚 PRONTA ENTREGA • 🩷 PRODUTOS POR APENAS R$10 • 📦 ENVIO RÁPIDO
 </div>
 
 
