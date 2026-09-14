@@ -410,9 +410,12 @@ footer {
     background: #cec8cd;
 }
 </style>
-</head>
-    // Deixa todas as categorias fechadas ao carregar a página
+</head> 
+ <script>
+
+// Deixa todas as categorias fechadas ao carregar a página
 document.addEventListener("DOMContentLoaded", function () {
+
     document.querySelectorAll(".subcategorias").forEach(function (menu) {
         menu.classList.remove("ativo");
     });
@@ -424,7 +427,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".categoria-nivel-2").forEach(function (item) {
         item.classList.remove("aberta");
     });
-});
+
+});   
 <script>
 
 function abrirCategoria(id) {
