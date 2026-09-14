@@ -295,7 +295,25 @@ footer {
 
 </style>
 </head>
+<script>
 
+function abrirCategoria(id) {
+
+    document.querySelectorAll('.subcategorias').forEach(function(categoria) {
+        categoria.classList.remove('ativo');
+    });
+
+    document.getElementById(id).classList.add('ativo');
+
+}
+
+function abrirProdutos(nome) {
+
+    alert("Você clicou em " + nome);
+
+}
+
+</script>
 <body>
 <!-- BANNER PRINCIPAL -->
 <div class="banner-principal">
@@ -390,50 +408,120 @@ R$10,00
 
 <div id="maquiagem" class="subcategorias">
 
-    <div class="subcategoria">
-        👄 Lábios
-    </div>
+<div class="subcategoria" onclick="abrirProdutos('Lábios')">
+    💋 Lábios
+</div>
 
-    <div class="subcategoria">
-        😊 Rosto
-    </div>
+   <div class="subcategoria" onclick="abrirProdutos('Rosto')">
+    😊 Rosto
+</div>
 
-    <div class="subcategoria">
-        👁️ Olhos
-    </div>
+   <div class="subcategoria" onclick="abrirProdutos('Olhos')">
+    👁️ Olhos
+</div>
+    
 
 </div>
 
-
+<div class="categoria" onclick="abrirCategoria('skincare')">
 <div class="categoria">
 <div class="icone">🧴</div>
 <h3>Skincare</h3>
 </div>
+<div id="skincare" class="subcategorias">
 
+    <div class="subcategoria" onclick="abrirProdutos('Hidratantes')">
+        🧴 Hidratantes
+    </div>
 
-<div class="categoria">
-<div class="icone">💇‍♀️</div>
-<h3>Cabelos</h3>
+    <div class="subcategoria" onclick="abrirProdutos('Sabonetes')">
+        🫧 Sabonetes
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Séruns')">
+        ✨ Séruns
+    </div>
+
+</div>
+<div class="categoria" onclick="abrirCategoria('cabelos')">
+    <div class="icone">💇‍♀️</div>
+    <h3>Cabelos</h3>
+</div>
+<div id="cabelos" class="subcategorias">
+
+    <div class="subcategoria" onclick="abrirProdutos('Shampoo')">
+        🧴 Shampoo
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Condicionador')">
+        💆‍♀️ Condicionador
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Máscara Capilar')">
+        ✨ Máscara Capilar
+    </div>
+
 </div>
 
 
-<div class="categoria">
-<div class="icone">🎀</div>
-<h3>Acessórios</h3>
+<div class="categoria" onclick="abrirCategoria('acessorios')">
+    <div class="icone">🎀</div>
+    <h3>Acessórios</h3>
 </div>
+<div id="acessorios" class="subcategorias">
 
+    <div class="subcategoria" onclick="abrirProdutos('Necessaire')">
+        👜 Necessaire
+    </div>
 
-<div class="categoria">
+    <div class="subcategoria" onclick="abrirProdutos('Laços')">
+        🎀 Laços
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Tiaras')">
+        👑 Tiaras
+    </div>
+
+</div>
+<div class="categoria" onclick="abrirCategoria('infantil')">
 <div class="icone">🧸</div>
 <h3>Linha Infantil</h3>
 </div>
+<div id="infantil" class="subcategorias">
 
+    <div class="subcategoria" onclick="abrirProdutos('Tiaras Infantis')">
+        🎀 Tiaras Infantis
+    </div>
 
-<div class="categoria">
-<div class="icone">🎁</div>
-<h3>Novidades</h3>
+    <div class="subcategoria" onclick="abrirProdutos('Laços Infantis')">
+        🎀 Laços Infantis
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Produtos Infantis')">
+        🧸 Produtos Infantis
+    </div>
+
 </div>
 
+<div class="categoria" onclick="abrirCategoria('novidades')">
+    <div class="icone">🎁</div>
+    <h3>Novidades</h3>
+</div>
+<div id="novidades" class="subcategorias">
+
+    <div class="subcategoria" onclick="abrirProdutos('Lançamentos')">
+        ✨ Lançamentos
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Ofertas')">
+        💕 Ofertas
+    </div>
+
+    <div class="subcategoria" onclick="abrirProdutos('Mais Vendidos')">
+        🔥 Mais Vendidos
+    </div>
+
+</div>
 </div>
 
 
