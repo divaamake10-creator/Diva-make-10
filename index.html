@@ -507,6 +507,27 @@ function voltarSubcategoria() {
     document.getElementById("produtos").style.display = "none";
     document.querySelector(".categorias").style.display = "grid";
 }
+     function mostrarProdutos(tipo) {
+    document.querySelector(".categorias").style.display = "none";
+
+    document.querySelectorAll(".subcategorias").forEach(menu => {
+        menu.classList.remove("ativo");
+    });
+
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
+        menu.style.display = "none";
+    });
+
+    document.getElementById("produtos").style.display = "block";
+
+    const titulo = document.getElementById("titulo-produtos");
+    const lista = document.getElementById("lista-produtos");
+
+    titulo.innerText = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+
+    lista.innerHTML =
+        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
+}
      </script>
 <section class="banner-principal">
     <img src="B40F7D08-A600-4130-801C-0BAB4B99E946.png" alt="Diva Make 10" class="banner-imagem">
