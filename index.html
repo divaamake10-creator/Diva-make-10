@@ -328,28 +328,149 @@ footer {
     font-weight: bold;
     background: #eee9ed;
 }
+    /* ===== SUBCATEGORIAS DE SEGUNDO NÍVEL ===== */
+
+.subcategorias-nivel-2 {
+    display: none;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    background: #d8d3d7;
+    box-sizing: border-box;
+}
+
+.subcategorias-nivel-2.ativo {
+    display: block;
+}
+
+/* Botão Lábios, Rosto, Olhos */
+
+.categoria-nivel-2 {
+    width: 100%;
+    min-height: 70px;
+    padding: 20px 30px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    background: #eee9ed;
+    border-bottom: 1px solid #d8d1d6;
+
+    color: #ec008c;
+    font-size: 18px;
+    font-weight: 400;
+
+    cursor: pointer;
+}
+
+/* Setinha */
+
+.categoria-nivel-2 .seta {
+    margin-left: auto;
+    font-size: 28px;
+    line-height: 1;
+    transition: transform 0.3s;
+}
+
+/* Setinha quando estiver aberto */
+
+.categoria-nivel-2.aberta .seta {
+    transform: rotate(180deg);
+}
+
+/* Produtos dentro de Lábios/Rosto/Olhos */
+
+.subcategoria-item {
+    width: 100%;
+    padding: 20px 32px;
+    box-sizing: border-box;
+
+    background: #d8d3d7;
+    border-bottom: 1px solid #c9c2c7;
+
+    color: #ec008c;
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+/* "Ver tudo em LÁBIOS" */
+
+.subcategoria-item.destaque {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Efeito ao tocar */
+
+.subcategoria-item:active {
+    background: #cec8cd;
+}
 </style>
 </head>
 <script>
 
 function abrirCategoria(id) {
 
-    document.querySelectorAll('.subcategorias').forEach(function(categoria) {
-        if (categoria.id !== id) {
-            categoria.classList.remove('ativo');
+    // Fecha todas as categorias abertas
+    document.querySelectorAll('.subcategorias').forEach(function(menu) {
+
+        if (menu.id !== id) {
+            menu.classList.remove('ativo');
         }
+
     });
 
+    // Abre ou fecha a categoria escolhida
     const menu = document.getElementById(id);
 
     if (menu) {
         menu.classList.toggle('ativo');
     }
 }
+
+
+function abrirSubcategoria(id) {
+
+    // Encontra o menu que será aberto
+    const menu = document.getElementById(id);
+
+    if (!menu) return;
+
+    // Encontra o botão da subcategoria
+    const categoria = menu.previousElementSibling;
+
+    // Fecha outras subcategorias
+    document.querySelectorAll('.subcategorias-nivel-2').forEach(function(item) {
+
+        if (item !== menu) {
+
+            item.classList.remove('ativo');
+
+            if (item.previousElementSibling) {
+                item.previousElementSibling.classList.remove('aberta');
+            }
+
+        }
+
+    });
+
+    // Abre ou fecha a escolhida
+    menu.classList.toggle('ativo');
+
+    if (categoria) {
+        categoria.classList.toggle('aberta');
+    }
+}
+
+
 function abrirProdutos(nome) {
+
     document.getElementById("produtos").scrollIntoView({
         behavior: "smooth"
     });
+
 }
 
 </script>
@@ -447,16 +568,106 @@ R$10,00
 
 <div id="maquiagem" class="subcategorias">
 
-<div class="subcategoria" onclick="abrirProdutos('Lábios')">
-    💋 Lábios
-</div>
+    <div class="subcategoria categoria-nivel-2"
+         onclick="abrirSubcategoria('labios')">
+        💋 Lábios
+        <span class="seta">⌄</span>
+    </div>
 
-   <div class="subcategoria" onclick="abrirProdutos('Rosto')">
-    😊 Rosto
-</div>
+    <div id="labios" class="subcategorias-nivel-2">
 
-   <div class="subcategoria" onclick="abrirProdutos('Olhos')">
-    👁️ Olhos
+        <div class="subcategoria-item destaque">
+            Ver tudo em LÁBIOS
+        </div>
+
+        <div class="subcategoria-item">
+            Batom
+        </div>
+
+        <div class="subcategoria-item">
+            Hidratante Labial
+        </div>
+
+        <div class="subcategoria-item">
+            Lip Tint
+        </div>
+
+        <div class="subcategoria-item">
+            Lip Oil / Gloss Labial
+        </div>
+
+        <div class="subcategoria-item">
+            Lápis Labial
+        </div>
+
+    </div>
+
+
+    <div class="subcategoria categoria-nivel-2"
+         onclick="abrirSubcategoria('rosto')">
+        😊 Rosto
+        <span class="seta">⌄</span>
+    </div>
+
+    <div id="rosto" class="subcategorias-nivel-2">
+
+        <div class="subcategoria-item destaque">
+            Ver tudo em ROSTO
+        </div>
+
+        <div class="subcategoria-item">
+            Base
+        </div>
+
+        <div class="subcategoria-item">
+            Corretivo
+        </div>
+
+        <div class="subcategoria-item">
+            Pó
+        </div>
+
+        <div class="subcategoria-item">
+            Blush
+        </div>
+
+        <div class="subcategoria-item">
+            Iluminador
+        </div>
+
+    </div>
+
+
+    <div class="subcategoria categoria-nivel-2"
+         onclick="abrirSubcategoria('olhos')">
+        👁️ Olhos
+        <span class="seta">⌄</span>
+    </div>
+
+    <div id="olhos" class="subcategorias-nivel-2">
+
+        <div class="subcategoria-item destaque">
+            Ver tudo em OLHOS
+        </div>
+
+        <div class="subcategoria-item">
+            Máscara de Cílios
+        </div>
+
+        <div class="subcategoria-item">
+            Delineador
+        </div>
+
+        <div class="subcategoria-item">
+            Sombra
+        </div>
+
+        <div class="subcategoria-item">
+            Lápis de Olho
+        </div>
+
+    </div>
+
 </div>
     
 
