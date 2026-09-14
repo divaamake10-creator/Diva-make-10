@@ -318,7 +318,43 @@ footer {
     cursor: pointer;
     transition: 0.3s;
 }
+/* CATEGORIAS EM 2 COLUNAS */
+.categorias {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 15px;
+}
 
+.categoria {
+    width: 100%;
+    min-height: 160px;
+    border: 2px solid #ffd1e3;
+    border-radius: 25px;
+    background: #fff8fc;
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-align: center;
+}
+
+.categoria .icon {
+    font-size: 45px;
+    margin-right: 0;
+}
+
+.categoria h3 {
+    font-size: 28px;
+    margin: 0;
+}
+
+/* Subcategorias continuam ocupando a largura toda */
+.subcategorias {
+    grid-column: 1 / -1;
+}
 .subcategoria:hover {
     background: #e4dfe3;
 }
