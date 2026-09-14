@@ -289,8 +289,9 @@ footer {
 
 /* Área que abre abaixo da categoria */
 
+/* ESCONDE TODAS AS SUBCATEGORIAS POR PADRÃO */
 .subcategorias {
-    display: none;
+    display: none !important;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -298,8 +299,9 @@ footer {
     box-sizing: border-box;
 }
 
+/* MOSTRA SOMENTE QUANDO A CATEGORIA FOR CLICADA */
 .subcategorias.ativo {
-    display: block;
+    display: block !important;
 }
 
 /* Cada subcategoria */
@@ -331,7 +333,7 @@ footer {
     /* ===== SUBCATEGORIAS DE SEGUNDO NÍVEL ===== */
 
 .subcategorias-nivel-2 {
-    display: none;
+    display: none !important;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -340,7 +342,7 @@ footer {
 }
 
 .subcategorias-nivel-2.ativo {
-    display: block;
+    display: block !important;
 }
 
 /* Botão Lábios, Rosto, Olhos */
@@ -409,6 +411,20 @@ footer {
 }
 </style>
 </head>
+    // Deixa todas as categorias fechadas ao carregar a página
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".subcategorias").forEach(function (menu) {
+        menu.classList.remove("ativo");
+    });
+
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(function (menu) {
+        menu.classList.remove("ativo");
+    });
+
+    document.querySelectorAll(".categoria-nivel-2").forEach(function (item) {
+        item.classList.remove("aberta");
+    });
+});
 <script>
 
 function abrirCategoria(id) {
