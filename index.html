@@ -308,9 +308,9 @@ function abrirCategoria(id) {
 }
 
 function abrirProdutos(nome) {
-
-    alert("Você clicou em " + nome);
-
+    document.getElementById("produtos").scrollIntoView({
+        behavior: "smooth"
+    });
 }
 
 </script>
@@ -401,7 +401,7 @@ R$10,00
 
 <div class="categorias">
 
-<div class="categoria" onclick="abrirSubcategoria('maquiagem')">
+ <div class="categoria" onclick="abrirCategoria('maquiagem')">
     <div class="icone">💄</div>
     <h3>Maquiagem</h3>
 </div>
@@ -423,13 +423,12 @@ R$10,00
 
 </div>
 
-<div class="categoria" onclick="abrirCategoria('skincare')">
-<div class="categoria">
+  <div class="categoria" onclick="abrirCategoria('skincare')">  
 <div class="icone">🧴</div>
 <h3>Skincare</h3>
 </div>
-<div id="skincare" class="subcategorias">
 
+    
     <div class="subcategoria" onclick="abrirProdutos('Hidratantes')">
         🧴 Hidratantes
     </div>
