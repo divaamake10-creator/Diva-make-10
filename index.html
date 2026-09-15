@@ -467,26 +467,14 @@ function abrirCategoria(id) {
 
     if (!menu) return;
 
-    const categoria = document.querySelector(
-        `.categoria[onclick*="${id}"]`
-    );
+    const estaAberto = menu.style.display === "block";
 
-    // Alterna abrir/fechar
-    const abrir = !menu.classList.contains("ativo");
-
-    // Fecha todas
     document.querySelectorAll(".subcategorias").forEach(item => {
-        item.classList.remove("ativo");
+        item.style.display = "none";
     });
 
-    document.querySelectorAll(".categoria").forEach(item => {
-        item.classList.remove("aberta");
-    });
-
-    // Se estava fechada, abre
-    if (abrir) {
-        menu.classList.add("ativo");
-        if (categoria) categoria.classList.add("aberta");
+    if (!estaAberto) {
+        menu.style.display = "block";
     }
 }
      let subcategoriaAtual = null;
