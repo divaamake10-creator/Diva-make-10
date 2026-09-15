@@ -668,15 +668,29 @@ function voltarSubcategoria() {
      <div class="subcategoria-item">cola para cílios</div>
     </div>
 
-    <div class="subcategoria categoria-nivel-2">
-      🖌️ Pincéis
-    </div>
+   <div class="subcategoria categoria-nivel-2"
+     onclick="abrirSubcategoria('pinceis')">
+    🖌️ Pincéis
+    <span class="seta">›</span>
+</div>
 
-    <div class="subcategoria categoria-nivel-2">
-      🤎 Sobrancelhas
-    </div>
+<div id="pinceis" class="subcategorias-nivel-2">
+    <div class="subcategoria-item"> Pincéis</div>
+    <div class="subcategoria-item"> Esponjas</div>
+</div>
 
-  </div>
+<div class="subcategoria categoria-nivel-2"
+     onclick="abrirSubcategoria('sobrancelhas')">
+    🤎 Sobrancelhas
+    <span class="seta">›</span>
+</div>
+
+<div id="sobrancelhas" class="subcategorias-nivel-2">
+    <div class="subcategoria-item"> Gel</div>
+    <div class="subcategoria-item"> Máscara para sobrancelhas</div>
+    <div class="subcategoria-item"> Pomadas</div>
+    <div class="subcategoria-item"> Canetas</div>
+</div>
 
 
   <!-- SKINCARE -->
