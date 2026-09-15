@@ -409,10 +409,12 @@ footer {
 }
     /* CATEGORIAS NA LATERAL ESQUERDA */
 .categorias {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    width: 250px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
     margin: 0 !important;
     padding: 10px !important;
     gap: 10px !important;
