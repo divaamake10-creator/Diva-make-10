@@ -493,13 +493,13 @@ function abrirCategoria(id) {
 
 function abrirSubcategoria(nome) {
     document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.style.display = "none";
+        menu.style.setProperty("display", "none", "important");
     });
 
     const menu = document.getElementById(nome);
 
     if (menu) {
-        menu.style.display = "block";
+        menu.style.setProperty("display", "block", "important");
         subcategoriaAtual = nome;
     }
 }
