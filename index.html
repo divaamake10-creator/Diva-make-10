@@ -535,13 +535,15 @@ function abrirCategoria(id) {
     }
 }
      function abrirSubcategoria(nome) {
-    document.querySelector(".categorias").style.display = "none";
-    document.getElementById("produtos").style.display = "block";
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
+        menu.style.display = "none";
+    });
 
-    document.getElementById("titulo-produtos").innerText = nome;
+    const menu = document.getElementById(nome);
 
-    document.getElementById("lista-produtos").innerHTML =
-        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
+    if (menu) {
+        menu.style.display = "block";
+    }
 }
 
 function voltarSubcategoria() {
