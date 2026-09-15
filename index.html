@@ -339,7 +339,7 @@ footer {
 }
 
 .categoria .icon {
-    font-size: 45px;
+    font-size: 25px;
     margin-right: 0;
 }
 
@@ -409,10 +409,12 @@ footer {
 }
     /* CATEGORIAS NA LATERAL ESQUERDA */
 .categorias {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    width: 250px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
     margin: 0 !important;
     padding: 10px !important;
     gap: 10px !important;
@@ -458,6 +460,36 @@ footer {
 
 .subcategoria-item:active {
     background: #cec8cd;
+} /* CATEGORIAS NA LATERAL ESQUERDA */
+.categorias {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    gap: 10px !important;
+}
+
+.categorias .categoria {
+    width: 100% !important;
+    height: 90px !important;
+    min-height: 90px !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.categorias .categoria h3 {
+    font-size: 22px !important;
+    margin: 0 !important;
+}
+
+.categorias .categoria .icon {
+    font-size: 35px !important;
+    margin-right: 10px !important;
 }
 </style>
 </head> 
@@ -508,13 +540,19 @@ function abrirCategoria(id) {
     }
 }
      function abrirSubcategoria(nome) {
-    document.querySelector(".categorias").style.display = "none";
-    document.getElementById("produtos").style.display = "block";
+    const menu = document.getElementById(nome);
 
-    document.getElementById("titulo-produtos").innerText = nome;
+    if (!menu) return;
 
-    document.getElementById("lista-produtos").innerHTML =
-        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
+    if (menu.classList.contains("ativo")) {
+        menu.classList.remove("ativo");
+    } else {
+        document.querySelectorAll(".subcategorias-nivel-2").forEach(item => {
+            item.classList.remove("ativo");
+        });
+
+        menu.classList.add("ativo");
+    }
 }
 
 function voltarSubcategoria() {
@@ -635,15 +673,29 @@ function voltarSubcategoria() {
      <div class="subcategoria-item">cola para cílios</div>
     </div>
 
-    <div class="subcategoria categoria-nivel-2">
-      🖌️ Pincéis
-    </div>
+   <div class="subcategoria categoria-nivel-2"
+     onclick="abrirSubcategoria('pinceis')">
+    🖌️ Pincéis
+   <span class="seta">⌄</span>
+</div>
 
-    <div class="subcategoria categoria-nivel-2">
-      🤎 Sobrancelhas
-    </div>
+<div id="pinceis" class="subcategorias-nivel-2">
+    <div class="subcategoria-item"> Pincéis</div>
+    <div class="subcategoria-item"> Esponjas</div>
+</div>
 
-  </div>
+<div class="subcategoria categoria-nivel-2"
+     onclick="abrirSubcategoria('sobrancelhas')">
+    🤎 Sobrancelhas
+  <span class="seta">⌄</span>
+</div>
+
+<div id="sobrancelhas" class="subcategorias-nivel-2">
+    <div class="subcategoria-item"> Gel</div>
+    <div class="subcategoria-item"> Máscara para sobrancelhas</div>
+    <div class="subcategoria-item"> Pomadas</div>
+    <div class="subcategoria-item"> Canetas</div>
+</div>
 
 
   <!-- SKINCARE -->
@@ -723,59 +775,50 @@ function voltarSubcategoria() {
 
 
 <!-- LINHA INFANTIL -->
-  <div class="categoria" onclick="abrirCategoria('infantil')"
-      
-    <div class="icone">🧸</div>
+<div class="categoria" onclick="abrirCategoria('infantil')">
+    <div class="icon">🧸</div>
     <h3>Linha Infantil</h3>
     <span class="seta">⌄</span>
-  </div>
-
-  <div id="infantil" class="subcategorias">
-
-    <div class="subcategoria">
-      🎀 Tiaras Infantis
-    </div>
-
-    <div class="subcategoria">
-      🎀 Laços Infantis
-    </div>
-
-    <div class="subcategoria">
-      🧸 Produtos Infantis
-    </div>
-
-  </div>
-
-
 </div>
 
+<div id="infantil" class="subcategorias">
+    <div class="subcategoria">
+        🎀 Tiaras Infantis
+    </div>
 
- <!-- DIVERSOS -->
-  <div class="categoria" onclick="abrirCategoria('acessorios')">
-    <div class="icone">✨</div>
-    <h3>diversos</h3>
+    <div class="subcategoria">
+        🎀 Laços Infantis
+    </div>
+
+    <div class="subcategoria">
+        🧸 Produtos Infantis
+    </div>
+</div>
+
+<!-- DIVERSOS -->
+<div class="categoria" onclick="abrirCategoria('diversos')">
+    <div class="icon">✨</div>
+    <h3>Diversos</h3>
     <span class="seta">⌄</span>
-  </div>
+</div>
 
-  <div id="diversos" class="subcategorias">
-
+<div id="diversos" class="subcategorias">
     <div class="subcategoria">
-      Necessaire
+        Necessaire
     </div>
 
     <div class="subcategoria">
-      Body splash
+        Body splash
     </div>
 
     <div class="subcategoria">
-     Sex Shop+18
+        Sex Shop+18
     </div>
 
-  <div class="subcategoria">
-     Diversos
-    </div>  
-
-  </div>
+    <div class="subcategoria">
+        Diversos
+    </div>
+</div>
     
 <!-- PRODUTOS -->
 <section id="produtos" class="produtos">
