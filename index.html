@@ -259,7 +259,7 @@ footer {
    ========================= */
 
 .categoria {
-    min-height: 55px !important;
+   min-height: 55px !important;
 height: 55px !important;
     width: 100%;
     padding: 8px 10px;
@@ -322,8 +322,8 @@ height: 55px !important;
 }
 /* CATEGORIAS EM 2 COLUNAS */
     .categorias {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
     gap: 10px;
     padding: 10px;
 
@@ -334,6 +334,8 @@ height: 55px !important;
     min-height: 60px;
     padding: 8px;
     gap: 8px;
+  justify-content: flex-start;
+text-align: left;   
 }
     .categoria .icon {
     font-size: 28px;
