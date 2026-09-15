@@ -535,13 +535,17 @@ function abrirCategoria(id) {
     }
 }
      function abrirSubcategoria(nome) {
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.classList.remove("ativo");
-    });
-
     const menu = document.getElementById(nome);
 
-    if (menu) {
+    if (!menu) return;
+
+    if (menu.classList.contains("ativo")) {
+        menu.classList.remove("ativo");
+    } else {
+        document.querySelectorAll(".subcategorias-nivel-2").forEach(item => {
+            item.classList.remove("ativo");
+        });
+
         menu.classList.add("ativo");
     }
 }
