@@ -522,26 +522,28 @@ function abrirCategoria(id) {
 
     if (!menu) return;
 
-    const categoria = document.querySelector(
-        `.categoria[onclick*="${id}"]`
-    );
+    const estaAberta = menu.classList.contains("ativo");
 
-    // Alterna abrir/fechar
-    const abrir = !menu.classList.contains("ativo");
-
-    // Fecha todas
-    document.querySelectorAll(".subcategorias").forEach(item => {
+    // Fecha todas as categorias
+    document.querySelectorAll(".subcategorias").forEach(function(item) {
         item.classList.remove("ativo");
     });
 
-    document.querySelectorAll(".categoria").forEach(item => {
+    document.querySelectorAll(".categoria").forEach(function(item) {
         item.classList.remove("aberta");
     });
 
-    // Se estava fechada, abre
-    if (abrir) {
+    // Se estava fechada, abre somente esta
+    if (!estaAberta) {
         menu.classList.add("ativo");
-        if (categoria) categoria.classList.add("aberta");
+
+        const categoria = document.querySelector(
+            `.categoria[onclick*="${id}"]`
+        );
+
+        if (categoria) {
+            categoria.classList.add("aberta");
+        }
     }
 }
      function abrirSubcategoria(nome) {
