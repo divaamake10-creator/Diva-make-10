@@ -572,19 +572,42 @@ function voltarSubcategoria() {
 
   <div id="maquiagem" class="subcategorias">
 
-  <div class="subcategoria categoria-nivel-2" onclick="abrirSubcategoria('labios')">
+ <div class="subcategoria categoria-nivel-2"
+     onclick="abrirSubcategoria('labios')">
     💋 Lábios
     <span class="seta">⌄</span>
 </div>
 
-    <div id="labios" class="subcategorias-nivel-2">
-    
-<div class="subcategoria-item" onclick="mostrarProdutos('batom')">💄 Batom</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('hidratante')"> Hidratante Labial</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('lip-tint')"> Lip Tint</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('gloss')">✨ Gloss Labial</div>        
-<div class="subcategoria-item" onclick="mostrarProdutos('lapis')"> Lápis Labial</div>
+<div id="labios"
+     class="subcategorias-nivel-2"
+     style="display:none;">
+
+    <div class="subcategoria-item"
+         onclick="mostrarProdutos('batom')">
+        💄 Batom
     </div>
+
+    <div class="subcategoria-item"
+         onclick="mostrarProdutos('gloss')">
+        ✨ Gloss Labial
+    </div>
+
+    <div class="subcategoria-item"
+         onclick="mostrarProdutos('hidratante')">
+        💧 Hidratante Labial
+    </div>
+
+    <div class="subcategoria-item"
+         onclick="mostrarProdutos('lip-tint')">
+        🎨 Lip Tint
+    </div>
+
+    <div class="subcategoria-item"
+         onclick="mostrarProdutos('lapis')">
+        ✏️ Lápis Labial
+    </div>
+
+</div>
 
     <div class="subcategoria categoria-nivel-2"
          onclick="abrirSubcategoria('rosto')">
