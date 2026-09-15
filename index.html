@@ -560,25 +560,91 @@ function voltarSubcategoria() {
     document.querySelector(".categorias").style.display = "grid";
 }
      function mostrarProdutos(tipo) {
+
     document.querySelector(".categorias").style.display = "none";
 
     document.querySelectorAll(".subcategorias").forEach(menu => {
         menu.classList.remove("ativo");
+        menu.style.display = "none";
     });
 
     document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
+        menu.classList.remove("ativo");
         menu.style.display = "none";
     });
 
     document.getElementById("produtos").style.display = "block";
 
-    const titulo = document.getElementById("titulo-produtos");
-    const lista = document.getElementById("lista-produtos");
+    const nomes = {
+        batom: "Batom",
+        gloss: "Gloss Labial",
+        hidratante: "Hidratante Labial",
+        "lip-tint": "Lip Tint",
+        lapis: "Lápis Labial",
+        base: "Base",
+        corretivo: "Corretivo",
+        contorno: "Contorno",
+        blush: "Blush",
+        "agua-micelar": "Água Micelar",
+        bruma: "Bruma/Fixadora",
+        "po-facial": "Pó Facial",
+        iluminador: "Iluminador",
+        pinceis: "Pincéis",
+        esponjas: "Esponjas",
+        gel: "Gel para Sobrancelhas",
+        mascara: "Máscara para Sobrancelhas",
+        pomadas: "Pomadas",
+        canetas: "Canetas"
+    };
 
-    titulo.innerText = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+    document.getElementById("titulo-produtos").innerText =
+        nomes[tipo] || tipo;
 
-    lista.innerHTML =
-        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
+    document.getElementById("lista-produtos").innerHTML = `
+        <div class="produto-card">
+
+            <div class="produto-foto">
+                📸
+                <p>Foto do produto</p>
+            </div>
+
+            <h3>${nomes[tipo] || tipo}</h3>
+
+            <p class="produto-preco">R$ 10,00</p>
+
+            <p class="produto-estoque">
+                📦 Quantidade disponível: <strong>0</strong>
+            </p>
+
+            <div class="quantidade">
+                <button onclick="alterarQuantidade(-1)">−</button>
+                <span id="quantidade-produto">1</span>
+                <button onclick="alterarQuantidade(1)">+</button>
+            </div>
+
+            <button class="btn-comprar">
+                🛒 Adicionar ao carrinho
+            </button>
+
+        </div>
+    `;
+}
+
+function alterarQuantidade(valor) {
+
+    const campo = document.getElementById("quantidade-produto");
+
+    if (!campo) return;
+
+    let quantidade = parseInt(campo.innerText);
+
+    quantidade += valor;
+
+    if (quantidade < 1) {
+        quantidade = 1;
+    }
+
+    campo.innerText = quantidade;
 }
      </script>
 <section class="banner-principal">
