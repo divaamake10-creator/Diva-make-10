@@ -513,8 +513,16 @@ function mostrarProdutos(tipo) {
 
     document.getElementById("produtos").style.display = "block";
 
-    document.getElementById("titulo-produtos").innerText =
-        tipo.charAt(0).toUpperCase() + tipo.slice(1);
+    const nomes = {
+    batom: "Batom",
+    gloss: "Gloss Labial",
+    hidratante: "Hidratante Labial",
+    "lip-tint": "Lip Tint",
+    lapis: "Lápis Labial"
+};
+
+document.getElementById("titulo-produtos").innerText =
+    nomes[tipo] || tipo;
 
     document.getElementById("lista-produtos").innerHTML =
         "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
@@ -523,9 +531,19 @@ function mostrarProdutos(tipo) {
 function voltarSubcategoria() {
     document.getElementById("produtos").style.display = "none";
 
-    if (subcategoriaAtual) {
-        document.getElementById(subcategoriaAtual).style.display = "block";
-    }
+    document.querySelector(".categorias").style.display = "grid";
+
+    document.querySelectorAll(".subcategorias").forEach(menu => {
+        menu.style.display = "none";
+    });
+
+    document.getElementById("maquiagem").style.display = "block";
+
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
+        menu.style.display = "none";
+    });
+
+    document.getElementById("labios").style.display = "block";
 }
      </script>
 <section class="banner-principal">
