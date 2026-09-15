@@ -498,22 +498,24 @@ footer {
 </head> 
  <script>
 
-// Deixa todas as categorias fechadas ao carregar a página
-document.addEventListener("DOMContentLoaded", function () {
+// Deixa todas as categorias fechadas ao carregar
+document.addEventListener("DOMContentLoaded", function() {
 
-    document.querySelectorAll(".subcategorias").forEach(function (menu) {
+    document.querySelectorAll(".subcategorias").forEach(function(menu) {
         menu.classList.remove("ativo");
+        menu.style.display = "none";
     });
 
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(function (menu) {
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(function(menu) {
         menu.classList.remove("ativo");
+        menu.style.display = "none";
     });
 
-    document.querySelectorAll(".categoria-nivel-2").forEach(function (item) {
+    document.querySelectorAll(".categoria-nivel-2").forEach(function(item) {
         item.classList.remove("aberta");
     });
 
-});   
+});
 
 function abrirCategoria(id) {
     const menu = document.getElementById(id);
