@@ -493,14 +493,19 @@ function abrirCategoria(id) {
 
 function abrirSubcategoria(nome) {
     document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.style.setProperty("display", "none", "important");
+        menu.style.display = "none";
     });
 
     const menu = document.getElementById(nome);
 
     if (menu) {
-        menu.style.setProperty("display", "block", "important");
-        subcategoriaAtual = nome;
+        if (menu.style.display === "block") {
+            menu.style.display = "none";
+            subcategoriaAtual = null;
+        } else {
+            menu.style.display = "block";
+            subcategoriaAtual = nome;
+        }
     }
 }
 
