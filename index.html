@@ -217,6 +217,9 @@ body {
 
 .produtos {
     padding: 15px;
+    #produtos {
+    display: none;
+
 }
 
 .produto {
@@ -557,7 +560,7 @@ function abrirCategoria(id) {
 
 function voltarSubcategoria() {
     document.getElementById("produtos").style.display = "none";
-    document.querySelector(".categorias").style.display = "grid";
+    document.querySelector(".categorias").style.display = "flex";
 }
      function mostrarProdutos(tipo) {
 
@@ -728,7 +731,7 @@ function alterarQuantidade(valor) {
     </div>
 
     <div id="rosto" class="subcategorias-nivel-2">
-      <div class="subcategoria-item">Base</div>
+     <div class="subcategoria-item" onclick="mostrarProdutos('base')">Base</div>
       <div class="subcategoria-item">corretivo</div>
       <div class="subcategoria-item">Contorno</div>
       <div class="subcategoria-item">blush</div>
@@ -886,7 +889,8 @@ function alterarQuantidade(valor) {
 <div id="diversos" class="subcategorias">
     <div class="subcategoria">
         Necessaire
-    </div>
+
+   </div>
 
     <div class="subcategoria">
         Body splash
