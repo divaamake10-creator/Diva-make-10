@@ -160,19 +160,23 @@ body {
 }
 
 .categorias {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    gap: 10px;
+    padding: 10px;
+    margin: 0;
 }
 
 .categoria {
     background: white;
     border-radius: 18px;
-    padding: 25px 10px;
+    padding: 12px 10px;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     border: 2px solid #ffd1e3;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .categoria .icone {
@@ -318,17 +322,10 @@ footer {
     cursor: pointer;
     transition: 0.3s;
 }
-/* CATEGORIAS EM 2 COLUNAS */
-.categorias {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 15px;
-}
 
 .categoria {
     width: 100%;
-    min-height: 120px;
+    min-height: 70px;
     border: 2px solid #ffd1e3;
     border-radius: 25px;
     background: #fff8fc;
@@ -353,7 +350,7 @@ footer {
 
 /* Subcategorias continuam ocupando a largura toda */
 .subcategorias {
-    grid-column: 1 / -1;
+    width: 100%;
 }
 .subcategoria:hover {
     background: #e4dfe3;
@@ -409,6 +406,23 @@ footer {
     font-size: 28px;
     line-height: 1;
     transition: transform 0.3s;
+}
+    /* CATEGORIAS NA LATERAL ESQUERDA */
+.categorias {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 250px !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    gap: 10px !important;
+}
+
+.categorias .categoria {
+    width: 250px !important;
+    min-height: 70px !important;
+    height: 70px !important;
+    box-sizing: border-box !important;
 }
 
 /* Setinha quando estiver aberto */
