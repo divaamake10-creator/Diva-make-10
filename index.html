@@ -6,7 +6,7 @@
 
 <title>Diva Make 10</title>
 
-    <style>
+<style>
 
 
 /* BANNER PRINCIPAL */
@@ -259,10 +259,8 @@ footer {
    ========================= */
 
 .categoria {
-   min-height: 55px !important;
-height: 55px !important;
     width: 100%;
-    padding: 8px 10px;
+    padding: 22px 30px;
     box-sizing: border-box;
     background: #fff8fc;
     border-bottom: 1px solid #eadfe5;
@@ -321,24 +319,30 @@ height: 55px !important;
     transition: 0.3s;
 }
 /* CATEGORIAS EM 2 COLUNAS */
-    .categorias {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-
+.categorias {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 15px;
 }
 
-    .categoria {
+.categoria {
     width: 100%;
-    min-height: 60px;
-    padding: 8px;
-    gap: 8px;
-  justify-content: flex-start;
-text-align: left;   
+    min-height: 120px;
+    border: 2px solid #ffd1e3;
+    border-radius: 25px;
+    background: #fff8fc;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    text-align: center;
 }
-    .categoria .icon {
-    font-size: 28px;
+
+.categoria .icon {
+    font-size: 45px;
     margin-right: 0;
 }
 
@@ -467,55 +471,33 @@ function abrirCategoria(id) {
 
     if (!menu) return;
 
-    const estaAberto = menu.style.display === "block";
+    const categoria = document.querySelector(
+        `.categoria[onclick*="${id}"]`
+    );
 
+    // Alterna abrir/fechar
+    const abrir = !menu.classList.contains("ativo");
+
+    // Fecha todas
     document.querySelectorAll(".subcategorias").forEach(item => {
-        item.style.display = "none";
+        item.classList.remove("ativo");
     });
 
-    if (!estaAberto) {
-        menu.style.display = "block";
+    document.querySelectorAll(".categoria").forEach(item => {
+        item.classList.remove("aberta");
+    });
+
+    // Se estava fechada, abre
+    if (abrir) {
+        menu.classList.add("ativo");
+        if (categoria) categoria.classList.add("aberta");
     }
 }
-     let subcategoriaAtual = null;
-
-function abrirSubcategoria(nome) {
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.style.display = "none";
-    });
-
-    const menu = document.getElementById(nome);
-
-    if (menu) {
-        if (menu.style.display === "block") {
-            menu.style.display = "none";
-            subcategoriaAtual = null;
-        } else {
-            menu.style.display = "block";
-            subcategoriaAtual = nome;
-        }
-    }
-}
-
-function mostrarProdutos(tipo) {
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.style.display = "none";
-    });
-
+     function abrirSubcategoria(nome) {
     document.querySelector(".categorias").style.display = "none";
-
     document.getElementById("produtos").style.display = "block";
 
-    const nomes = {
-    batom: "Batom",
-    gloss: "Gloss Labial",
-    hidratante: "Hidratante Labial",
-    "lip-tint": "Lip Tint",
-    lapis: "Lápis Labial"
-};
-
-document.getElementById("titulo-produtos").innerText =
-    nomes[tipo] || tipo;
+    document.getElementById("titulo-produtos").innerText = nome;
 
     document.getElementById("lista-produtos").innerHTML =
         "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
@@ -523,20 +505,28 @@ document.getElementById("titulo-produtos").innerText =
 
 function voltarSubcategoria() {
     document.getElementById("produtos").style.display = "none";
-
     document.querySelector(".categorias").style.display = "grid";
+}
+     function mostrarProdutos(tipo) {
+    document.querySelector(".categorias").style.display = "none";
 
     document.querySelectorAll(".subcategorias").forEach(menu => {
-        menu.style.display = "none";
+        menu.classList.remove("ativo");
     });
-
-    document.getElementById("maquiagem").style.display = "block";
 
     document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
         menu.style.display = "none";
     });
 
-    document.getElementById("labios").style.display = "block";
+    document.getElementById("produtos").style.display = "block";
+
+    const titulo = document.getElementById("titulo-produtos");
+    const lista = document.getElementById("lista-produtos");
+
+    titulo.innerText = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+
+    lista.innerHTML =
+        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
 }
      </script>
 <section class="banner-principal">
@@ -583,42 +573,20 @@ function voltarSubcategoria() {
 
   <div id="maquiagem" class="subcategorias">
 
- <div class="subcategoria categoria-nivel-2"
-     onclick="abrirSubcategoria('labios')">
-    💋 Lábios
-    <span class="seta">⌄</span>
-</div>
-
-<div id="labios"
-     class="subcategorias-nivel-2"
-     style="display:none;">
-
-    <div class="subcategoria-item"
-         onclick="mostrarProdutos('batom')">
-         Batom
+    <div class="subcategoria categoria-nivel-2"
+         onclick="abrirSubcategoria('labios')">
+      💋 Lábios
+      <span class="seta">⌄</span>
     </div>
 
-    <div class="subcategoria-item"
-         onclick="mostrarProdutos('gloss')">
-         Gloss Labial
+    <div id="labios" class="subcategorias-nivel-2">
+    <div class="subcategoria-item" onclick="mostrarProdutos('labios')">💋 Ver tudo em LÁBIOS</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('batom')"> Batom</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('hidratante')"> Hidratante Labial</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('lip-tint')"> Lip Tint</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('gloss')"> Gloss labial</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('lapis')">Lápis Labial</div>
     </div>
-
-    <div class="subcategoria-item"
-         onclick="mostrarProdutos('hidratante')">
-         Hidratante Labial
-    </div>
-
-    <div class="subcategoria-item"
-         onclick="mostrarProdutos('lip-tint')">
-         Lip Tint
-    </div>
-
-    <div class="subcategoria-item"
-         onclick="mostrarProdutos('lapis')">
-         Lápis Labial
-    </div>
-
-</div>
 
     <div class="subcategoria categoria-nivel-2"
          onclick="abrirSubcategoria('rosto')">
@@ -627,14 +595,14 @@ function voltarSubcategoria() {
     </div>
 
     <div id="rosto" class="subcategorias-nivel-2">
-      <div class="subcategoria-item" onclick="mostrarProdutos('base')"> Base</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('corretivo')"> Corretivo</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('contorno')">Contorno</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('blush')">Blush</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('agua-micelar')">Água Micelar</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('bruma')"> Bruma / Fixadora</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('po-facial')">Pó Facial</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('iluminador')">Iluminador</div>
+      <div class="subcategoria-item">Base</div>
+      <div class="subcategoria-item">corretivo</div>
+      <div class="subcategoria-item">Contorno</div>
+      <div class="subcategoria-item">blush</div>
+      <div class="subcategoria-item">água micelar</div>
+      <div class="subcategoria-item">bruma/fixadora</div>
+     <div class="subcategoria-item">pó facial</div>
+    <div class="subcategoria-item">iluminador</div> 
     </div>
 
     <div class="subcategoria categoria-nivel-2"
@@ -644,11 +612,13 @@ function voltarSubcategoria() {
     </div>
 
     <div id="olhos" class="subcategorias-nivel-2">
-      <div class="subcategoria-item">Ver tudo em OLHOS</div>
+      <div class="subcategoria-item">paleta de sombra</div>
       <div class="subcategoria-item">Máscara de Cílios</div>
-      <div class="subcategoria-item">Delineador</div>
-      <div class="subcategoria-item">Sombra</div>
-      <div class="subcategoria-item">Lápis de Olho</div>
+      <div class="subcategoria-item">lápis de olho</div>
+      <div class="subcategoria-item">glitter</div>
+      <div class="subcategoria-item">delineadores</div>
+     <div class="subcategoria-item">cílios postiços</div>
+     <div class="subcategoria-item">cola para cílios</div>
     </div>
 
     <div class="subcategoria categoria-nivel-2">
@@ -695,36 +665,19 @@ function voltarSubcategoria() {
 
   <div id="cabelos" class="subcategorias">
 
-   <div class="subcategoria">
-    
-       Spray Capilar
-</div>
+    <div class="subcategoria">
+      🧴 Shampoo
+    </div>
 
-<div class="subcategoria">
-    Óleos
-</div>
+    <div class="subcategoria">
+      👱‍♀️ Condicionador
+    </div>
 
-<div class="subcategoria">
-     Tônico Capilar
-</div>
+    <div class="subcategoria">
+      ✨ Máscara Capilar
+    </div>
 
-<div class="subcategoria">
-    🌸 Perfume Capilar
-</div>
-
-<div class="subcategoria">
-    🧴 Máscaras / Hidratantes
-</div>
-
-<div class="subcategoria">
-    🧴 Shampoo / Condicionador
-</div>
-
-<div class="subcategoria">
-     Escovas
-</div>
-
-</div>
+  </div>
 
 
   <!-- ACESSÓRIOS -->
@@ -741,11 +694,11 @@ function voltarSubcategoria() {
     </div>
 
     <div class="subcategoria">
-     Body Splash
+      🎀 Laços
     </div>
 
     <div class="subcategoria">
-      🎀 Acessório para cabelo
+      👑 Tiaras
     </div>
 
   </div>
@@ -778,19 +731,23 @@ function voltarSubcategoria() {
   <!-- NOVIDADES -->
   <div class="categoria" onclick="abrirCategoria('novidades')">
     <div class="icone">🎁</div>
-    <h3>Diversos</h3>
+    <h3>Novidades</h3>
     <span class="seta">⌄</span>
   </div>
 
   <div id="novidades" class="subcategorias">
 
-  <div class="subcategoria">
-    🔞 Sex Shop +18
-</div>
+    <div class="subcategoria">
+      ✨ Lançamentos
+    </div>
 
-<div class="subcategoria">
-    🎁 Diversos
-</div>
+    <div class="subcategoria">
+      💕 Ofertas
+    </div>
+
+    <div class="subcategoria">
+      🔥 Mais Vendidos
+    </div>
 
   </div>
 
