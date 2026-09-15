@@ -217,9 +217,6 @@ body {
 
 .produtos {
     padding: 15px;
-    #produtos {
-    display: none;
-
 }
 
 .produto {
@@ -342,7 +339,7 @@ footer {
 }
 
 .categoria .icon {
-    font-size: 25px;
+    font-size: 45px;
     margin-right: 0;
 }
 
@@ -412,12 +409,10 @@ footer {
 }
     /* CATEGORIAS NA LATERAL ESQUERDA */
 .categorias {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    width: 100% !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    width: 250px !important;
     margin: 0 !important;
     padding: 10px !important;
     gap: 10px !important;
@@ -463,195 +458,89 @@ footer {
 
 .subcategoria-item:active {
     background: #cec8cd;
-} /* CATEGORIAS NA LATERAL ESQUERDA */
-.categorias {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    margin: 0 !important;
-    padding: 10px !important;
-    gap: 10px !important;
-}
-
-.categorias .categoria {
-    width: 100% !important;
-    height: 90px !important;
-    min-height: 90px !important;
-    flex-shrink: 0 !important;
-    box-sizing: border-box !important;
-}
-
-.categorias .categoria h3 {
-    font-size: 22px !important;
-    margin: 0 !important;
-}
-
-.categorias .categoria .icon {
-    font-size: 35px !important;
-    margin-right: 10px !important;
 }
 </style>
 </head> 
  <script>
 
-// Deixa todas as categorias fechadas ao carregar
-document.addEventListener("DOMContentLoaded", function() {
+// Deixa todas as categorias fechadas ao carregar a página
+document.addEventListener("DOMContentLoaded", function () {
 
-    document.querySelectorAll(".subcategorias").forEach(function(menu) {
+    document.querySelectorAll(".subcategorias").forEach(function (menu) {
         menu.classList.remove("ativo");
-        menu.style.display = "none";
     });
 
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(function(menu) {
+    document.querySelectorAll(".subcategorias-nivel-2").forEach(function (menu) {
         menu.classList.remove("ativo");
-        menu.style.display = "none";
     });
 
-    document.querySelectorAll(".categoria-nivel-2").forEach(function(item) {
+    document.querySelectorAll(".categoria-nivel-2").forEach(function (item) {
         item.classList.remove("aberta");
     });
 
-});
+});   
 
 function abrirCategoria(id) {
     const menu = document.getElementById(id);
 
     if (!menu) return;
 
-    const estaAberta = menu.classList.contains("ativo");
+    const categoria = document.querySelector(
+        `.categoria[onclick*="${id}"]`
+    );
 
-    // Fecha todas as categorias
-    document.querySelectorAll(".subcategorias").forEach(function(item) {
+    // Alterna abrir/fechar
+    const abrir = !menu.classList.contains("ativo");
+
+    // Fecha todas
+    document.querySelectorAll(".subcategorias").forEach(item => {
         item.classList.remove("ativo");
     });
 
-    document.querySelectorAll(".categoria").forEach(function(item) {
+    document.querySelectorAll(".categoria").forEach(item => {
         item.classList.remove("aberta");
     });
 
-    // Se estava fechada, abre somente esta
-    if (!estaAberta) {
+    // Se estava fechada, abre
+    if (abrir) {
         menu.classList.add("ativo");
-
-        const categoria = document.querySelector(
-            `.categoria[onclick*="${id}"]`
-        );
-
-        if (categoria) {
-            categoria.classList.add("aberta");
-        }
+        if (categoria) categoria.classList.add("aberta");
     }
 }
      function abrirSubcategoria(nome) {
-    const menu = document.getElementById(nome);
+    document.querySelector(".categorias").style.display = "none";
+    document.getElementById("produtos").style.display = "block";
 
-    if (!menu) return;
+    document.getElementById("titulo-produtos").innerText = nome;
 
-    if (menu.classList.contains("ativo")) {
-        menu.classList.remove("ativo");
-    } else {
-        document.querySelectorAll(".subcategorias-nivel-2").forEach(item => {
-            item.classList.remove("ativo");
-        });
-
-        menu.classList.add("ativo");
-    }
+    document.getElementById("lista-produtos").innerHTML =
+        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
 }
 
 function voltarSubcategoria() {
     document.getElementById("produtos").style.display = "none";
-    document.querySelector(".categorias").style.display = "flex";
+    document.querySelector(".categorias").style.display = "grid";
 }
      function mostrarProdutos(tipo) {
-
     document.querySelector(".categorias").style.display = "none";
 
     document.querySelectorAll(".subcategorias").forEach(menu => {
         menu.classList.remove("ativo");
-        menu.style.display = "none";
     });
 
     document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.classList.remove("ativo");
         menu.style.display = "none";
     });
 
     document.getElementById("produtos").style.display = "block";
 
-    const nomes = {
-        batom: "Batom",
-        gloss: "Gloss Labial",
-        hidratante: "Hidratante Labial",
-        "lip-tint": "Lip Tint",
-        lapis: "Lápis Labial",
-        base: "Base",
-        corretivo: "Corretivo",
-        contorno: "Contorno",
-        blush: "Blush",
-        "agua-micelar": "Água Micelar",
-        bruma: "Bruma/Fixadora",
-        "po-facial": "Pó Facial",
-        iluminador: "Iluminador",
-        pinceis: "Pincéis",
-        esponjas: "Esponjas",
-        gel: "Gel para Sobrancelhas",
-        mascara: "Máscara para Sobrancelhas",
-        pomadas: "Pomadas",
-        canetas: "Canetas"
-    };
+    const titulo = document.getElementById("titulo-produtos");
+    const lista = document.getElementById("lista-produtos");
 
-    document.getElementById("titulo-produtos").innerText =
-        nomes[tipo] || tipo;
+    titulo.innerText = tipo.charAt(0).toUpperCase() + tipo.slice(1);
 
-    document.getElementById("lista-produtos").innerHTML = `
-        <div class="produto-card">
-
-            <div class="produto-foto">
-                📸
-                <p>Foto do produto</p>
-            </div>
-
-            <h3>${nomes[tipo] || tipo}</h3>
-
-            <p class="produto-preco">R$ 10,00</p>
-
-            <p class="produto-estoque">
-                📦 Quantidade disponível: <strong>0</strong>
-            </p>
-
-            <div class="quantidade">
-                <button onclick="alterarQuantidade(-1)">−</button>
-                <span id="quantidade-produto">1</span>
-                <button onclick="alterarQuantidade(1)">+</button>
-            </div>
-
-            <button class="btn-comprar">
-                🛒 Adicionar ao carrinho
-            </button>
-
-        </div>
-    `;
-}
-
-function alterarQuantidade(valor) {
-
-    const campo = document.getElementById("quantidade-produto");
-
-    if (!campo) return;
-
-    let quantidade = parseInt(campo.innerText);
-
-    quantidade += valor;
-
-    if (quantidade < 1) {
-        quantidade = 1;
-    }
-
-    campo.innerText = quantidade;
+    lista.innerHTML =
+        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
 }
      </script>
 <section class="banner-principal">
@@ -704,29 +593,14 @@ function alterarQuantidade(valor) {
       <span class="seta">⌄</span>
     </div>
 
-   <div id="labios" class="subcategorias-nivel-2">
-
-    <div class="subcategoria-item" onclick="mostrarProdutos('batom')">
-         Batom
+    <div id="labios" class="subcategorias-nivel-2">
+    <div class="subcategoria-item" onclick="mostrarProdutos('labios')">💋 Ver tudo em LÁBIOS</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('batom')"> Batom</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('hidratante')"> Hidratante Labial</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('lip-tint')"> Lip Tint</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('gloss')"> Gloss labial</div>
+<div class="subcategoria-item" onclick="mostrarProdutos('lapis')">Lápis Labial</div>
     </div>
-
-    <div class="subcategoria-item" onclick="mostrarProdutos('gloss')">
-         Gloss Labial
-    </div>
-
-    <div class="subcategoria-item" onclick="mostrarProdutos('hidratante')">
-         Hidratante Labial
-    </div>
-
-    <div class="subcategoria-item" onclick="mostrarProdutos('lip-tint')">
-         Lip Tint
-    </div>
-
-    <div class="subcategoria-item" onclick="mostrarProdutos('lapis')">
-         Lápis Labial
-    </div>
-
-</div>
 
     <div class="subcategoria categoria-nivel-2"
          onclick="abrirSubcategoria('rosto')">
@@ -735,7 +609,7 @@ function alterarQuantidade(valor) {
     </div>
 
     <div id="rosto" class="subcategorias-nivel-2">
-    <div class="subcategoria-item">Base</div>
+      <div class="subcategoria-item">Base</div>
       <div class="subcategoria-item">corretivo</div>
       <div class="subcategoria-item">Contorno</div>
       <div class="subcategoria-item">blush</div>
@@ -761,30 +635,16 @@ function alterarQuantidade(valor) {
      <div class="subcategoria-item">cola para cílios</div>
     </div>
 
-   <div class="subcategoria categoria-nivel-2"
-     onclick="abrirSubcategoria('pinceis')">
-    🖌️ Pincéis
-   <span class="seta">⌄</span>
-</div>
+    <div class="subcategoria categoria-nivel-2">
+      🖌️ Pincéis
+    </div>
 
-<div id="pinceis" class="subcategorias-nivel-2">
-    <div class="subcategoria-item"> Pincéis</div>
-    <div class="subcategoria-item"> Esponjas</div>
-</div>
+    <div class="subcategoria categoria-nivel-2">
+      🤎 Sobrancelhas
+    </div>
 
-<div class="subcategoria categoria-nivel-2"
-     onclick="abrirSubcategoria('sobrancelhas')">
-    🤎 Sobrancelhas
-  <span class="seta">⌄</span>
-</div>
-
-<div id="sobrancelhas" class="subcategorias-nivel-2">
-    <div class="subcategoria-item"> Gel</div>
-    <div class="subcategoria-item"> Máscara para sobrancelhas</div>
-    <div class="subcategoria-item"> Pomadas</div>
-    <div class="subcategoria-item"> Canetas</div>
-</div>
   </div>
+
 
   <!-- SKINCARE -->
   <div class="categoria" onclick="abrirCategoria('skincare')">
@@ -863,51 +723,59 @@ function alterarQuantidade(valor) {
 
 
 <!-- LINHA INFANTIL -->
-<div class="categoria" onclick="abrirCategoria('infantil')">
-    <div class="icon">🧸</div>
+  <div class="categoria" onclick="abrirCategoria('infantil')"
+      
+    <div class="icone">🧸</div>
     <h3>Linha Infantil</h3>
     <span class="seta">⌄</span>
+  </div>
+
+  <div id="infantil" class="subcategorias">
+
+    <div class="subcategoria">
+      🎀 Tiaras Infantis
+    </div>
+
+    <div class="subcategoria">
+      🎀 Laços Infantis
+    </div>
+
+    <div class="subcategoria">
+      🧸 Produtos Infantis
+    </div>
+
+  </div>
+
+
 </div>
 
-<div id="infantil" class="subcategorias">
-    <div class="subcategoria">
-        🎀 Tiaras Infantis
-    </div>
 
-    <div class="subcategoria">
-        🎀 Laços Infantis
-    </div>
-
-    <div class="subcategoria">
-        🧸 Produtos Infantis
-    </div>
-</div>
-
-<!-- DIVERSOS -->
-<div class="categoria" onclick="abrirCategoria('diversos')">
-    <div class="icon">✨</div>
-    <h3>Diversos</h3>
+ <!-- DIVERSOS -->
+  <div class="categoria" onclick="abrirCategoria('acessorios')">
+    <div class="icone">✨</div>
+    <h3>diversos</h3>
     <span class="seta">⌄</span>
-</div>
+  </div>
 
-<div id="diversos" class="subcategorias">
-    <div class="subcategoria">
-        Necessaire
-
-   </div>
+  <div id="diversos" class="subcategorias">
 
     <div class="subcategoria">
-        Body splash
+      Necessaire
     </div>
 
     <div class="subcategoria">
-        Sex Shop+18
+      Body splash
     </div>
 
     <div class="subcategoria">
-        Diversos
+     Sex Shop+18
     </div>
-</div>
+
+  <div class="subcategoria">
+     Diversos
+    </div>  
+
+  </div>
     
 <!-- PRODUTOS -->
 <section id="produtos" class="produtos">
