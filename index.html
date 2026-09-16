@@ -540,19 +540,7 @@ function abrirCategoria(id) {
     }
 }
      function abrirSubcategoria(nome) {
-    const menu = document.getElementById(nome);
-
-    if (!menu) return;
-
-    if (menu.classList.contains("ativo")) {
-        menu.classList.remove("ativo");
-    } else {
-        document.querySelectorAll(".subcategorias-nivel-2").forEach(item => {
-            item.classList.remove("ativo");
-        });
-
-        menu.classList.add("ativo");
-    }
+  mostrarProdutos(nome);
 }
 
 function voltarSubcategoria() {
@@ -707,27 +695,28 @@ function voltarSubcategoria() {
 
   <div id="skincare" class="subcategorias">
 
-    <div class="subcategoria">
-       Esfoliantes
-    </div>
+ <div class="subcategoria" onclick="abrirSubcategoria('Esfoliantes')">
+    Esfoliantes
+</div>
+       
 
-    <div class="subcategoria">
+  <div class="subcategoria" onclick="abrirSubcategoria('Hydratantes')">
      Hidratantes
     </div>
 
-    <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Primer')">
      Primer
     </div>
 
-    <div class="subcategoria">
+ <div class="subcategoria" onclick="abrirSubcategoria('Sabonete liquido/mousse')">
      Sabonete liquido/mousse
     </div>
 
-    <div class="subcategoria">
-     Sérum
-    </div>  
+   <div class="subcategoria" onclick="abrirSubcategoria('Sérum')">
+    Sérum
+</div>
 
-    <div class="subcategoria">
+    <div class="subcategoria" onclick="abrirSubcategoria('Argilas')">
      Argilas
     </div>  
 
@@ -743,33 +732,34 @@ function voltarSubcategoria() {
 
   <div id="cabelos" class="subcategorias">
 
-    <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Spray capilar')">
       Spray capilar
     </div>
 
-    <div class="subcategoria">
+  <div class="subcategoria" onclick="abrirSubcategoria('Óleos')">
       Óleos
     </div>
 
-    <div class="subcategoria">
-      Tônico capilar
-    </div>
+   <div class="subcategoria" onclick="abrirSubcategoria('Tônico capilar')">
+    Tônico capilar
+</div>
 
-    <div class="subcategoria">
+    <div class="subcategoria" onclick="abrirSubcategoria('Perfume capilar')">
       Perfume capilar
     </div> 
 
-    <div class="subcategoria">
+   
+      <div class="subcategoria" onclick="abrirSubcategoria('Máscaras/hidratantes')">
       Máscaras/hidratantes
     </div>  
 
-     <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Shampoo/condicionador')">
       Shampoo/condicionador
     </div> 
 
-     <div class="subcategoria">
-      Escovas
-    </div> 
+     <div class="subcategoria" onclick="abrirSubcategoria('Escovas')">
+    Escovas
+</div>
 
   </div>
 
@@ -782,15 +772,15 @@ function voltarSubcategoria() {
 </div>
 
 <div id="infantil" class="subcategorias">
-    <div class="subcategoria">
+    <div class="subcategoria" onclick="abrirSubcategoria('Tiaras Infantis')">
         🎀 Tiaras Infantis
     </div>
 
-    <div class="subcategoria">
+ <div class="subcategoria" onclick="abrirSubcategoria('Laços Infantis')">
         🎀 Laços Infantis
     </div>
 
-    <div class="subcategoria">
+    <div class="subcategoria" onclick="abrirSubcategoria('Produtos Infantis')">
         🧸 Produtos Infantis
     </div>
 </div>
@@ -803,19 +793,19 @@ function voltarSubcategoria() {
 </div>
 
 <div id="diversos" class="subcategorias">
-    <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Necessaire')">
         Necessaire
     </div>
 
-    <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Body splash')">
         Body splash
     </div>
 
-    <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Sex Shop+18')">
         Sex Shop+18
     </div>
 
-    <div class="subcategoria">
+   <div class="subcategoria" onclick="abrirSubcategoria('Diversos')">
         Diversos
     </div>
 </div>
