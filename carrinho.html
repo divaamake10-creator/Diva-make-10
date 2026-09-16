@@ -353,7 +353,7 @@ function removerProduto(index) {
     carregarCarrinho();
 }
 
-async function finalizarCompra() {
+function finalizarCompra() {
 
     const carrinho =
         JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -363,36 +363,8 @@ async function finalizarCompra() {
         return;
     }
 
-    try {
-
-        const resposta = await fetch("/api/criar-pagamento", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                carrinho: carrinho
-            })
-        });
-
-        const dados = await resposta.json();
-
-        if (!resposta.ok || !dados.checkout_url) {
-            console.error(dados);
-            alert("Não foi possível iniciar o pagamento. Tente novamente.");
-            return;
-        }
-
-        window.location.href = dados.checkout_url;
-
-    } catch (erro) {
-
-        console.error(erro);
-
-        alert("Erro ao conectar com o pagamento. Tente novamente.");
-    }
+    window.location.href = "dados-pedido.html";
 }
-
 carregarCarrinho();
 
 </script>
