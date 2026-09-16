@@ -769,6 +769,25 @@ if (nome === "diversos") {
 
     
 }
+     function atualizarContadorCarrinho() {
+
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    const quantidade = carrinho.reduce(
+        (total, produto) => total + produto.quantidade,
+        0
+    );
+
+    const contador =
+        document.getElementById("contadorCarrinho");
+
+    if (contador) {
+        contador.textContent = quantidade;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", atualizarContadorCarrinho);
      </script>
     <!-- BOTÃO DO CARRINHO -->
 <a href="carrinho.html" class="carrinho-flutuante">
