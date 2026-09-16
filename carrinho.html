@@ -261,6 +261,7 @@ function carregarCarrinho() {
         `;
 
         totalElemento.textContent = "R$ 0,00";
+
         return;
     }
 
@@ -316,7 +317,6 @@ function carregarCarrinho() {
 
     totalElemento.textContent =
         "R$ " + total.toFixed(2).replace(".", ",");
-
 }
 
 function alterarQuantidade(index, valor) {
@@ -365,10 +365,43 @@ function finalizarCompra() {
         return;
     }
 
-    alert(
-        "Compra pronta para finalizar! 💗\n\n" +
-        "Na próxima etapa vamos configurar a forma de pagamento e o envio."
-    );
+    let mensagem = "🛍️ *NOVO PEDIDO - DIVA MAKE 10*%0A%0A";
+
+    let total = 0;
+
+    carrinho.forEach(produto => {
+
+        const subtotal = produto.preco * produto.quantidade;
+
+        total += subtotal;
+
+        mensagem +=
+            "💄 " + produto.nome +
+            "%0A" +
+            "Quantidade: " + produto.quantidade +
+            "%0A" +
+            "Valor: R$ " +
+            subtotal.toFixed(2).replace(".", ",") +
+            "%0A%0A";
+    });
+
+    mensagem +=
+        "💰 *TOTAL: R$ " +
+        total.toFixed(2).replace(".", ",") +
+        "*%0A%0A";
+
+    mensagem +=
+        "Olá! Gostaria de finalizar este pedido. 💗";
+
+    const numeroWhatsApp = "5548988176691";
+
+    const link =
+        "https://wa.me/" +
+        numeroWhatsApp +
+        "?text=" +
+        mensagem;
+
+    window.location.href = link;
 }
 
 carregarCarrinho();
