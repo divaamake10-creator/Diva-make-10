@@ -340,7 +340,7 @@ footer p {
 
 <script>
 
-function continuarWhatsApp() {
+async function continuarPagamento() {
 
     const nome =
         document.getElementById("nome").value.trim();
@@ -377,9 +377,7 @@ function continuarWhatsApp() {
         !entrega
     ) {
 
-        alert(
-            "Por favor, preencha todos os campos. 💗"
-        );
+        alert("Por favor, preencha todos os campos. 💗");
 
         return;
     }
@@ -389,82 +387,70 @@ function continuarWhatsApp() {
 
     if (carrinho.length === 0) {
 
-        alert(
-            "Seu carrinho está vazio!"
-        );
+        alert("Seu carrinho está vazio!");
 
         window.location.href = "index.html";
 
         return;
     }
 
-    let mensagem =
-        "🛍️ *NOVO PEDIDO - DIVA MAKE 10*%0A%0A";
+    const dadosCliente = {
+        nome,
+        telefone,
+        endereco,
+        bairro,
+        cidade,
+        cep,
+        pagamento,
+        entrega
+    };
 
-    mensagem +=
-        "👤 *CLIENTE*%0A" +
-        "Nome: " + encodeURIComponent(nome) + "%0A" +
-        "Telefone: " + encodeURIComponent(telefone) + "%0A%0A";
+    localStorage.setItem(
+        "dadosPedido",
+        JSON.stringify(dadosCliente)
+    );
 
-    mensagem +=
-        "🏠 *ENDEREÇO*%0A" +
-        encodeURIComponent(endereco) + "%0A" +
-        "Bairro: " + encodeURIComponent(bairro) + "%0A" +
-        "Cidade: " + encodeURIComponent(cidade) + "%0A" +
-        "CEP: " + encodeURIComponent(cep) + "%0A%0A";
+    try {
 
-    mensagem +=
-        "💳 *PAGAMENTO:* " +
-        encodeURIComponent(pagamento) +
-        "%0A";
+        const resposta = await fetch(
+            "https://diva-make-10.vercel.app/api/criar-pagamento",
+            {
+                method: "POST",
 
-    mensagem +=
-        "🚚 *ENTREGA:* " +
-        encodeURIComponent(entrega) +
-        "%0A%0A";
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-    mensagem +=
-        "🛒 *PRODUTOS*%0A";
+                body: JSON.stringify({
+                    carrinho: carrinho,
+                    cliente: dadosCliente
+                })
+            }
+        );
 
-    let total = 0;
+        const dados = await resposta.json();
 
-    carrinho.forEach(produto => {
+        if (!resposta.ok || !dados.checkout_url) {
 
-        const subtotal =
-            produto.preco * produto.quantidade;
+            console.error(dados);
 
-        total += subtotal;
+            alert(
+                "Não foi possível iniciar o pagamento. Tente novamente. 💗"
+            );
 
-        mensagem +=
-            "💄 " +
-            encodeURIComponent(produto.nome) +
-            "%0A" +
-            "Quantidade: " +
-            produto.quantidade +
-            "%0A" +
-            "Subtotal: R$ " +
-            subtotal.toFixed(2).replace(".", ",") +
-            "%0A%0A";
-    });
+            return;
+        }
 
-    mensagem +=
-        "💰 *TOTAL: R$ " +
-        total.toFixed(2).replace(".", ",") +
-        "*%0A%0A";
+        window.location.href = dados.checkout_url;
 
-    mensagem +=
-        "Olá! Gostaria de finalizar este pedido. 💗";
+    } catch (erro) {
 
-    const numeroWhatsApp =
-        "5548988176691";
+        console.error(erro);
 
-    const link =
-        "https://wa.me/" +
-        numeroWhatsApp +
-        "?text=" +
-        mensagem;
-
-    window.location.href = link;
+        alert(
+            "Erro ao conectar com o pagamento. Tente novamente. 💗"
+        );
+    }
 }
 
 </script>
