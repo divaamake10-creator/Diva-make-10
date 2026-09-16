@@ -540,33 +540,21 @@ function abrirCategoria(id) {
     }
 }
      function abrirSubcategoria(nome) {
-  mostrarProdutos(nome);
-}
+  const menu = document.getElementById(nome);
 
-function voltarSubcategoria() {
-    document.getElementById("produtos").style.display = "none";
-    document.querySelector(".categorias").style.display = "grid";
-}
-     function mostrarProdutos(tipo) {
-    document.querySelector(".categorias").style.display = "none";
+  if (menu) {
+    if (menu.classList.contains("ativo")) {
+      menu.classList.remove("ativo");
+    } else {
+      document.querySelectorAll(".subcategorias-nivel-2").forEach(item => {
+        item.classList.remove("ativo");
+      });
 
-    document.querySelectorAll(".subcategorias").forEach(menu => {
-        menu.classList.remove("ativo");
-    });
-
-    document.querySelectorAll(".subcategorias-nivel-2").forEach(menu => {
-        menu.style.display = "none";
-    });
-
-    document.getElementById("produtos").style.display = "block";
-
-    const titulo = document.getElementById("titulo-produtos");
-    const lista = document.getElementById("lista-produtos");
-
-    titulo.innerText = tipo.charAt(0).toUpperCase() + tipo.slice(1);
-
-    lista.innerHTML =
-        "<p style='text-align:center;'>Nenhum produto cadastrado ainda.</p>";
+      menu.classList.add("ativo");
+    }
+  } else {
+    mostrarProdutos(nome);
+  }
 }
      </script>
 <section class="banner-principal">
@@ -621,7 +609,7 @@ function voltarSubcategoria() {
 
     <div id="labios" class="subcategorias-nivel-2">
     <div class="subcategoria-item" onclick="mostrarProdutos('labios')">💋 Ver tudo em LÁBIOS</div>
-<div class="subcategoria-item" onclick="mostrarProdutos('batom')"> Batom</div>
+<div class="subcategoria-item" onclick="event.stopPropagation(); mostrarProdutos('batom')">
 <div class="subcategoria-item" onclick="mostrarProdutos('hidratante')"> Hidratante Labial</div>
 <div class="subcategoria-item" onclick="mostrarProdutos('lip-tint')"> Lip Tint</div>
 <div class="subcategoria-item" onclick="mostrarProdutos('gloss')"> Gloss labial</div>
