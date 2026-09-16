@@ -159,12 +159,26 @@ header p {
 
     <div class="lista-produtos">
 
-        <div class="produto">
+      <div class="produto">
 
     <h3>💄 Batom</h3>
 
     <div class="produto-preco">
         R$ 10,00
+    </div>
+
+    <div class="controle-quantidade">
+
+        <button onclick="alterarQuantidadeProduto(-1)">
+            −
+        </button>
+
+        <span id="quantidadeProduto">1</span>
+
+        <button onclick="alterarQuantidadeProduto(1)">
+            +
+        </button>
+
     </div>
 
     <button class="botao-carrinho" onclick="adicionarAoCarrinho('Batom', 10)">
