@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Meu Carrinho - Diva Make 10</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+    color: #333;
+}
+
+.topo {
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.cabecalho {
+    background: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+.cabecalho h1 {
+    color: #d0276b;
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.cabecalho p {
+    color: #777;
+    font-size: 20px;
+}
+
+.principal {
+    padding: 30px 20px;
+    min-height: 500px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.voltar {
+    display: inline-block;
+    background: #cc2870;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+#listaCarrinho {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.produto-carrinho {
+    background: white;
+    border: 2px solid #f7c4da;
+    border-radius: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.produto-info h3 {
+    color: #c92b6d;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.produto-info p {
+    color: #666;
+    font-size: 17px;
+}
+
+.quantidade {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantidade button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background: #e52d7b;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quantidade span {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.remover {
+    border: none;
+    background: transparent;
+    color: #d0276b;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.vazio {
+    background: white;
+    border-radius: 20px;
+    padding: 50px 20px;
+    text-align: center;
+    color: #777;
+    font-size: 22px;
+}
+
+.resumo {
+    background: white;
+    border: 2px solid #f7c4da;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 25px;
+}
+
+.resumo h2 {
+    color: #c92b6d;
+    margin-bottom: 20px;
+}
+
+.linha-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#total {
+    color: #d0276b;
+}
+
+.finalizar {
+    width: 100%;
+    margin-top: 20px;
+    border: none;
+    border-radius: 35px;
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    padding: 18px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 30px;
+}
+
+footer h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+    🛒 DIVA MAKE 10 💗
+</div>
+
+<div class="cabecalho">
+
+    <h1>🛒 MEU CARRINHO</h1>
+
+    <p>Confira seus produtos antes de finalizar a compra</p>
+
+</div>
+
+<div class="principal">
+
+    <a href="index.html" class="voltar">
+        ← Continuar comprando
+    </a>
+
+    <div id="listaCarrinho"></div>
+
+    <div class="resumo">
+
+        <h2>Resumo da compra</h2>
+
+        <div class="linha-total">
+            <span>Total:</span>
+            <span id="total">R$ 0,00</span>
+        </div>
+
+        <button class="finalizar" onclick="finalizarCompra()">
+            💗 FINALIZAR COMPRA
+        </button>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <h2>DIVA MAKE 10 💗</h2>
+
+    <p>
+        Beleza, variedade e preço incrível!
+    </p>
+
+</footer>
+
+<script>
+
+function carregarCarrinho() {
+
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    const lista = document.getElementById("listaCarrinho");
+    const totalElemento = document.getElementById("total");
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    if (carrinho.length === 0) {
+
+        lista.innerHTML = `
+            <div class="vazio">
+                🛒 Seu carrinho está vazio.<br><br>
+                Escolha seus produtos para começar!
+            </div>
+        `;
+
+        totalElemento.textContent = "R$ 0,00";
+        return;
+    }
+
+    carrinho.forEach((produto, index) => {
+
+        const subtotal = produto.preco * produto.quantidade;
+
+        total += subtotal;
+
+        const item = document.createElement("div");
+
+        item.className = "produto-carrinho";
+
+        item.innerHTML = `
+            <div class="produto-info">
+
+                <h3>${produto.nome}</h3>
+
+                <p>
+                    R$ ${produto.preco.toFixed(2).replace(".", ",")}
+                    cada
+                </p>
+
+                <p>
+                    Subtotal:
+                    R$ ${subtotal.toFixed(2).replace(".", ",")}
+                </p>
+
+            </div>
+
+            <div class="quantidade">
+
+                <button onclick="alterarQuantidade(${index}, -1)">
+                    −
+                </button>
+
+                <span>${produto.quantidade}</span>
+
+                <button onclick="alterarQuantidade(${index}, 1)">
+                    +
+                </button>
+
+                <button class="remover" onclick="removerProduto(${index})">
+                    🗑️
+                </button>
+
+            </div>
+        `;
+
+        lista.appendChild(item);
+
+    });
+
+    totalElemento.textContent =
+        "R$ " + total.toFixed(2).replace(".", ",");
+
+}
+
+function alterarQuantidade(index, valor) {
+
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    carrinho[index].quantidade += valor;
+
+    if (carrinho[index].quantidade <= 0) {
+        carrinho.splice(index, 1);
+    }
+
+    localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+    );
+
+    carregarCarrinho();
+}
+
+function removerProduto(index) {
+
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    carrinho.splice(index, 1);
+
+    localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+    );
+
+    carregarCarrinho();
+}
+
+function finalizarCompra() {
+
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    if (carrinho.length === 0) {
+
+        alert("Seu carrinho está vazio!");
+
+        return;
+    }
+
+    alert(
+        "Compra pronta para finalizar! 💗\n\n" +
+        "Na próxima etapa vamos configurar a forma de pagamento e o envio."
+    );
+}
+
+carregarCarrinho();
+
+</script>
+
+</body>
+</html>
