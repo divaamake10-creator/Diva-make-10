@@ -103,6 +103,40 @@ header p {
         grid-template-columns: 1fr;
     }
 }
+    .produto {
+    background: white;
+    border: 2px solid #f7c4da;
+    border-radius: 25px;
+    padding: 25px;
+    max-width: 350px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.produto h3 {
+    color: #c92b6d;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.produto-preco {
+    color: #d0276b;
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.botao-carrinho {
+    border: none;
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    padding: 16px 25px;
+    border-radius: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
 </style>
 </head>
 
@@ -125,7 +159,19 @@ header p {
 
     <div class="lista-produtos">
 
-        <!-- OS PRODUTOS SERÃO COLOCADOS AQUI -->
+        <div class="produto">
+
+    <h3>💄 Batom</h3>
+
+    <div class="produto-preco">
+        R$ 10,00
+    </div>
+
+    <button class="botao-carrinho" onclick="adicionarAoCarrinho('Batom', 10)">
+        🛒 Adicionar ao carrinho
+    </button>
+
+</div>
 
     </div>
 
