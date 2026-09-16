@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Batons - Diva Make 10</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+    color: #333;
+}
+
+.topo {
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-weight: bold;
+}
+
+header {
+    background: white;
+    text-align: center;
+    padding: 25px 15px;
+    border-bottom: 2px solid #f3c0d5;
+}
+
+header h1 {
+    color: #e60073;
+    font-size: 30px;
+}
+
+header p {
+    color: #777;
+    margin-top: 8px;
+}
+
+.voltar {
+    display: inline-block;
+    margin: 20px;
+    background: #e60073;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.titulo {
+    text-align: center;
+    color: #d90068;
+    margin: 10px 0 25px;
+}
+
+.produtos {
+    padding: 15px;
+}
+
+.lista-produtos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.produto {
+    background: white;
+    padding: 15px;
+    border-radius: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.produto img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.produto h3 {
+    margin-top: 10px;
+    color: #333;
+}
+
+.produto p {
+    color: #e60073;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+@media (max-width: 500px) {
+    .lista-produtos {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+    💄 DIVA MAKE 10 🩷
+</div>
+
+<header>
+    <h1>💋 BATONS</h1>
+    <p>Confira nossos batons disponíveis</p>
+</header>
+
+<a href="index.html" class="voltar">← Voltar</a>
+
+<section class="produtos">
+
+    <h2 class="titulo">💋 Nossos Batons</h2>
+
+    <div class="lista-produtos">
+
+        <!-- OS PRODUTOS SERÃO COLOCADOS AQUI -->
+
+    </div>
+
+</section>
+
+</body>
+</html>
