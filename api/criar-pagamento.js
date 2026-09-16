@@ -1,4 +1,15 @@
 export default async function handler(req, res) {
+
+    const origemPermitida = "https://divaamake10-creator.github.io";
+
+    res.setHeader("Access-Control-Allow-Origin", origemPermitida);
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+        return res.status(200).end();
+    }
+
     if (req.method !== "POST") {
         return res.status(405).json({
             erro: "Método não permitido"
@@ -6,6 +17,7 @@ export default async function handler(req, res) {
     }
 
     try {
+
         const { carrinho, cliente } = req.body;
 
         if (!Array.isArray(carrinho) || carrinho.length === 0) {
@@ -15,21 +27,27 @@ export default async function handler(req, res) {
         }
 
         const total = carrinho.reduce((soma, produto) => {
+
             const quantidade = Number(produto.quantidade);
 
-            if (!produto.nome || !Number.isInteger(quantidade) || quantidade < 1) {
+            if (
+                !produto.nome ||
+                !Number.isInteger(quantidade) ||
+                quantidade < 1
+            ) {
                 throw new Error("Produto inválido");
             }
 
             return soma + (10 * quantidade);
+
         }, 0);
 
-        const itens = carrinho.map((produto, index) => ({
-            external_code: `DIVA-${index + 1}`,
+        const itens = carrinho.map(produto => ({
             title: produto.nome,
             quantity: Number(produto.quantidade),
             unit_price: "10.00",
-            currency_id: "BRL"
+            unit_measure: "unit",
+            total_amount: (10 * Number(produto.quantidade)).toFixed(2)
         }));
 
         const idempotencyKey = crypto.randomUUID();
@@ -38,16 +56,23 @@ export default async function handler(req, res) {
             "https://api.mercadopago.com/v1/orders",
             {
                 method: "POST",
+
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`,
                     "X-Idempotency-Key": idempotencyKey
                 },
+
                 body: JSON.stringify({
+
                     type: "online",
+
                     total_amount: total.toFixed(2),
+
                     external_reference: `DIVA-${Date.now()}`,
+
                     processing_mode: "manual",
+
                     capture_mode: "automatic_async",
 
                     payer: {
@@ -57,12 +82,16 @@ export default async function handler(req, res) {
 
                     config: {
                         online: {
+
                             success_url:
-                                "https://diva-make-10.vercel.app/pagamento-aprovado.html",
+                                "https://divaamake10-creator.github.io/Diva-make-10/pagamento-aprovado.html",
+
                             failure_url:
-                                "https://diva-make-10.vercel.app/pagamento-recusado.html",
+                                "https://divaamake10-creator.github.io/Diva-make-10/pagamento-recusado.html",
+
                             pending_url:
-                                "https://diva-make-10.vercel.app/pagamento-pendente.html",
+                                "https://divaamake10-creator.github.io/Diva-make-10/pagamento-pendente.html",
+
                             auto_return: "approved"
                         }
                     },
@@ -77,6 +106,7 @@ export default async function handler(req, res) {
         const dados = await resposta.json();
 
         if (!resposta.ok) {
+
             console.error("Mercado Pago:", dados);
 
             return res.status(resposta.status).json({
@@ -91,6 +121,7 @@ export default async function handler(req, res) {
         });
 
     } catch (erro) {
+
         console.error(erro);
 
         return res.status(500).json({
