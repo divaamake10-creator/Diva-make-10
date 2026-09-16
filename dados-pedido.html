@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dados do Pedido - Diva Make 10</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+    color: #333;
+}
+
+.topo {
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    text-align: center;
+    padding: 30px 10px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.cabecalho {
+    background: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.cabecalho h1 {
+    color: #d0276b;
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.cabecalho p {
+    color: #777;
+    font-size: 19px;
+}
+
+.principal {
+    max-width: 700px;
+    margin: auto;
+    padding: 30px 20px 50px;
+}
+
+.voltar {
+    display: inline-block;
+    background: #cc2870;
+    color: white;
+    padding: 13px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.formulario {
+    background: white;
+    border: 2px solid #f7c4da;
+    border-radius: 20px;
+    padding: 25px;
+}
+
+.formulario h2 {
+    color: #c92b6d;
+    margin-bottom: 25px;
+    font-size: 25px;
+}
+
+.campo {
+    margin-bottom: 20px;
+}
+
+.campo label {
+    display: block;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #f0c2d5;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    background: white;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: #e52d7b;
+}
+
+.finalizar {
+    width: 100%;
+    border: none;
+    border-radius: 35px;
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    padding: 18px;
+    font-size: 21px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.finalizar:hover {
+    opacity: 0.9;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+footer h2 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topo">
+    🛒 DIVA MAKE 10 💗
+</div>
+
+<div class="cabecalho">
+
+    <h1>📋 DADOS DO PEDIDO</h1>
+
+    <p>
+        Preencha seus dados para continuar a compra
+    </p>
+
+</div>
+
+<div class="principal">
+
+    <a href="carrinho.html" class="voltar">
+        ← Voltar para o carrinho
+    </a>
+
+    <div class="formulario">
+
+        <h2>👤 Seus dados</h2>
+
+        <div class="campo">
+
+            <label for="nome">
+                Nome completo
+            </label>
+
+            <input
+                type="text"
+                id="nome"
+                placeholder="Digite seu nome completo"
+                required
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label for="telefone">
+                Telefone
+            </label>
+
+            <input
+                type="tel"
+                id="telefone"
+                placeholder="(48) 99999-9999"
+                required
+            >
+
+        </div>
+
+        <h2>🏠 Endereço</h2>
+
+        <div class="campo">
+
+            <label for="endereco">
+                Endereço
+            </label>
+
+            <input
+                type="text"
+                id="endereco"
+                placeholder="Rua, número"
+                required
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label for="bairro">
+                Bairro
+            </label>
+
+            <input
+                type="text"
+                id="bairro"
+                placeholder="Digite seu bairro"
+                required
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label for="cidade">
+                Cidade
+            </label>
+
+            <input
+                type="text"
+                id="cidade"
+                placeholder="Digite sua cidade"
+                required
+            >
+
+        </div>
+
+        <div class="campo">
+
+            <label for="cep">
+                CEP
+            </label>
+
+            <input
+                type="text"
+                id="cep"
+                placeholder="00000-000"
+                required
+            >
+
+        </div>
+
+        <h2>💳 Pagamento</h2>
+
+        <div class="campo">
+
+            <label for="pagamento">
+                Forma de pagamento
+            </label>
+
+            <select id="pagamento" required>
+
+                <option value="">
+                    Selecione uma opção
+                </option>
+
+                <option value="Pix">
+                    Pix
+                </option>
+
+                <option value="Dinheiro">
+                    Dinheiro
+                </option>
+
+                <option value="Cartão de débito">
+                    Cartão de débito
+                </option>
+
+                <option value="Cartão de crédito">
+                    Cartão de crédito
+                </option>
+
+            </select>
+
+        </div>
+
+        <h2>🚚 Entrega</h2>
+
+        <div class="campo">
+
+            <label for="entrega">
+                Forma de entrega
+            </label>
+
+            <select id="entrega" required>
+
+                <option value="">
+                    Selecione uma opção
+                </option>
+
+                <option value="Entrega">
+                    Entrega
+                </option>
+
+                <option value="Retirada">
+                    Retirada
+                </option>
+
+            </select>
+
+        </div>
+
+        <button
+            class="finalizar"
+            onclick="continuarWhatsApp()"
+        >
+            💗 CONTINUAR PARA O WHATSAPP
+        </button>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <h2>DIVA MAKE 10 💗</h2>
+
+    <p>
+        Beleza, variedade e preço incrível!
+    </p>
+
+</footer>
+
+<script>
+
+function continuarWhatsApp() {
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const telefone =
+        document.getElementById("telefone").value.trim();
+
+    const endereco =
+        document.getElementById("endereco").value.trim();
+
+    const bairro =
+        document.getElementById("bairro").value.trim();
+
+    const cidade =
+        document.getElementById("cidade").value.trim();
+
+    const cep =
+        document.getElementById("cep").value.trim();
+
+    const pagamento =
+        document.getElementById("pagamento").value;
+
+    const entrega =
+        document.getElementById("entrega").value;
+
+    if (
+        !nome ||
+        !telefone ||
+        !endereco ||
+        !bairro ||
+        !cidade ||
+        !cep ||
+        !pagamento ||
+        !entrega
+    ) {
+
+        alert(
+            "Por favor, preencha todos os campos. 💗"
+        );
+
+        return;
+    }
+
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    if (carrinho.length === 0) {
+
+        alert(
+            "Seu carrinho está vazio!"
+        );
+
+        window.location.href = "index.html";
+
+        return;
+    }
+
+    let mensagem =
+        "🛍️ *NOVO PEDIDO - DIVA MAKE 10*%0A%0A";
+
+    mensagem +=
+        "👤 *CLIENTE*%0A" +
+        "Nome: " + encodeURIComponent(nome) + "%0A" +
+        "Telefone: " + encodeURIComponent(telefone) + "%0A%0A";
+
+    mensagem +=
+        "🏠 *ENDEREÇO*%0A" +
+        encodeURIComponent(endereco) + "%0A" +
+        "Bairro: " + encodeURIComponent(bairro) + "%0A" +
+        "Cidade: " + encodeURIComponent(cidade) + "%0A" +
+        "CEP: " + encodeURIComponent(cep) + "%0A%0A";
+
+    mensagem +=
+        "💳 *PAGAMENTO:* " +
+        encodeURIComponent(pagamento) +
+        "%0A";
+
+    mensagem +=
+        "🚚 *ENTREGA:* " +
+        encodeURIComponent(entrega) +
+        "%0A%0A";
+
+    mensagem +=
+        "🛒 *PRODUTOS*%0A";
+
+    let total = 0;
+
+    carrinho.forEach(produto => {
+
+        const subtotal =
+            produto.preco * produto.quantidade;
+
+        total += subtotal;
+
+        mensagem +=
+            "💄 " +
+            encodeURIComponent(produto.nome) +
+            "%0A" +
+            "Quantidade: " +
+            produto.quantidade +
+            "%0A" +
+            "Subtotal: R$ " +
+            subtotal.toFixed(2).replace(".", ",") +
+            "%0A%0A";
+    });
+
+    mensagem +=
+        "💰 *TOTAL: R$ " +
+        total.toFixed(2).replace(".", ",") +
+        "*%0A%0A";
+
+    mensagem +=
+        "Olá! Gostaria de finalizar este pedido. 💗";
+
+    const numeroWhatsApp =
+        "5548988176691";
+
+    const link =
+        "https://wa.me/" +
+        numeroWhatsApp +
+        "?text=" +
+        mensagem;
+
+    window.location.href = link;
+}
+
+</script>
+
+</body>
+</html>
