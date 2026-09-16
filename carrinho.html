@@ -353,19 +353,44 @@ function removerProduto(index) {
     carregarCarrinho();
 }
 
-function finalizarCompra() {
+async function finalizarCompra() {
 
     const carrinho =
         JSON.parse(localStorage.getItem("carrinho")) || [];
 
     if (carrinho.length === 0) {
-
         alert("Seu carrinho está vazio!");
-
         return;
     }
 
-    window.location.href = "dados-pedido.html";
+    try {
+
+        const resposta = await fetch("/api/criar-pagamento", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                carrinho: carrinho
+            })
+        });
+
+        const dados = await resposta.json();
+
+        if (!resposta.ok || !dados.checkout_url) {
+            console.error(dados);
+            alert("Não foi possível iniciar o pagamento. Tente novamente.");
+            return;
+        }
+
+        window.location.href = dados.checkout_url;
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        alert("Erro ao conectar com o pagamento. Tente novamente.");
+    }
 }
 
 carregarCarrinho();
