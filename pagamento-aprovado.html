@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pagamento Aprovado - Diva Make 10</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff5f8;
+    text-align: center;
+    color: #333;
+}
+
+.caixa {
+    max-width: 600px;
+    margin: 80px auto;
+    background: white;
+    padding: 40px 25px;
+    border-radius: 25px;
+    border: 2px solid #f7c4da;
+}
+
+h1 {
+    color: #d0276b;
+    font-size: 32px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.botao {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 16px 25px;
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="caixa">
+
+    <h1>💗 Pagamento aprovado!</h1>
+
+    <p>
+        Obrigada pela sua compra na Diva Make 10! 🛍️
+    </p>
+
+    <p>
+        Seu pagamento foi aprovado.
+    </p>
+
+    <button class="botao" onclick="enviarWhatsApp()">
+        📲 ENVIAR PEDIDO NO WHATSAPP
+    </button>
+
+</div>
+
+<script>
+
+function enviarWhatsApp() {
+
+    const carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    const cliente =
+        JSON.parse(localStorage.getItem("dadosPedido")) || {};
+
+    let mensagem =
+        "🛍️ *NOVO PEDIDO - DIVA MAKE 10*%0A%0A";
+
+    mensagem +=
+        "👤 *CLIENTE*%0A" +
+        "Nome: " + encodeURIComponent(cliente.nome || "") + "%0A" +
+        "Telefone: " + encodeURIComponent(cliente.telefone || "") + "%0A%0A";
+
+    mensagem +=
+        "🏠 *ENDEREÇO*%0A" +
+        encodeURIComponent(cliente.endereco || "") + "%0A" +
+        "Bairro: " + encodeURIComponent(cliente.bairro || "") + "%0A" +
+        "Cidade: " + encodeURIComponent(cliente.cidade || "") + "%0A" +
+        "CEP: " + encodeURIComponent(cliente.cep || "") + "%0A%0A";
+
+    mensagem +=
+        "💳 *PAGAMENTO:* Mercado Pago - Aprovado%0A";
+
+    mensagem +=
+        "🚚 *ENTREGA:* " +
+        encodeURIComponent(cliente.entrega || "") +
+        "%0A%0A";
+
+    mensagem += "🛒 *PRODUTOS*%0A";
+
+    let total = 0;
+
+    carrinho.forEach(produto => {
+
+        const quantidade = Number(produto.quantidade);
+        const subtotal = 10 * quantidade;
+
+        total += subtotal;
+
+        mensagem +=
+            "💄 " +
+            encodeURIComponent(produto.nome) +
+            "%0A" +
+            "Quantidade: " +
+            quantidade +
+            "%0A" +
+            "Subtotal: R$ " +
+            subtotal.toFixed(2).replace(".", ",") +
+            "%0A%0A";
+    });
+
+    mensagem +=
+        "💰 *TOTAL: R$ " +
+        total.toFixed(2).replace(".", ",") +
+        "*%0A%0A";
+
+    mensagem +=
+        "Pagamento realizado pelo Mercado Pago. 💗";
+
+    const numeroWhatsApp = "5548988176691";
+
+    const link =
+        "https://wa.me/" +
+        numeroWhatsApp +
+        "?text=" +
+        mensagem;
+
+    window.location.href = link;
+}
+
+</script>
+
+</body>
+</html>
