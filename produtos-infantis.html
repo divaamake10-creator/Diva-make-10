@@ -69,6 +69,71 @@ body {
     margin-bottom: 50px;
 }
 
+.produto {
+    background: white;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 35px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+
+.produto h3 {
+    color: #c92b6d;
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.preco {
+    color: #d90068;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+.quantidade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.quantidade button {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: #ff4b9b;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quantidade span {
+    font-size: 25px;
+    font-weight: bold;
+    min-width: 30px;
+}
+
+.adicionar {
+    width: 100%;
+    border: none;
+    background: linear-gradient(90deg, #ff0080, #d90068);
+    color: white;
+    padding: 18px;
+    border-radius: 30px;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.adicionar:hover {
+    opacity: 0.9;
+}
+
 footer {
     background: #222;
     color: white;
@@ -112,6 +177,28 @@ footer p {
         🧸 Nossos Produtos Infantis
     </h2>
 
+    <div class="produto">
+
+        <h3>Produto Infantil</h3>
+
+        <div class="preco">
+            R$ 10,00
+        </div>
+
+        <div class="quantidade">
+            <button onclick="alterarQuantidade(-1)">−</button>
+
+            <span id="quantidade">1</span>
+
+            <button onclick="alterarQuantidade(1)">+</button>
+        </div>
+
+        <button class="adicionar" onclick="adicionarCarrinho()">
+            🛒 Adicionar ao carrinho
+        </button>
+
+    </div>
+
 </div>
 
 <footer>
@@ -123,6 +210,59 @@ footer p {
     </p>
 
 </footer>
+
+<script>
+
+let quantidade = 1;
+
+function alterarQuantidade(valor) {
+
+    quantidade += valor;
+
+    if (quantidade < 1) {
+        quantidade = 1;
+    }
+
+    document.getElementById("quantidade").textContent = quantidade;
+}
+
+function adicionarCarrinho() {
+
+    const produto = {
+        nome: "Produto Infantil",
+        preco: 10,
+        quantidade: quantidade
+    };
+
+    let carrinho =
+        JSON.parse(localStorage.getItem("carrinho")) || [];
+
+    const produtoExistente = carrinho.find(
+        item => item.nome === produto.nome
+    );
+
+    if (produtoExistente) {
+
+        produtoExistente.quantidade += produto.quantidade;
+
+    } else {
+
+        carrinho.push(produto);
+
+    }
+
+    localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+    );
+
+    alert(
+        quantidade +
+        "x Produto Infantil foi adicionado ao carrinho! 💗"
+    );
+}
+
+</script>
 
 </body>
 </html>
