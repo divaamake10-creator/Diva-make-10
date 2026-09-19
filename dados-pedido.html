@@ -430,16 +430,21 @@ async function continuarPagamento() {
 
         const dados = await resposta.json();
 
-        if (!resposta.ok || !dados.checkout_url) {
+      if (!resposta.ok || !dados.checkout_url) {
 
-            console.error(dados);
+    console.error("ERRO MERCADO PAGO:", dados);
 
-            alert(
-                "Não foi possível iniciar o pagamento. Tente novamente. 💗"
-            );
+    alert(
+        "Erro do pagamento:\n\n" +
+        (dados.detalhes?.message ||
+        dados.detalhes?.error ||
+        dados.erro ||
+        "Erro desconhecido")
+    );
 
-            return;
-        }
+    return;
+}
+        
 
         window.location.href = dados.checkout_url;
 
