@@ -435,12 +435,9 @@ async function continuarPagamento() {
     console.error("ERRO MERCADO PAGO:", dados);
 
     alert(
-        "Erro do pagamento:\n\n" +
-        (dados.detalhes?.message ||
-        dados.detalhes?.error ||
-        dados.erro ||
-        "Erro desconhecido")
-    );
+    "ERRO DO MERCADO PAGO:\n\n" +
+    JSON.stringify(dados.detalhes, null, 2)
+);
 
     return;
 }
