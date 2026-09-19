@@ -45,7 +45,7 @@ export default async function handler(req, res) {
         const itens = carrinho.map(produto => ({
             title: produto.nome,
             quantity: Number(produto.quantidade),
-            unit_price: 10
+            unit_price: "10.00"
         }));
 
         const idempotencyKey = crypto.randomUUID();
