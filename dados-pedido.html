@@ -426,6 +426,83 @@ footer p {
 
         return;
     }
+      if (pagamento === "Pix automático") {
+
+  const total = carrinho.reduce((soma, produto) => {
+    return soma + (10 * Number(produto.quantidade));
+  }, 0);
+
+  try {
+
+    const respostaPix = await fetch(
+      "https://diva-make-10.vercel.app/api/criar-pix",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          total: total,
+          cliente: {
+            nome: nome
+          }
+        })
+      }
+    );
+
+    const dadosPix = await respostaPix.json();
+
+    if (
+      !respostaPix.ok ||
+      !dadosPix.qr_code ||
+      !dadosPix.qr_code_base64
+    ) {
+
+      console.error("ERRO AO CRIAR PIX:", dadosPix);
+
+      alert(
+        "Não foi possível gerar o Pix automático. Tente novamente. 💗"
+      );
+
+      return;
+    }
+
+    document.getElementById("pixValor").textContent =
+      total.toFixed(2).replace(".", ",");
+
+    document.getElementById("pixContainer").style.display =
+      "block";
+
+    document.getElementById("pixQRCode").innerHTML = `
+      <img
+        src="data:image/png;base64,${dadosPix.qr_code_base64}"
+        style="width:220px;height:220px;"
+      >
+    `;
+
+    document.getElementById("pixCopiaCola").value =
+      dadosPix.qr_code;
+
+    localStorage.setItem(
+      "pixPaymentId",
+      dadosPix.payment_id
+    );
+
+    return;
+
+  } catch (erro) {
+
+    console.error(erro);
+
+    alert(
+      "Erro ao conectar com o Pix automático. Tente novamente. 💗"
+    );
+
+    return;
+  }
+}
 if (pagamento === "Pix") {
 
   const total = carrinho.reduce((soma, produto) => {
