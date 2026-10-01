@@ -422,7 +422,34 @@ footer p {
 
         return;
     }
+if (pagamento === "Pix") {
 
+  const total = carrinho.reduce((soma, produto) => {
+    return soma + (10 * Number(produto.quantidade));
+  }, 0);
+
+  const valorFormatado = total.toFixed(2).replace(".", ",");
+
+  document.getElementById("pixValor").textContent = valorFormatado;
+
+  const pixContainer = document.getElementById("pixContainer");
+
+  pixContainer.style.display = "block";
+
+  const payloadPix = gerarPix(total);
+
+  document.getElementById("pixCopiaCola").value = payloadPix;
+
+  document.getElementById("pixQRCode").innerHTML = "";
+
+  new QRCode(document.getElementById("pixQRCode"), {
+    text: payloadPix,
+    width: 220,
+    height: 220
+  });
+
+  return;
+}
     const dadosCliente = {
         nome,
         telefone,
@@ -483,7 +510,69 @@ footer p {
         );
     }
 }
+function gerarPix(valor) {
 
+  const chavePix = "48988176691";
+  const nome = "Ana Paula Ramos Bressan";
+  const cidade = "CRICIUMA";
+
+  function campo(id, valor) {
+    return id + String(valor.length).padStart(2, "0") + valor;
+  }
+
+  const merchantAccount =
+    campo("00", "br.gov.bcb.pix") +
+    campo("01", chavePix);
+
+  let payload =
+    campo("00", "01") +
+    campo("26", merchantAccount) +
+    campo("52", "0000") +
+    campo("53", "986") +
+    campo("54", Number(valor).toFixed(2)) +
+    campo("58", "BR") +
+    campo("59", nome) +
+    campo("60", cidade) +
+    campo("62", campo("05", "***"));
+
+  function crc16(texto) {
+    let crc = 0xFFFF;
+
+    for (let i = 0; i < texto.length; i++) {
+      crc ^= texto.charCodeAt(i) << 8;
+
+      for (let j = 0; j < 8; j++) {
+        if (crc & 0x8000) {
+          crc = (crc << 1) ^ 0x1021;
+        } else {
+          crc = crc << 1;
+        }
+
+        crc &= 0xFFFF;
+      }
+    }
+
+    return crc.toString(16).toUpperCase().padStart(4, "0");
+  }
+
+  payload += "6304";
+
+  payload += crc16(payload);
+
+  return payload;
+}
+
+function copiarPix() {
+
+  const campoPix = document.getElementById("pixCopiaCola");
+
+  campoPix.select();
+  campoPix.setSelectionRange(0, 99999);
+
+  navigator.clipboard.writeText(campoPix.value);
+
+  alert("Pix copiado! 💗");
+}
 </script>
 
 </body>
