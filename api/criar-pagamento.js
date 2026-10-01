@@ -26,21 +26,84 @@ export default async function handler(req, res) {
             });
         }
 
-        const total = carrinho.reduce((soma, produto) => {
+        const subtotal = carrinho.reduce((soma, produto) => {
 
-            const quantidade = Number(produto.quantidade);
+    const quantidade = Number(produto.quantidade);
 
-            if (
-                !produto.nome ||
-                !Number.isInteger(quantidade) ||
-                quantidade < 1
-            ) {
-                throw new Error("Produto inválido");
-            }
+    if (
+        !produto.nome ||
+        !Number.isInteger(quantidade) ||
+        quantidade < 1
+    ) {
+        throw new Error("Produto inválido");
+    }
 
-            return soma + (10 * quantidade);
+    return soma + (10 * quantidade);
 
-        }, 0);
+}, 0);
+
+
+// Tabela de taxas por estado
+const taxasEntrega = {
+    AC: 30,
+    AL: 22,
+    AP: 30,
+    AM: 30,
+    BA: 20,
+    CE: 24,
+    DF: 17,
+    ES: 15,
+    GO: 17,
+    MA: 25,
+    MT: 18,
+    MS: 16,
+    MG: 14,
+    PA: 27,
+    PB: 23,
+    PR: 10,
+    PE: 22,
+    PI: 24,
+    RJ: 14,
+    RN: 24,
+    RS: 10,
+    RO: 28,
+    RR: 32,
+    SC: 8,
+    SP: 12,
+    SE: 21,
+    TO: 23
+};
+
+
+// Descobre o estado pelo CEP
+const cep = String(cliente?.cep || "")
+    .replace(/\D/g, "");
+
+if (cep.length !== 8) {
+    throw new Error("CEP inválido");
+}
+
+const respostaCep = await fetch(
+    `https://viacep.com.br/ws/${cep}/json/`
+);
+
+const dadosCep = await respostaCep.json();
+
+if (dadosCep.erro || !dadosCep.uf) {
+    throw new Error("CEP não encontrado");
+}
+
+const estadoEntrega = dadosCep.uf;
+
+
+// Frete grátis a partir de R$ 100
+const taxaEntrega =
+    subtotal >= 100
+        ? 0
+        : (taxasEntrega[estadoEntrega] || 30);
+
+
+const total = subtotal + taxaEntrega;
 
         const itens = carrinho.map(produto => ({
             title: produto.nome,
