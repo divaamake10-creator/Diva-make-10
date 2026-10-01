@@ -573,9 +573,11 @@ async function calcularTaxaEntrega() {
     }
       if (pagamento === "Pix automático") {
 
-  const total = carrinho.reduce((soma, produto) => {
+  const subtotal = carrinho.reduce((soma, produto) => {
     return soma + (10 * Number(produto.quantidade));
-  }, 0);
+}, 0);
+
+const total = subtotal + taxaEntrega;
 
   try {
 
