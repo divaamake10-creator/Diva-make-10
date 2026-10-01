@@ -463,8 +463,9 @@ footer p {
       console.error("ERRO AO CRIAR PIX:", dadosPix);
 
       alert(
-        "Não foi possível gerar o Pix automático. Tente novamente. 💗"
-      );
+  "ERRO AO GERAR PIX:\n\n" +
+  JSON.stringify(dadosPix.detalhes || dadosPix, null, 2)
+);
 
       return;
     }
