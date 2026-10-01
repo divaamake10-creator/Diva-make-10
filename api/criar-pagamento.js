@@ -110,6 +110,15 @@ const total = subtotal + taxaEntrega;
             quantity: Number(produto.quantidade),
             unit_price: "10.00"
         }));
+        if (taxaEntrega > 0) {
+
+    itens.push({
+        title: "Taxa de entrega",
+        quantity: 1,
+        unit_price: taxaEntrega.toFixed(2)
+    });
+
+}
 
         const idempotencyKey = crypto.randomUUID();
 
