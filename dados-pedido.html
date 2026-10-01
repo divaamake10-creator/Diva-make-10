@@ -365,10 +365,11 @@ footer p {
     </p>
 
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 <script>
+  async function continuarPagamento() {
 
-async function continuarPagamento() {
 
     const nome =
         document.getElementById("nome").value.trim();
