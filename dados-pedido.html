@@ -388,6 +388,134 @@ footer p {
 <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 
 <script>
+    const taxasEntrega = {
+    AC: 30,
+    AL: 22,
+    AP: 30,
+    AM: 30,
+    BA: 20,
+    CE: 24,
+    DF: 17,
+    ES: 15,
+    GO: 17,
+    MA: 25,
+    MT: 18,
+    MS: 16,
+    MG: 14,
+    PA: 27,
+    PB: 23,
+    PR: 10,
+    PE: 22,
+    PI: 24,
+    RJ: 14,
+    RN: 24,
+    RS: 10,
+    RO: 28,
+    RR: 32,
+    SC: 8,
+    SP: 12,
+    SE: 21,
+    TO: 23
+};
+
+let taxaEntrega = 0;
+let estadoEntrega = "";
+
+async function calcularTaxaEntrega() {
+
+    const cep = document
+        .getElementById("cep")
+        .value
+        .replace(/\D/g, "");
+
+    if (cep.length !== 8) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            `https://viacep.com.br/ws/${cep}/json/`
+        );
+
+        const dados = await resposta.json();
+
+        if (dados.erro) {
+
+            alert("CEP não encontrado. 💗");
+
+            return;
+        }
+
+        estadoEntrega = dados.uf;
+
+        const carrinho =
+            JSON.parse(localStorage.getItem("carrinho")) || [];
+
+        const subtotal = carrinho.reduce(
+            (soma, produto) => {
+                return soma + (
+                    10 * Number(produto.quantidade)
+                );
+            },
+            0
+        );
+
+        if (subtotal >= 100) {
+
+            taxaEntrega = 0;
+
+            document.getElementById(
+                "taxaEntrega"
+            ).textContent = "0,00";
+
+            document.getElementById(
+                "freteGratis"
+            ).style.display = "block";
+
+        } else {
+
+            taxaEntrega =
+                taxasEntrega[estadoEntrega] || 30;
+
+            document.getElementById(
+                "taxaEntrega"
+            ).textContent =
+                taxaEntrega
+                    .toFixed(2)
+                    .replace(".", ",");
+
+            document.getElementById(
+                "freteGratis"
+            ).style.display = "none";
+        }
+
+        document.getElementById(
+            "taxaEntregaContainer"
+        ).style.display = "block";
+
+        localStorage.setItem(
+            "taxaEntrega",
+            taxaEntrega
+        );
+
+        localStorage.setItem(
+            "estadoEntrega",
+            estadoEntrega
+        );
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao consultar CEP:",
+            erro
+        );
+
+        alert(
+            "Não foi possível consultar o CEP. Tente novamente. 💗"
+        );
+    }
+}
   async function continuarPagamento() {
 
 
