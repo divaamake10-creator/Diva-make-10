@@ -290,7 +290,35 @@ footer p {
             </select>
 
         </div>
+<div id="pixContainer" style="display:none; text-align:center; margin:20px 0;">
 
+  <h3>📱 Pague com Pix</h3>
+
+  <p>Escaneie o QR Code abaixo para pagar sua compra:</p>
+
+  <div id="pixQRCode"></div>
+
+  <p>
+    <strong>Valor: R$ <span id="pixValor">0,00</span></strong>
+  </p>
+
+  <p>Ou copie o código Pix:</p>
+
+  <textarea
+    id="pixCopiaCola"
+    readonly
+    style="width:100%; min-height:90px;"
+  ></textarea>
+
+  <button
+    type="button"
+    onclick="copiarPix()"
+    style="margin-top:10px;"
+  >
+    📋 COPIAR PIX
+  </button>
+
+</div>
         <h2>🚚 Entrega</h2>
 
         <div class="campo">
