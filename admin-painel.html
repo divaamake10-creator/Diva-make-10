@@ -497,6 +497,14 @@ verificarAcesso();
 
 function abrirModulo(modulo) {
 
+    if (modulo === "produtos") {
+
+        window.location.href =
+            "admin-produtos.html";
+
+        return;
+    }
+
     alert(
         "Módulo " +
         modulo +
@@ -504,7 +512,6 @@ function abrirModulo(modulo) {
     );
 
 }
-
 
 function sair() {
 
