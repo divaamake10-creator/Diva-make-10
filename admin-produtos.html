@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Produtos - Diva Make 10</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff5fa;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #ff0080, #e60073);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin-top: 8px;
+    font-size: 17px;
+}
+
+.container {
+    max-width: 700px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.card {
+    background: white;
+    border: 2px solid #f3b6d4;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+}
+
+h2 {
+    color: #c72b73;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #b52c69;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+button {
+    border: none;
+    border-radius: 25px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-adicionar {
+    width: 100%;
+    margin-top: 20px;
+    background: #e60073;
+    color: white;
+}
+
+.btn-voltar {
+    background: #eee;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.lista-produtos {
+    margin-top: 20px;
+}
+
+.produto {
+    border: 1px solid #f0c4da;
+    border-radius: 15px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.produto h3 {
+    color: #c72b73;
+    margin-top: 0;
+}
+
+.produto p {
+    margin: 7px 0;
+}
+
+.status {
+    font-weight: bold;
+}
+
+.vazio {
+    text-align: center;
+    color: #777;
+    padding: 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>🛍️ Produtos</h1>
+
+<p>Gerencie os produtos da DIVA MAKE 10 💗</p>
+
+</header>
+
+<div class="container">
+
+<button
+class="btn-voltar"
+onclick="window.location.href='admin-painel.html'">
+← Voltar para o painel
+</button>
+
+<div class="card">
+
+<h2>➕ Adicionar produto</h2>
+
+<label>Nome do produto</label>
+
+<input
+type="text"
+id="nome"
+placeholder="Ex: Batom Matte">
+
+<label>Preço</label>
+
+<input
+type="number"
+id="preco"
+placeholder="Ex: 10.00"
+step="0.01">
+
+<label>Categoria</label>
+
+<select id="categoria">
+
+<option value="">Selecione</option>
+
+<option value="Maquiagem">
+Maquiagem
+</option>
+
+<option value="Skincare">
+Skincare
+</option>
+
+<option value="Cabelos">
+Cabelos
+</option>
+
+<option value="Linha Infantil">
+Linha Infantil
+</option>
+
+<option value="Diversos">
+Diversos
+</option>
+
+</select>
+
+<label>Subcategoria</label>
+
+<input
+type="text"
+id="subcategoria"
+placeholder="Ex: Batom">
+
+<label>Imagem do produto</label>
+
+<input
+type="text"
+id="imagem"
+placeholder="Cole aqui o endereço da imagem">
+
+<button
+class="btn-adicionar"
+onclick="adicionarProduto()">
+
+➕ ADICIONAR PRODUTO
+
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📦 Produtos cadastrados</h2>
+
+<div
+id="listaProdutos"
+class="lista-produtos">
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function carregarProdutos() {
+
+    const produtos =
+        JSON.parse(
+            localStorage.getItem("produtosDivaMake10")
+        ) || [];
+
+    const lista =
+        document.getElementById("listaProdutos");
+
+    lista.innerHTML = "";
+
+    if (produtos.length === 0) {
+
+        lista.innerHTML =
+            '<div class="vazio">' +
+            'Nenhum produto cadastrado ainda. 💗' +
+            '</div>';
+
+        return;
+    }
+
+    produtos.forEach((produto, index) => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "produto";
+
+        div.innerHTML = `
+
+            <h3>${produto.nome}</h3>
+
+            <p>
+                💰 R$ ${Number(produto.preco)
+                .toFixed(2)
+                .replace(".", ",")}
+            </p>
+
+            <p>
+                📂 ${produto.categoria}
+            </p>
+
+            <p>
+                🔖 ${produto.subcategoria || "Sem subcategoria"}
+            </p>
+
+            <p class="status">
+                ${produto.ativo ? "🟢 Ativo" : "🔴 Oculto"}
+            </p>
+
+            <button
+                onclick="alternarProduto(${index})">
+                ${produto.ativo ? "👁️ Ocultar" : "👁️ Mostrar"}
+            </button>
+
+            <button
+                onclick="excluirProduto(${index})">
+                🗑️ Excluir
+            </button>
+
+        `;
+
+        lista.appendChild(div);
+
+    });
+
+}
+
+function adicionarProduto() {
+
+    const nome =
+        document.getElementById("nome").value.trim();
+
+    const preco =
+        Number(
+            document.getElementById("preco").value
+        );
+
+    const categoria =
+        document.getElementById("categoria").value;
+
+    const subcategoria =
+        document.getElementById("subcategoria").value.trim();
+
+    const imagem =
+        document.getElementById("imagem").value.trim();
+
+    if (!nome) {
+
+        alert("Digite o nome do produto.");
+
+        return;
+    }
+
+    if (!preco || preco <= 0) {
+
+        alert("Digite um preço válido.");
+
+        return;
+    }
+
+    if (!categoria) {
+
+        alert("Selecione uma categoria.");
+
+        return;
+    }
+
+    const produtos =
+        JSON.parse(
+            localStorage.getItem("produtosDivaMake10")
+        ) || [];
+
+    produtos.push({
+
+        nome: nome,
+
+        preco: preco,
+
+        categoria: categoria,
+
+        subcategoria: subcategoria,
+
+        imagem: imagem,
+
+        ativo: true
+
+    });
+
+    localStorage.setItem(
+        "produtosDivaMake10",
+        JSON.stringify(produtos)
+    );
+
+    document.getElementById("nome").value = "";
+
+    document.getElementById("preco").value = "";
+
+    document.getElementById("categoria").value = "";
+
+    document.getElementById("subcategoria").value = "";
+
+    document.getElementById("imagem").value = "";
+
+    carregarProdutos();
+
+    alert("Produto adicionado! 💗");
+
+}
+
+function excluirProduto(index) {
+
+    if (!confirm("Deseja excluir este produto?")) {
+        return;
+    }
+
+    const produtos =
+        JSON.parse(
+            localStorage.getItem("produtosDivaMake10")
+        ) || [];
+
+    produtos.splice(index, 1);
+
+    localStorage.setItem(
+        "produtosDivaMake10",
+        JSON.stringify(produtos)
+    );
+
+    carregarProdutos();
+
+}
+
+function alternarProduto(index) {
+
+    const produtos =
+        JSON.parse(
+            localStorage.getItem("produtosDivaMake10")
+        ) || [];
+
+    produtos[index].ativo =
+        !produtos[index].ativo;
+
+    localStorage.setItem(
+        "produtosDivaMake10",
+        JSON.stringify(produtos)
+    );
+
+    carregarProdutos();
+
+}
+
+carregarProdutos();
+
+</script>
+
+</body>
+</html>
