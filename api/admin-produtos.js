@@ -15,10 +15,10 @@ function configurarCORS(res) {
         "GET, POST, PUT, DELETE, OPTIONS"
     );
 
-    res.setHeader(
-        "Access-Control-Allow-Headers",
-        "Content-Type"
-    );
+   res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Content-Type, Authorization"
+);
 }
 
 function verificarToken(token) {
