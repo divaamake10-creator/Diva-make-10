@@ -2,8 +2,13 @@
 <html lang="pt-BR">
 
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>Produtos - Diva Make 10</title>
 
@@ -21,7 +26,12 @@ body {
 }
 
 header {
-    background: linear-gradient(135deg, #ff0080, #e60073);
+    background: linear-gradient(
+        135deg,
+        #ff0080,
+        #e60073
+    );
+
     color: white;
     text-align: center;
     padding: 30px 20px;
@@ -49,7 +59,10 @@ header p {
     border-radius: 20px;
     padding: 22px;
     margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,0.06);
 }
 
 h2 {
@@ -126,7 +139,20 @@ button {
     padding: 20px;
 }
 
+.btn-produto {
+    margin-top: 10px;
+    margin-right: 6px;
+    background: #eee;
+    color: #555;
+}
+
+.btn-excluir {
+    background: #e60073;
+    color: white;
+}
+
 </style>
+
 </head>
 
 <body>
@@ -135,300 +161,733 @@ button {
 
 <h1>🛍️ Produtos</h1>
 
-<p>Gerencie os produtos da DIVA MAKE 10 💗</p>
+<p>
+    Gerencie os produtos da DIVA MAKE 10 💗
+</p>
 
 </header>
 
+
 <div class="container">
 
+
 <button
-class="btn-voltar"
-onclick="window.location.href='admin-painel.html'">
-← Voltar para o painel
+    class="btn-voltar"
+    onclick="window.location.href='admin-painel.html'"
+>
+    ← Voltar para o painel
 </button>
+
 
 <div class="card">
 
 <h2>➕ Adicionar produto</h2>
 
-<label>Nome do produto</label>
+
+<label>
+    Nome do produto
+</label>
 
 <input
-type="text"
-id="nome"
-placeholder="Ex: Batom Matte">
+    type="text"
+    id="nome"
+    placeholder="Ex: Batom Matte"
+>
 
-<label>Preço</label>
+
+<label>
+    Preço
+</label>
 
 <input
-type="number"
-id="preco"
-placeholder="Ex: 10.00"
-step="0.01">
+    type="number"
+    id="preco"
+    placeholder="Ex: 10.00"
+    step="0.01"
+>
 
-<label>Categoria</label>
+
+<label>
+    Categoria
+</label>
 
 <select id="categoria">
 
-<option value="">Selecione</option>
+<option value="">
+    Selecione
+</option>
 
 <option value="Maquiagem">
-Maquiagem
+    Maquiagem
 </option>
 
 <option value="Skincare">
-Skincare
+    Skincare
 </option>
 
 <option value="Cabelos">
-Cabelos
+    Cabelos
 </option>
 
 <option value="Linha Infantil">
-Linha Infantil
+    Linha Infantil
 </option>
 
 <option value="Diversos">
-Diversos
+    Diversos
 </option>
 
 </select>
 
-<label>Subcategoria</label>
+
+<label>
+    Subcategoria
+</label>
 
 <input
-type="text"
-id="subcategoria"
-placeholder="Ex: Batom">
+    type="text"
+    id="subcategoria"
+    placeholder="Ex: Batom"
+>
 
-<label>Imagem do produto</label>
+
+<label>
+    Imagem do produto
+</label>
 
 <input
-type="text"
-id="imagem"
-placeholder="Cole aqui o endereço da imagem">
+    type="text"
+    id="imagem"
+    placeholder="Cole aqui o endereço da imagem"
+>
+
 
 <button
-class="btn-adicionar"
-onclick="adicionarProduto()">
+    class="btn-adicionar"
+    onclick="adicionarProduto()"
+>
 
-➕ ADICIONAR PRODUTO
+    ➕ ADICIONAR PRODUTO
 
 </button>
 
 </div>
 
+
 <div class="card">
 
-<h2>📦 Produtos cadastrados</h2>
+<h2>
+    📦 Produtos cadastrados
+</h2>
 
 <div
-id="listaProdutos"
-class="lista-produtos">
-
+    id="listaProdutos"
+    class="lista-produtos"
+>
 </div>
 
 </div>
 
+
 </div>
+
 
 <script>
 
-function carregarProdutos() {
 
-    const produtos =
-        JSON.parse(
-            localStorage.getItem("produtosDivaMake10")
-        ) || [];
+const API_PRODUTOS =
+    "https://diva-make-10.vercel.app/api/admin-produtos";
+
+
+function obterToken() {
+
+    return sessionStorage.getItem(
+        "adminToken"
+    );
+
+}
+
+
+async function apiProdutos(
+    url,
+    opcoes = {}
+) {
+
+    const token =
+        obterToken();
+
+
+    if (!token) {
+
+        window.location.href =
+            "admin.html";
+
+        return null;
+
+    }
+
+
+    const resposta =
+        await fetch(
+            url,
+            {
+
+                ...opcoes,
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json",
+
+                    "Authorization":
+                        "Bearer " + token,
+
+                    ...(opcoes.headers || {})
+
+                }
+
+            }
+        );
+
+
+    if (
+        resposta.status === 401
+    ) {
+
+        sessionStorage.removeItem(
+            "adminToken"
+        );
+
+        window.location.href =
+            "admin.html";
+
+        return null;
+
+    }
+
+
+    const dados =
+        await resposta.json();
+
+
+    if (!resposta.ok) {
+
+        throw new Error(
+            dados.error ||
+            "Erro ao acessar os produtos."
+        );
+
+    }
+
+
+    return dados;
+
+}
+
+
+function escaparHTML(
+    texto
+) {
+
+    return String(
+        texto ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+async function carregarProdutos() {
 
     const lista =
-        document.getElementById("listaProdutos");
+        document.getElementById(
+            "listaProdutos"
+        );
 
-    lista.innerHTML = "";
 
-    if (produtos.length === 0) {
+    lista.innerHTML =
+        '<div class="vazio">' +
+        'Carregando produtos... 💗' +
+        '</div>';
+
+
+    try {
+
+        const produtos =
+            await apiProdutos(
+                API_PRODUTOS
+            );
+
+
+        if (!produtos) {
+
+            return;
+
+        }
+
+
+        lista.innerHTML =
+            "";
+
+
+        if (
+            produtos.length === 0
+        ) {
+
+            lista.innerHTML =
+                '<div class="vazio">' +
+                'Nenhum produto cadastrado ainda. 💗' +
+                '</div>';
+
+            return;
+
+        }
+
+
+        produtos.forEach(
+            (produto) => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "produto";
+
+
+                div.innerHTML = `
+
+                    <h3>
+                        ${escaparHTML(
+                            produto.nome
+                        )}
+                    </h3>
+
+                    <p>
+                        💰 R$
+                        ${Number(
+                            produto.preco
+                        )
+                        .toFixed(2)
+                        .replace(
+                            ".",
+                            ","
+                        )}
+                    </p>
+
+                    <p>
+                        📂
+                        ${escaparHTML(
+                            produto.categoria
+                        )}
+                    </p>
+
+                    <p>
+                        🔖
+                        ${
+                            escaparHTML(
+                                produto.subcategoria ||
+                                "Sem subcategoria"
+                            )
+                        }
+                    </p>
+
+                    <p class="status">
+                        ${
+                            produto.ativo
+                            ? "🟢 Ativo"
+                            : "🔴 Oculto"
+                        }
+                    </p>
+
+                    <button
+                        class="btn-produto"
+                        onclick="alternarProduto(
+                            ${produto.id},
+                            ${produto.ativo}
+                        )"
+                    >
+
+                        ${
+                            produto.ativo
+                            ? "👁️ Ocultar"
+                            : "👁️ Mostrar"
+                        }
+
+                    </button>
+
+                    <button
+                        class="btn-produto btn-excluir"
+                        onclick="excluirProduto(
+                            ${produto.id}
+                        )"
+                    >
+
+                        🗑️ Excluir
+
+                    </button>
+
+                `;
+
+
+                lista.appendChild(
+                    div
+                );
+
+            }
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            erro
+        );
+
 
         lista.innerHTML =
             '<div class="vazio">' +
-            'Nenhum produto cadastrado ainda. 💗' +
+            'Erro ao carregar os produtos. ❌' +
             '</div>';
 
-        return;
+
+        alert(
+            "Não foi possível carregar os produtos."
+        );
+
     }
-
-    produtos.forEach((produto, index) => {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "produto";
-
-        div.innerHTML = `
-
-            <h3>${produto.nome}</h3>
-
-            <p>
-                💰 R$ ${Number(produto.preco)
-                .toFixed(2)
-                .replace(".", ",")}
-            </p>
-
-            <p>
-                📂 ${produto.categoria}
-            </p>
-
-            <p>
-                🔖 ${produto.subcategoria || "Sem subcategoria"}
-            </p>
-
-            <p class="status">
-                ${produto.ativo ? "🟢 Ativo" : "🔴 Oculto"}
-            </p>
-
-            <button
-                onclick="alternarProduto(${index})">
-                ${produto.ativo ? "👁️ Ocultar" : "👁️ Mostrar"}
-            </button>
-
-            <button
-                onclick="excluirProduto(${index})">
-                🗑️ Excluir
-            </button>
-
-        `;
-
-        lista.appendChild(div);
-
-    });
 
 }
 
-function adicionarProduto() {
+
+async function adicionarProduto() {
 
     const nome =
-        document.getElementById("nome").value.trim();
+        document
+            .getElementById(
+                "nome"
+            )
+            .value
+            .trim();
+
 
     const preco =
         Number(
-            document.getElementById("preco").value
+            document
+                .getElementById(
+                    "preco"
+                )
+                .value
         );
 
+
     const categoria =
-        document.getElementById("categoria").value;
+        document
+            .getElementById(
+                "categoria"
+            )
+            .value;
+
 
     const subcategoria =
-        document.getElementById("subcategoria").value.trim();
+        document
+            .getElementById(
+                "subcategoria"
+            )
+            .value
+            .trim();
+
 
     const imagem =
-        document.getElementById("imagem").value.trim();
+        document
+            .getElementById(
+                "imagem"
+            )
+            .value
+            .trim();
+
 
     if (!nome) {
 
-        alert("Digite o nome do produto.");
+        alert(
+            "Digite o nome do produto."
+        );
 
         return;
+
     }
 
-    if (!preco || preco <= 0) {
 
-        alert("Digite um preço válido.");
+    if (
+        !preco ||
+        preco <= 0
+    ) {
+
+        alert(
+            "Digite um preço válido."
+        );
 
         return;
+
     }
+
 
     if (!categoria) {
 
-        alert("Selecione uma categoria.");
+        alert(
+            "Selecione uma categoria."
+        );
 
         return;
+
     }
 
-    const produtos =
-        JSON.parse(
-            localStorage.getItem("produtosDivaMake10")
-        ) || [];
 
-    produtos.push({
+    try {
 
-        nome: nome,
+        await apiProdutos(
 
-        preco: preco,
+            API_PRODUTOS,
 
-        categoria: categoria,
+            {
 
-        subcategoria: subcategoria,
+                method: "POST",
 
-        imagem: imagem,
+                body:
+                    JSON.stringify({
 
-        ativo: true
+                        nome:
+                            nome,
 
-    });
+                        preco:
+                            preco,
 
-    localStorage.setItem(
-        "produtosDivaMake10",
-        JSON.stringify(produtos)
-    );
+                        categoria:
+                            categoria,
 
-    document.getElementById("nome").value = "";
+                        subcategoria:
+                            subcategoria,
 
-    document.getElementById("preco").value = "";
+                        imagem:
+                            imagem,
 
-    document.getElementById("categoria").value = "";
+                        ativo:
+                            true
 
-    document.getElementById("subcategoria").value = "";
+                    })
 
-    document.getElementById("imagem").value = "";
+            }
 
-    carregarProdutos();
+        );
 
-    alert("Produto adicionado! 💗");
+
+        document
+            .getElementById(
+                "nome"
+            )
+            .value =
+                "";
+
+
+        document
+            .getElementById(
+                "preco"
+            )
+            .value =
+                "";
+
+
+        document
+            .getElementById(
+                "categoria"
+            )
+            .value =
+                "";
+
+
+        document
+            .getElementById(
+                "subcategoria"
+            )
+            .value =
+                "";
+
+
+        document
+            .getElementById(
+                "imagem"
+            )
+            .value =
+                "";
+
+
+        await carregarProdutos();
+
+
+        alert(
+            "Produto adicionado com sucesso! 💗"
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            erro
+        );
+
+
+        alert(
+            "Erro ao adicionar o produto:\n\n" +
+            erro.message
+        );
+
+    }
 
 }
 
-function excluirProduto(index) {
 
-    if (!confirm("Deseja excluir este produto?")) {
+async function excluirProduto(
+    id
+) {
+
+    if (
+        !confirm(
+            "Deseja excluir este produto?"
+        )
+    ) {
+
         return;
+
     }
 
-    const produtos =
-        JSON.parse(
-            localStorage.getItem("produtosDivaMake10")
-        ) || [];
 
-    produtos.splice(index, 1);
+    try {
 
-    localStorage.setItem(
-        "produtosDivaMake10",
-        JSON.stringify(produtos)
-    );
+        await apiProdutos(
 
-    carregarProdutos();
+            API_PRODUTOS,
+
+            {
+
+                method: "DELETE",
+
+                body:
+                    JSON.stringify({
+
+                        id:
+                            id
+
+                    })
+
+            }
+
+        );
+
+
+        await carregarProdutos();
+
+
+        alert(
+            "Produto excluído com sucesso."
+        );
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            erro
+        );
+
+
+        alert(
+            "Erro ao excluir o produto."
+        );
+
+    }
 
 }
 
-function alternarProduto(index) {
 
-    const produtos =
-        JSON.parse(
-            localStorage.getItem("produtosDivaMake10")
-        ) || [];
+async function alternarProduto(
+    id,
+    ativoAtual
+) {
 
-    produtos[index].ativo =
-        !produtos[index].ativo;
+    try {
 
-    localStorage.setItem(
-        "produtosDivaMake10",
-        JSON.stringify(produtos)
-    );
+        await apiProdutos(
 
-    carregarProdutos();
+            API_PRODUTOS,
+
+            {
+
+                method: "PUT",
+
+                body:
+                    JSON.stringify({
+
+                        id:
+                            id,
+
+                        ativo:
+                            !ativoAtual
+
+                    })
+
+            }
+
+        );
+
+
+        await carregarProdutos();
+
+    }
+
+    catch (erro) {
+
+        console.error(
+            erro
+        );
+
+
+        alert(
+            "Erro ao alterar o status do produto."
+        );
+
+    }
 
 }
+
 
 carregarProdutos();
 
 </script>
 
+
 </body>
+
 </html>
