@@ -592,12 +592,7 @@ function abrirCategoria(id) {
      function mostrarProdutos(nome) {
 
     if (nome === "batom") {
-    carregarProdutosDaLoja("Batom");
-
-    document.getElementById("produtos").scrollIntoView({
-        behavior: "smooth"
-    });
-
+    window.location.href = "batom.html";
     return;
 }
 
