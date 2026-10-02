@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Lápis Labial - Diva Make 10</title>
 
 <style>
+
 * {
     margin: 0;
     padding: 0;
@@ -71,7 +76,7 @@ header p {
 
 .lista-produtos {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
 }
 
@@ -81,9 +86,18 @@ header p {
     border-radius: 25px;
     padding: 25px;
     max-width: 350px;
+    width: 100%;
     margin: 0 auto;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.produto img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .produto h3 {
@@ -133,66 +147,83 @@ header p {
     color: white;
     padding: 16px 25px;
     border-radius: 30px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
 }
 
+.mensagem {
+    text-align: center;
+    padding: 30px;
+    grid-column: 1 / -1;
+}
+
 footer {
     margin-top: 100px;
-    background: #222;
+    background: #e60073;
     color: white;
     text-align: center;
     padding: 25px;
 }
+
+@media (max-width: 500px) {
+
+    .lista-produtos {
+        grid-template-columns: 1fr;
+    }
+
+}
+
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="topo">
+
     <h1>💄 DIVA MAKE 10 🩷</h1>
+
 </div>
 
+
 <header>
+
     <h1>💋 LÁPIS LABIAL</h1>
-    <p>Confira nossos Lápis Labiais disponíveis</p>
+
+    <p>
+        Confira nossos Lápis Labiais disponíveis
+    </p>
+
 </header>
 
-<a href="index.html" class="voltar">← Voltar</a>
+
+<a href="index.html" class="voltar">
+
+    ← Voltar
+
+</a>
+
 
 <section class="produtos">
 
-    <h2 class="titulo">💋 Nossos Lápis Labiais</h2>
+    <h2 class="titulo">
 
-    <div class="lista-produtos">
+        💋 Nossos Lápis Labiais
 
-        <div class="produto">
+    </h2>
 
-            <h3>💋 Lápis Labial</h3>
 
-            <div class="produto-preco">
-                R$ 10,00
-            </div>
+    <div
+        id="lista-lapis"
+        class="lista-produtos"
+    >
 
-            <div class="controle-quantidade">
+        <div class="mensagem">
 
-                <button onclick="alterarQuantidadeProduto(-1)">
-                    −
-                </button>
-
-                <span id="quantidadeProduto">1</span>
-
-                <button onclick="alterarQuantidadeProduto(1)">
-                    +
-                </button>
-
-            </div>
-
-            <button class="botao-carrinho"
-                onclick="adicionarAoCarrinho('Lápis Labial', 10)">
-                🛒 Adicionar ao carrinho
-            </button>
+            Carregando Lápis Labiais... 💗
 
         </div>
 
@@ -200,62 +231,410 @@ footer {
 
 </section>
 
+
+<footer>
+
+    <h3>DIVA MAKE 10 🩷</h3>
+
+    <p>
+        Beleza, variedade e preço incrível!
+    </p>
+
+</footer>
+
+
 <script>
 
-let quantidadeProduto = 1;
+const API_PRODUTOS =
+    "https://diva-make-10.vercel.app/api/produtos";
 
-function alterarQuantidadeProduto(valor) {
 
-    quantidadeProduto += valor;
+let produtosDaLoja = [];
 
-    if (quantidadeProduto < 1) {
-        quantidadeProduto = 1;
+
+async function carregarLapis() {
+
+    const lista =
+        document.getElementById(
+            "lista-lapis"
+        );
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                API_PRODUTOS,
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
+
+
+        const produtos =
+            await resposta.json();
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                produtos.error ||
+                "Erro ao carregar produtos"
+            );
+
+        }
+
+
+        /*
+         * MOSTRA SOMENTE PRODUTOS
+         * DA SUBCATEGORIA LÁPIS LABIAL
+         */
+
+        produtosDaLoja =
+            produtos.filter(
+                produto =>
+                    String(
+                        produto.subcategoria || ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    === "lápis labial"
+            );
+
+
+        lista.innerHTML = "";
+
+
+        if (
+            produtosDaLoja.length === 0
+        ) {
+
+            lista.innerHTML = `
+
+                <div class="mensagem">
+
+                    Nenhum Lápis Labial
+                    disponível no momento. 💗
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        produtosDaLoja.forEach(
+            produto => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "produto";
+
+
+                const id =
+                    Number(produto.id);
+
+
+                const preco =
+                    Number(produto.preco)
+                        .toFixed(2)
+                        .replace(".", ",");
+
+
+                div.innerHTML = `
+
+                    ${
+                        produto.imagem
+                        ?
+                        `
+                        <img
+                            src="${produto.imagem}"
+                            alt="${produto.nome}"
+                        >
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <h3>
+
+                        💋 ${produto.nome}
+
+                    </h3>
+
+
+                    <div
+                        class="produto-preco"
+                    >
+
+                        R$ ${preco}
+
+                    </div>
+
+
+                    <div
+                        class="controle-quantidade"
+                    >
+
+                        <button
+                            type="button"
+                            onclick="
+                                alterarQuantidadeProduto(
+                                    ${id},
+                                    -1
+                                )
+                            "
+                        >
+
+                            −
+
+                        </button>
+
+
+                        <span
+                            id="quantidade-${id}"
+                        >
+
+                            1
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            onclick="
+                                alterarQuantidadeProduto(
+                                    ${id},
+                                    1
+                                )
+                            "
+                        >
+
+                            +
+
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="botao-carrinho"
+                        onclick="
+                            adicionarAoCarrinho(
+                                ${id}
+                            )
+                        "
+                    >
+
+                        🛒 Adicionar ao carrinho
+
+                    </button>
+
+                `;
+
+
+                lista.appendChild(
+                    div
+                );
+
+            }
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "ERRO AO CARREGAR LÁPIS:",
+            erro
+        );
+
+
+        lista.innerHTML = `
+
+            <div class="mensagem">
+
+                Não foi possível carregar
+                os Lápis Labiais. ❌
+
+            </div>
+
+        `;
+
     }
 
-    document.getElementById("quantidadeProduto").textContent =
-        quantidadeProduto;
 }
 
-function adicionarAoCarrinho(nome, preco) {
+
+function alterarQuantidadeProduto(
+    id,
+    valor
+) {
+
+    const elemento =
+        document.getElementById(
+            "quantidade-" + Number(id)
+        );
+
+
+    if (!elemento) {
+
+        return;
+
+    }
+
+
+    let quantidade =
+        Number(
+            elemento.textContent
+        ) || 1;
+
+
+    quantidade += valor;
+
+
+    if (quantidade < 1) {
+
+        quantidade = 1;
+
+    }
+
+
+    elemento.textContent =
+        quantidade;
+
+}
+
+
+function adicionarAoCarrinho(id) {
+
+    const produto =
+        produtosDaLoja.find(
+            item =>
+                Number(item.id)
+                === Number(id)
+        );
+
+
+    if (!produto) {
+
+        alert(
+            "Produto não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    const elemento =
+        document.getElementById(
+            "quantidade-" + Number(id)
+        );
+
+
+    const quantidade =
+        elemento
+        ?
+        Number(
+            elemento.textContent
+        ) || 1
+        :
+        1;
+
 
     let carrinho =
-        JSON.parse(localStorage.getItem("carrinho")) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "carrinho"
+            )
+        ) || [];
 
-    const produtoExistente =
-        carrinho.find(produto => produto.nome === nome);
 
-    if (produtoExistente) {
+    const existente =
+        carrinho.find(
+            item =>
+                Number(item.id)
+                === Number(produto.id)
+        );
 
-        produtoExistente.quantidade += quantidadeProduto;
+
+    if (existente) {
+
+        existente.quantidade =
+            Number(
+                existente.quantidade
+            ) + quantidade;
 
     } else {
 
         carrinho.push({
-            nome: nome,
-            preco: preco,
-            quantidade: quantidadeProduto
+
+            id:
+                produto.id,
+
+            nome:
+                produto.nome,
+
+            preco:
+                Number(
+                    produto.preco
+                ),
+
+            imagem:
+                produto.imagem,
+
+            categoria:
+                produto.categoria,
+
+            subcategoria:
+                produto.subcategoria,
+
+            quantidade:
+                quantidade
+
         });
 
     }
 
+
     localStorage.setItem(
         "carrinho",
-        JSON.stringify(carrinho)
+        JSON.stringify(
+            carrinho
+        )
     );
 
-    alert("💗 Produto adicionado ao carrinho!");
 
-    quantidadeProduto = 1;
+    alert(
+        "💗 Produto adicionado ao carrinho!"
+    );
 
-    document.getElementById("quantidadeProduto").textContent = 1;
+
+    if (elemento) {
+
+        elemento.textContent =
+            "1";
+
+    }
+
 }
+
+
+carregarLapis();
 
 </script>
 
-<footer>
-    <h3>DIVA MAKE 10 🩷</h3>
-    <p>Beleza, variedade e preço incrível!</p>
-</footer>
 
 </body>
+
 </html>
