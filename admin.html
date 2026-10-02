@@ -1,1 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Administração - Diva Make 10</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff5f8,
+            #ffd6e8
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.login {
+
+    width: 100%;
+
+    max-width: 430px;
+
+    background: white;
+
+    border: 2px solid #f7c4da;
+
+    border-radius: 25px;
+
+    padding: 35px 25px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+    text-align: center;
+}
+
+.logo {
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+    color: #e60073;
+
+    margin-bottom: 10px;
+}
+
+.titulo {
+
+    color: #c92b6d;
+
+    font-size: 25px;
+
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+
+    color: #777;
+
+    font-size: 16px;
+
+    margin-bottom: 30px;
+}
+
+.icone {
+
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+label {
+
+    display: block;
+
+    text-align: left;
+
+    font-weight: bold;
+
+    color: #555;
+
+    margin-bottom: 8px;
+}
+
+input {
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: 2px solid #f0c2d5;
+
+    border-radius: 12px;
+
+    font-size: 17px;
+
+    outline: none;
+
+    margin-bottom: 18px;
+}
+
+input:focus {
+
+    border-color: #e60073;
+}
+
+button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff0080,
+            #d90068
+        );
+
+    color: white;
+
+    padding: 17px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:disabled {
+
+    opacity: 0.6;
+
+}
+
+#mensagem {
+
+    margin-top: 18px;
+
+    font-weight: bold;
+
+    min-height: 22px;
+}
+
+.voltar {
+
+    display: inline-block;
+
+    margin-top: 22px;
+
+    color: #c92b6d;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="login">
+
+    <div class="icone">
+        🔐
+    </div>
+
+    <div class="logo">
+        DIVA MAKE 10 💗
+    </div>
+
+    <h1 class="titulo">
+        Administração
+    </h1>
+
+    <p class="subtitulo">
+        Área exclusiva da proprietária
+    </p>
+
+    <form onsubmit="entrar(event)">
+
+        <label for="senha">
+            Senha de acesso
+        </label>
+
+        <input
+            type="password"
+            id="senha"
+            placeholder="Digite sua senha"
+            autocomplete="current-password"
+            required
+        >
+
+        <button
+            type="submit"
+            id="botaoEntrar"
+        >
+            🔓 ENTRAR
+        </button>
+
+    </form>
+
+    <div id="mensagem"></div>
+
+    <a
+        href="index.html"
+        class="voltar"
+    >
+        ← Voltar para a loja
+    </a>
+
+</div>
+
+<script>
+
+async function entrar(event) {
+
+    event.preventDefault();
+
+    const senha =
+        document.getElementById("senha").value;
+
+    const botao =
+        document.getElementById("botaoEntrar");
+
+    const mensagem =
+        document.getElementById("mensagem");
+
+    botao.disabled = true;
+
+    botao.textContent = "ENTRANDO...";
+
+    mensagem.textContent = "";
+
+    try {
+
+        const resposta = await fetch(
+            "https://diva-make-10.vercel.app/api/admin-login",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    senha: senha
+                })
+            }
+        );
+
+        const dados =
+            await resposta.json();
+
+        if (!resposta.ok || !dados.sucesso) {
+
+            mensagem.textContent =
+                "❌ Senha incorreta.";
+
+            mensagem.style.color =
+                "#d00000";
+
+            botao.disabled = false;
+
+            botao.textContent =
+                "🔓 ENTRAR";
+
+            return;
+        }
+
+        sessionStorage.setItem(
+            "adminToken",
+            dados.token
+        );
+
+        mensagem.textContent =
+            "✅ Acesso autorizado!";
+
+        mensagem.style.color =
+            "#008000";
+
+        setTimeout(() => {
+
+            window.location.href =
+                "admin-painel.html";
+
+        }, 500);
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        mensagem.textContent =
+            "❌ Erro ao conectar com a administração.";
+
+        mensagem.style.color =
+            "#d00000";
+
+        botao.disabled = false;
+
+        botao.textContent =
+            "🔓 ENTRAR";
+    }
+}
+
+</script>
+
+</body>
+
+</html>
