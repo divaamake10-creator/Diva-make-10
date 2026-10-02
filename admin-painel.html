@@ -432,7 +432,7 @@ footer {
 
 <script>
 
-function verificarAcesso() {
+async function verificarAcesso() {
 
     const token =
         sessionStorage.getItem("adminToken");
@@ -442,8 +442,54 @@ function verificarAcesso() {
         window.location.href =
             "admin.html";
 
+        return;
     }
 
+    try {
+
+        const resposta = await fetch(
+            "https://diva-make-10.vercel.app/api/admin-verificar",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    token: token
+                })
+            }
+        );
+
+        const dados =
+            await resposta.json();
+
+        if (
+            !resposta.ok ||
+            !dados.autorizado
+        ) {
+
+            sessionStorage.removeItem(
+                "adminToken"
+            );
+
+            window.location.href =
+                "admin.html";
+
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        sessionStorage.removeItem(
+            "adminToken"
+        );
+
+        window.location.href =
+            "admin.html";
+    }
 }
 
 verificarAcesso();
