@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Painel Administrativo - Diva Make 10</title>
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family: Arial, sans-serif;
+
+    background: #fff5f8;
+
+    color: #333;
+}
+
+.topo {
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff0080,
+            #d90068
+        );
+
+    color: white;
+
+    text-align: center;
+
+    padding: 25px 15px;
+}
+
+.topo h1 {
+
+    font-size: 28px;
+
+    margin-bottom: 8px;
+}
+
+.topo p {
+
+    font-size: 16px;
+}
+
+.principal {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 30px 20px 60px;
+}
+
+.aviso {
+
+    background: white;
+
+    border: 2px solid #f7c4da;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    margin-bottom: 25px;
+
+    text-align: center;
+}
+
+.aviso h2 {
+
+    color: #c92b6d;
+
+    margin-bottom: 8px;
+}
+
+.aviso p {
+
+    color: #777;
+}
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+.card {
+
+    background: white;
+
+    border: 2px solid #f7c4da;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+.card:hover {
+
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,0.08);
+}
+
+.icone {
+
+    font-size: 42px;
+
+    margin-bottom: 12px;
+}
+
+.card h3 {
+
+    color: #c92b6d;
+
+    margin-bottom: 8px;
+}
+
+.card p {
+
+    color: #777;
+
+    font-size: 14px;
+
+    margin-bottom: 18px;
+}
+
+.card button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 25px;
+
+    background: #e60073;
+
+    color: white;
+
+    padding: 12px;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.card button:hover {
+
+    opacity: 0.9;
+}
+
+.acoes {
+
+    margin-top: 30px;
+
+    display: flex;
+
+    gap: 12px;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+}
+
+.acao {
+
+    border: none;
+
+    border-radius: 25px;
+
+    padding: 13px 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.loja {
+
+    background: #e60073;
+
+    color: white;
+}
+
+.sair {
+
+    background: #555;
+
+    color: white;
+}
+
+footer {
+
+    background: #e60073;
+
+    color: white;
+
+    text-align: center;
+
+    padding: 25px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="topo">
+
+    <h1>
+        ⚙️ DIVA MAKE 10 💗
+    </h1>
+
+    <p>
+        Painel Administrativo
+    </p>
+
+</header>
+
+<main class="principal">
+
+    <div class="aviso">
+
+        <h2>
+            🔐 Área administrativa
+        </h2>
+
+        <p>
+            Aqui você poderá configurar sua loja.
+        </p>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="icone">🛍️</div>
+
+            <h3>Produtos</h3>
+
+            <p>
+                Adicionar, editar e remover produtos.
+            </p>
+
+            <button onclick="abrirModulo('produtos')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">📂</div>
+
+            <h3>Categorias</h3>
+
+            <p>
+                Criar e organizar categorias.
+            </p>
+
+            <button onclick="abrirModulo('categorias')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">💰</div>
+
+            <h3>Preços</h3>
+
+            <p>
+                Alterar preços dos produtos.
+            </p>
+
+            <button onclick="abrirModulo('precos')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">📸</div>
+
+            <h3>Imagens</h3>
+
+            <p>
+                Adicionar ou trocar imagens.
+            </p>
+
+            <button onclick="abrirModulo('imagens')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">🚚</div>
+
+            <h3>Entrega</h3>
+
+            <p>
+                Configurar taxas por estado.
+            </p>
+
+            <button onclick="abrirModulo('entrega')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">💳</div>
+
+            <h3>Pagamentos</h3>
+
+            <p>
+                Configurar formas de pagamento.
+            </p>
+
+            <button onclick="abrirModulo('pagamentos')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">🏠</div>
+
+            <h3>Página inicial</h3>
+
+            <p>
+                Alterar conteúdos da loja.
+            </p>
+
+            <button onclick="abrirModulo('inicio')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icone">⚙️</div>
+
+            <h3>Configurações</h3>
+
+            <p>
+                Configurações gerais da loja.
+            </p>
+
+            <button onclick="abrirModulo('configuracoes')">
+                GERENCIAR
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="acoes">
+
+        <button
+            class="acao loja"
+            onclick="window.location.href='index.html'"
+        >
+            🏠 VOLTAR PARA A LOJA
+        </button>
+
+        <button
+            class="acao sair"
+            onclick="sair()"
+        >
+            🔒 SAIR DA ADMINISTRAÇÃO
+        </button>
+
+    </div>
+
+</main>
+
+<footer>
+
+    <strong>
+        DIVA MAKE 10 💗
+    </strong>
+
+</footer>
+
+
+<script>
+
+function verificarAcesso() {
+
+    const token =
+        sessionStorage.getItem("adminToken");
+
+    if (!token) {
+
+        window.location.href =
+            "admin.html";
+
+    }
+
+}
+
+verificarAcesso();
+
+
+function abrirModulo(modulo) {
+
+    alert(
+        "Módulo " +
+        modulo +
+        " será configurado na próxima etapa. 💗"
+    );
+
+}
+
+
+function sair() {
+
+    sessionStorage.removeItem(
+        "adminToken"
+    );
+
+    window.location.href =
+        "admin.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
