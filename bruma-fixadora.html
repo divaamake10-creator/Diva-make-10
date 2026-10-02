@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>Bruma/Fixadora - Diva Make 10</title>
 
@@ -24,7 +28,7 @@ body {
     background: linear-gradient(90deg, #ff0080, #d90068);
     color: white;
     text-align: center;
-    padding: 35px 10px;
+    padding: 20px 10px;
     font-size: 32px;
     font-weight: bold;
 }
@@ -32,63 +36,79 @@ body {
 .cabecalho {
     background: white;
     text-align: center;
-    padding: 65px 20px;
+    padding: 40px 20px;
 }
 
 .cabecalho h1 {
     color: #d0276b;
-    font-size: 50px;
-    margin-bottom: 25px;
+    font-size: 40px;
+    margin-bottom: 15px;
 }
 
 .cabecalho p {
     color: #777;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .principal {
-    padding: 50px 25px;
+    padding: 30px 20px;
     min-height: 500px;
 }
 
 .voltar {
     display: inline-block;
-    background: #cc2870;
+    background: #e60073;
     color: white;
-    padding: 18px 40px;
-    border-radius: 40px;
+    padding: 12px 22px;
+    border-radius: 30px;
     text-decoration: none;
-    font-size: 28px;
+    font-size: 18px;
     font-weight: bold;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .produtos-titulo {
     text-align: center;
     color: #c92b6d;
-    font-size: 48px;
-    margin-bottom: 40px;
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+.lista-produtos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
 }
 
 .produto {
     background: white;
-    max-width: 500px;
-    margin: 0 auto 40px;
-    padding: 40px 25px;
+    max-width: 350px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 25px;
     border-radius: 25px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+    border: 2px solid #f7c4da;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.10);
     text-align: center;
+}
+
+.produto img {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 .produto h3 {
     color: #d0276b;
-    font-size: 32px;
-    margin-bottom: 20px;
+    font-size: 26px;
+    margin-bottom: 15px;
 }
 
 .produto-preco {
     color: #c92b6d;
-    font-size: 32px;
+    font-size: 26px;
     font-weight: bold;
 }
 
@@ -124,91 +144,105 @@ body {
     background: linear-gradient(135deg, #ff4b9b, #d90068);
     color: white;
     border: none;
-    padding: 18px 30px;
+    padding: 15px 20px;
     border-radius: 35px;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
 }
 
+.mensagem {
+    text-align: center;
+    padding: 30px;
+    grid-column: 1 / -1;
+}
+
 footer {
-    background: #222;
+    background: #e60073;
     color: white;
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 20px;
     margin-top: 30px;
 }
 
 footer h2 {
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 15px;
 }
 
 footer p {
-    font-size: 22px;
+    font-size: 18px;
+}
+
+@media (max-width: 600px) {
+
+    .lista-produtos {
+        grid-template-columns: 1fr;
+    }
+
 }
 
 </style>
+
 </head>
 
 <body>
 
+
 <div class="topo">
+
     💄 DIVA MAKE 10 💗
+
 </div>
+
 
 <div class="cabecalho">
 
     <h1>✨ BRUMA / FIXADORA</h1>
 
-    <p>Confira nossas Brumas e Fixadoras disponíveis</p>
+    <p>
+        Confira nossas Brumas e Fixadoras disponíveis
+    </p>
 
 </div>
+
 
 <div class="principal">
 
-    <a href="index.html" class="voltar">
+
+    <a
+        href="index.html"
+        class="voltar"
+    >
+
         ← Voltar
+
     </a>
 
+
     <h2 class="produtos-titulo">
+
         ✨ Nossas Brumas / Fixadoras
+
     </h2>
 
-    <div class="produto">
 
-        <h3>✨ Bruma / Fixadora</h3>
+    <div
+        id="lista-brumas"
+        class="lista-produtos"
+    >
 
-        <div class="produto-preco">
-            R$ 10,00
-        </div>
+        <div class="mensagem">
 
-        <div class="controle-quantidade">
-
-            <button onclick="alterarQuantidadeProduto(-1)">
-                −
-            </button>
-
-            <span id="quantidadeProduto">
-                1
-            </span>
-
-            <button onclick="alterarQuantidadeProduto(1)">
-                +
-            </button>
+            Carregando Brumas e Fixadoras... 💗
 
         </div>
-
-        <button
-            class="botao-carrinho"
-            onclick="adicionarAoCarrinho('Bruma / Fixadora', 10)"
-        >
-            🛒 Adicionar ao carrinho
-        </button>
 
     </div>
 
+
 </div>
+
 
 <footer>
 
@@ -220,57 +254,399 @@ footer p {
 
 </footer>
 
+
 <script>
 
-let quantidadeProduto = 1;
+const API_PRODUTOS =
+    "https://diva-make-10.vercel.app/api/produtos";
 
-function alterarQuantidadeProduto(valor) {
 
-    quantidadeProduto += valor;
+let produtosDaLoja = [];
 
-    if (quantidadeProduto < 1) {
-        quantidadeProduto = 1;
+
+async function carregarBrumas() {
+
+    const lista =
+        document.getElementById(
+            "lista-brumas"
+        );
+
+
+    try {
+
+        const resposta =
+            await fetch(
+                API_PRODUTOS,
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
+
+
+        const produtos =
+            await resposta.json();
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                produtos.error ||
+                "Erro ao carregar produtos"
+            );
+
+        }
+
+
+        /*
+         * MOSTRA SOMENTE PRODUTOS
+         * DA SUBCATEGORIA BRUMA/FIXADORA
+         */
+
+        produtosDaLoja =
+            produtos.filter(
+                produto =>
+                    String(
+                        produto.subcategoria || ""
+                    )
+                    .trim()
+                    .toLowerCase()
+                    === "bruma/fixadora"
+            );
+
+
+        lista.innerHTML = "";
+
+
+        if (
+            produtosDaLoja.length === 0
+        ) {
+
+            lista.innerHTML = `
+
+                <div class="mensagem">
+
+                    Nenhuma Bruma/Fixadora
+                    disponível no momento. 💗
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        produtosDaLoja.forEach(
+            produto => {
+
+                const div =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                div.className =
+                    "produto";
+
+
+                const id =
+                    Number(produto.id);
+
+
+                const preco =
+                    Number(produto.preco)
+                        .toFixed(2)
+                        .replace(".", ",");
+
+
+                div.innerHTML = `
+
+                    ${
+                        produto.imagem
+                        ?
+                        `
+                        <img
+                            src="${produto.imagem}"
+                            alt="${produto.nome}"
+                        >
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <h3>
+
+                        ✨ ${produto.nome}
+
+                    </h3>
+
+
+                    <div
+                        class="produto-preco"
+                    >
+
+                        R$ ${preco}
+
+                    </div>
+
+
+                    <div
+                        class="controle-quantidade"
+                    >
+
+                        <button
+                            type="button"
+                            onclick="
+                                alterarQuantidadeProduto(
+                                    ${id},
+                                    -1
+                                )
+                            "
+                        >
+
+                            −
+
+                        </button>
+
+
+                        <span
+                            id="quantidade-${id}"
+                        >
+
+                            1
+
+                        </span>
+
+
+                        <button
+                            type="button"
+                            onclick="
+                                alterarQuantidadeProduto(
+                                    ${id},
+                                    1
+                                )
+                            "
+                        >
+
+                            +
+
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="botao-carrinho"
+                        onclick="
+                            adicionarAoCarrinho(
+                                ${id}
+                            )
+                        "
+                    >
+
+                        🛒 Adicionar ao carrinho
+
+                    </button>
+
+                `;
+
+
+                lista.appendChild(
+                    div
+                );
+
+            }
+        );
+
+
+    } catch (erro) {
+
+        console.error(
+            "ERRO AO CARREGAR BRUMAS:",
+            erro
+        );
+
+
+        lista.innerHTML = `
+
+            <div class="mensagem">
+
+                Não foi possível carregar
+                as Brumas/Fixadoras. ❌
+
+            </div>
+
+        `;
+
     }
 
-    document.getElementById("quantidadeProduto").textContent =
-        quantidadeProduto;
 }
 
-function adicionarAoCarrinho(nome, preco) {
+
+function alterarQuantidadeProduto(
+    id,
+    valor
+) {
+
+    const elemento =
+        document.getElementById(
+            "quantidade-" + Number(id)
+        );
+
+
+    if (!elemento) {
+
+        return;
+
+    }
+
+
+    let quantidade =
+        Number(
+            elemento.textContent
+        ) || 1;
+
+
+    quantidade += valor;
+
+
+    if (quantidade < 1) {
+
+        quantidade = 1;
+
+    }
+
+
+    elemento.textContent =
+        quantidade;
+
+}
+
+
+function adicionarAoCarrinho(id) {
+
+    const produto =
+        produtosDaLoja.find(
+            item =>
+                Number(item.id)
+                === Number(id)
+        );
+
+
+    if (!produto) {
+
+        alert(
+            "Produto não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    const elemento =
+        document.getElementById(
+            "quantidade-" + Number(id)
+        );
+
+
+    const quantidade =
+        elemento
+        ?
+        Number(
+            elemento.textContent
+        ) || 1
+        :
+        1;
+
 
     let carrinho =
-        JSON.parse(localStorage.getItem("carrinho")) || [];
+        JSON.parse(
+            localStorage.getItem(
+                "carrinho"
+            )
+        ) || [];
 
-    const produtoExistente =
-        carrinho.find(produto => produto.nome === nome);
 
-    if (produtoExistente) {
+    const existente =
+        carrinho.find(
+            item =>
+                Number(item.id)
+                === Number(produto.id)
+        );
 
-        produtoExistente.quantidade += quantidadeProduto;
+
+    if (existente) {
+
+        existente.quantidade =
+            Number(
+                existente.quantidade
+            ) + quantidade;
 
     } else {
 
         carrinho.push({
-            nome: nome,
-            preco: preco,
-            quantidade: quantidadeProduto
+
+            id:
+                produto.id,
+
+            nome:
+                produto.nome,
+
+            preco:
+                Number(
+                    produto.preco
+                ),
+
+            imagem:
+                produto.imagem,
+
+            categoria:
+                produto.categoria,
+
+            subcategoria:
+                produto.subcategoria,
+
+            quantidade:
+                quantidade
+
         });
 
     }
 
+
     localStorage.setItem(
         "carrinho",
-        JSON.stringify(carrinho)
+        JSON.stringify(
+            carrinho
+        )
     );
 
-    alert("💗 Produto adicionado ao carrinho!");
 
-    quantidadeProduto = 1;
+    alert(
+        "💗 Produto adicionado ao carrinho!"
+    );
 
-    document.getElementById("quantidadeProduto").textContent = 1;
+
+    if (elemento) {
+
+        elemento.textContent =
+            "1";
+
+    }
+
 }
+
+
+carregarBrumas();
 
 </script>
 
+
 </body>
+
 </html>
