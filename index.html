@@ -1011,13 +1011,37 @@ document.addEventListener("DOMContentLoaded", atualizarContadorCarrinho);
     
 <!-- PRODUTOS -->
 <section id="produtos" class="produtos">
-    <button onclick="voltarSubcategoria()">← Voltar</button>
 
-    <h2 id="titulo-produtos">Produtos</h2>
+    <button
+        onclick="voltarSubcategoria()"
+        style="
+            background:#eee;
+            color:#555;
+            border:none;
+            padding:12px 20px;
+            border-radius:25px;
+            font-weight:bold;
+            margin-bottom:20px;
+        "
+    >
+        ← Voltar
+    </button>
 
-    <div id="lista-produtos" class="lista-produtos">
-        <!-- Os produtos serão colocados aqui futuramente -->
+    <h2 id="titulo-produtos">
+        Produtos
+    </h2>
+
+    <div
+        id="lista-produtos"
+        class="lista-produtos"
+    >
+
+        <p style="text-align:center;">
+            Carregando produtos... 💗
+        </p>
+
     </div>
+
 </section>
 <!-- RODAPÉ -->
 
