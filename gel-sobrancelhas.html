@@ -69,19 +69,34 @@ body {
     margin-bottom: 50px;
 }
 
+.lista-produtos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
 .produto {
     background: white;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 40px 25px;
+    padding: 30px 25px;
     border-radius: 25px;
     text-align: center;
     box-shadow: 0 5px 18px rgba(0,0,0,0.10);
 }
 
+.produto-imagem {
+    width: 100%;
+    max-width: 250px;
+    height: 250px;
+    object-fit: contain;
+    margin: 0 auto 20px;
+    display: block;
+}
+
 .produto h3 {
     color: #d0276b;
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 20px;
 }
 
@@ -89,6 +104,7 @@ body {
     color: #c92b6d;
     font-size: 30px;
     font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .controle-quantidade {
@@ -125,16 +141,16 @@ body {
     color: white;
     padding: 18px 30px;
     border-radius: 35px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
 
 footer {
-    background: #222;
+    background: #e60073;
     color: white;
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 20px;
     margin-top: 30px;
 }
 
@@ -145,6 +161,51 @@ footer h2 {
 
 footer p {
     font-size: 22px;
+}
+
+@media (max-width: 700px) {
+
+    .topo {
+        font-size: 25px;
+        padding: 25px 10px;
+    }
+
+    .cabecalho {
+        padding: 40px 15px;
+    }
+
+    .cabecalho h1 {
+        font-size: 34px;
+    }
+
+    .cabecalho p {
+        font-size: 18px;
+    }
+
+    .principal {
+        padding: 30px 15px;
+    }
+
+    .voltar {
+        font-size: 20px;
+        padding: 14px 25px;
+        margin-bottom: 45px;
+    }
+
+    .produtos-titulo {
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+
+    .lista-produtos {
+        grid-template-columns: 1fr;
+    }
+
+    .produto {
+        max-width: 500px;
+        margin: 0 auto;
+        width: 100%;
+    }
 }
 </style>
 </head>
@@ -173,35 +234,11 @@ footer p {
         ✨ Nossos Géis para Sobrancelhas
     </h2>
 
-    <div class="produto">
+    <div id="lista-produtos" class="lista-produtos">
 
-        <h3>✨ Gel para Sobrancelhas</h3>
-
-        <div class="produto-preco">
-            R$ 10,00
-        </div>
-
-        <div class="controle-quantidade">
-
-            <button onclick="alterarQuantidadeProduto(-1)">
-                −
-            </button>
-
-            <span id="quantidadeProduto">
-                1
-            </span>
-
-            <button onclick="alterarQuantidadeProduto(1)">
-                +
-            </button>
-
-        </div>
-
-        <button
-            class="botao-carrinho"
-            onclick="adicionarAoCarrinho('Gel para Sobrancelhas', 10)">
-            🛒 Adicionar ao carrinho
-        </button>
+        <p style="text-align:center;">
+            Carregando produtos... 💗
+        </p>
 
     </div>
 
@@ -219,38 +256,202 @@ footer p {
 
 <script>
 
-let quantidadeProduto = 1;
+const API_PRODUTOS =
+    "https://diva-make-10.vercel.app/api/produtos";
 
-function alterarQuantidadeProduto(valor) {
+let produtosDaPagina = [];
 
-    quantidadeProduto += valor;
+const quantidades = {};
 
-    if (quantidadeProduto < 1) {
-        quantidadeProduto = 1;
+async function carregarProdutos() {
+
+    const lista =
+        document.getElementById("lista-produtos");
+
+    try {
+
+        const resposta =
+            await fetch(API_PRODUTOS);
+
+        const produtos =
+            await resposta.json();
+
+        if (!resposta.ok) {
+            throw new Error("Erro ao buscar produtos");
+        }
+
+        produtosDaPagina =
+            produtos.filter(produto =>
+                produto.subcategoria &&
+                produto.subcategoria
+                    .trim()
+                    .toLowerCase() === "gel"
+            );
+
+        if (produtosDaPagina.length === 0) {
+
+            lista.innerHTML = `
+                <p style="
+                    text-align:center;
+                    font-size:22px;
+                    color:#777;
+                    grid-column:1/-1;
+                ">
+                    Nenhum gel para sobrancelhas disponível no momento. 💗
+                </p>
+            `;
+
+            return;
+        }
+
+        produtosDaPagina.forEach(produto => {
+            quantidades[produto.id] = 1;
+        });
+
+        lista.innerHTML =
+            produtosDaPagina.map(produto => {
+
+                const imagem =
+                    produto.imagem
+                        ? `
+                            <img
+                                src="${produto.imagem}"
+                                class="produto-imagem"
+                                alt="${produto.nome}"
+                            >
+                          `
+                        : "";
+
+                return `
+                    <div class="produto">
+
+                        ${imagem}
+
+                        <h3>
+                            ${produto.nome}
+                        </h3>
+
+                        <div class="produto-preco">
+                            R$ ${Number(produto.preco)
+                                .toFixed(2)
+                                .replace(".", ",")}
+                        </div>
+
+                        <div class="controle-quantidade">
+
+                            <button
+                                onclick="alterarQuantidade(${produto.id}, -1)">
+                                −
+                            </button>
+
+                            <span id="quantidade-${produto.id}">
+                                1
+                            </span>
+
+                            <button
+                                onclick="alterarQuantidade(${produto.id}, 1)">
+                                +
+                            </button>
+
+                        </div>
+
+                        <button
+                            class="botao-carrinho"
+                            onclick="adicionarAoCarrinho(${produto.id})">
+                            🛒 Adicionar ao carrinho
+                        </button>
+
+                    </div>
+                `;
+
+            }).join("");
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        lista.innerHTML = `
+            <p style="
+                text-align:center;
+                color:#d0276b;
+                font-size:20px;
+                grid-column:1/-1;
+            ">
+                Não foi possível carregar os produtos. 💗
+            </p>
+        `;
     }
-
-    document.getElementById("quantidadeProduto").textContent =
-        quantidadeProduto;
 }
 
-function adicionarAoCarrinho(nome, preco) {
+function alterarQuantidade(id, valor) {
+
+    quantidades[id] =
+        (quantidades[id] || 1) + valor;
+
+    if (quantidades[id] < 1) {
+        quantidades[id] = 1;
+    }
+
+    const elemento =
+        document.getElementById(
+            `quantidade-${id}`
+        );
+
+    if (elemento) {
+        elemento.textContent =
+            quantidades[id];
+    }
+}
+
+function adicionarAoCarrinho(id) {
+
+    const produto =
+        produtosDaPagina.find(
+            item => Number(item.id) === Number(id)
+        );
+
+    if (!produto) {
+        return;
+    }
+
+    const quantidade =
+        quantidades[id] || 1;
 
     let carrinho =
-        JSON.parse(localStorage.getItem("carrinho")) || [];
+        JSON.parse(
+            localStorage.getItem("carrinho")
+        ) || [];
 
     const produtoExistente =
-        carrinho.find(produto => produto.nome === nome);
+        carrinho.find(
+            item =>
+                Number(item.id) === Number(produto.id)
+        );
 
     if (produtoExistente) {
 
-        produtoExistente.quantidade += quantidadeProduto;
+        produtoExistente.quantidade +=
+            quantidade;
 
     } else {
 
         carrinho.push({
-            nome: nome,
-            preco: preco,
-            quantidade: quantidadeProduto
+
+            id: produto.id,
+
+            nome: produto.nome,
+
+            preco: Number(produto.preco),
+
+            imagem: produto.imagem || "",
+
+            categoria: produto.categoria,
+
+            subcategoria:
+                produto.subcategoria,
+
+            quantidade: quantidade
+
         });
 
     }
@@ -260,14 +461,23 @@ function adicionarAoCarrinho(nome, preco) {
         JSON.stringify(carrinho)
     );
 
-    alert("💗 Produto adicionado ao carrinho!");
+    alert(
+        "💗 Produto adicionado ao carrinho!"
+    );
 
-    quantidadeProduto = 1;
+    quantidades[id] = 1;
 
-    document.getElementById(
-        "quantidadeProduto"
-    ).textContent = 1;
+    const elemento =
+        document.getElementById(
+            `quantidade-${id}`
+        );
+
+    if (elemento) {
+        elemento.textContent = 1;
+    }
 }
+
+carregarProdutos();
 
 </script>
 
