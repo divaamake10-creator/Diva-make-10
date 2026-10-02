@@ -593,6 +593,11 @@ function abrirCategoria(id) {
 
     if (nome === "batom") {
     carregarProdutosDaLoja("Batom");
+
+    document.getElementById("produtos").scrollIntoView({
+        behavior: "smooth"
+    });
+
     return;
 }
 
