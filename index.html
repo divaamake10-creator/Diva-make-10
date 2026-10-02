@@ -1059,6 +1059,189 @@ Beleza, variedade e preço incrível!
 
 </footer>
 
+<script>
 
+async function carregarProdutosDaLoja() {
+
+    const lista = document.getElementById("lista-produtos");
+
+    if (!lista) {
+        return;
+    }
+
+    try {
+
+        const resposta = await fetch(
+            "https://diva-make-10.vercel.app/api/produtos",
+            {
+                method: "GET",
+                cache: "no-store"
+            }
+        );
+
+        const produtos = await resposta.json();
+
+        console.log("PRODUTOS RECEBIDOS:", produtos);
+
+        if (!resposta.ok) {
+            throw new Error(
+                produtos.error || "Erro ao carregar produtos"
+            );
+        }
+
+        lista.innerHTML = "";
+
+        if (!Array.isArray(produtos) || produtos.length === 0) {
+
+            lista.innerHTML = `
+                <p style="text-align:center;">
+                    Nenhum produto disponível no momento. 💗
+                </p>
+            `;
+
+            return;
+        }
+
+        window.produtosDaLoja = produtos;
+
+        produtos.forEach(produto => {
+
+            const div = document.createElement("div");
+
+            div.className = "produto";
+
+            div.innerHTML = `
+
+                ${
+                    produto.imagem
+                    ? `
+                        <img
+                            src="${produto.imagem}"
+                            alt="${produto.nome}"
+                            style="
+                                width:100%;
+                                max-width:220px;
+                                height:220px;
+                                object-fit:contain;
+                                border-radius:15px;
+                                margin-bottom:15px;
+                            "
+                        >
+                    `
+                    : ""
+                }
+
+                <h3>
+                    ${produto.nome}
+                </h3>
+
+                <p>
+                    R$ ${Number(produto.preco)
+                        .toFixed(2)
+                        .replace(".", ",")}
+                </p>
+
+                <button
+                    onclick="adicionarAoCarrinhoLoja(${produto.id})"
+                >
+                    🛒 ADICIONAR AO CARRINHO
+                </button>
+
+            `;
+
+            lista.appendChild(div);
+
+        });
+
+    } catch (erro) {
+
+        console.error(
+            "ERRO AO CARREGAR PRODUTOS:",
+            erro
+        );
+
+        lista.innerHTML = `
+            <p style="text-align:center;">
+                Não foi possível carregar os produtos. ❌
+            </p>
+        `;
+
+    }
+
+}
+
+
+function adicionarAoCarrinhoLoja(id) {
+
+    const produto =
+        window.produtosDaLoja?.find(
+            item => Number(item.id) === Number(id)
+        );
+
+    if (!produto) {
+
+        alert("Produto não encontrado.");
+
+        return;
+    }
+
+    let carrinho =
+        JSON.parse(
+            localStorage.getItem("carrinho")
+        ) || [];
+
+    const existente =
+        carrinho.find(
+            item =>
+                Number(item.id) === Number(produto.id)
+        );
+
+    if (existente) {
+
+        existente.quantidade =
+            Number(existente.quantidade) + 1;
+
+    } else {
+
+        carrinho.push({
+
+            id: produto.id,
+
+            nome: produto.nome,
+
+            preco: Number(produto.preco),
+
+            imagem: produto.imagem,
+
+            categoria: produto.categoria,
+
+            subcategoria: produto.subcategoria,
+
+            quantidade: 1
+
+        });
+
+    }
+
+    localStorage.setItem(
+        "carrinho",
+        JSON.stringify(carrinho)
+    );
+
+    atualizarContadorCarrinho();
+
+    alert(
+        "Produto adicionado ao carrinho! 🛒💗"
+    );
+
+}
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    carregarProdutosDaLoja
+);
+
+</script>
 </body>
 </html>
