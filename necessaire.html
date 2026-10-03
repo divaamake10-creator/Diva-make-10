@@ -69,27 +69,42 @@ body {
     margin-bottom: 50px;
 }
 
+.lista-produtos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 .produto {
     background: white;
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 35px;
+    padding: 25px;
     border-radius: 25px;
     text-align: center;
     box-shadow: 0 5px 20px rgba(0,0,0,0.12);
 }
 
+.produto img {
+    width: 100%;
+    max-width: 260px;
+    height: 260px;
+    object-fit: contain;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
 .produto h3 {
     color: #c92b6d;
-    font-size: 32px;
+    font-size: 28px;
     margin-bottom: 15px;
 }
 
 .preco {
     color: #d90068;
-    font-size: 30px;
+    font-size: 28px;
     font-weight: bold;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .quantidade {
@@ -97,7 +112,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .quantidade button {
@@ -134,11 +149,18 @@ body {
     opacity: 0.9;
 }
 
+.mensagem {
+    text-align: center;
+    font-size: 22px;
+    color: #777;
+    padding: 40px 10px;
+}
+
 footer {
-    background: #222;
+    background: #e60073;
     color: white;
     text-align: center;
-    padding: 50px 20px;
+    padding: 40px 20px;
     margin-top: 30px;
 }
 
@@ -149,6 +171,35 @@ footer h2 {
 
 footer p {
     font-size: 22px;
+}
+
+@media (max-width: 600px) {
+
+    .topo {
+        font-size: 24px;
+    }
+
+    .cabecalho h1 {
+        font-size: 35px;
+    }
+
+    .cabecalho p {
+        font-size: 18px;
+    }
+
+    .voltar {
+        font-size: 20px;
+        padding: 14px 25px;
+        margin-bottom: 40px;
+    }
+
+    .produtos-titulo {
+        font-size: 32px;
+    }
+
+    .lista-produtos {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
@@ -177,25 +228,11 @@ footer p {
         👜 Nossas Nécessaires
     </h2>
 
-    <div class="produto">
+    <div id="lista-produtos" class="lista-produtos">
 
-        <h3>Nécessaire</h3>
-
-        <div class="preco">
-            R$ 10,00
-        </div>
-
-        <div class="quantidade">
-            <button onclick="alterarQuantidade(-1)">−</button>
-
-            <span id="quantidade">1</span>
-
-            <button onclick="alterarQuantidade(1)">+</button>
-        </div>
-
-        <button class="adicionar" onclick="adicionarCarrinho()">
-            🛒 Adicionar ao carrinho
-        </button>
+        <p class="mensagem">
+            Carregando produtos... 💗
+        </p>
 
     </div>
 
@@ -213,9 +250,132 @@ footer p {
 
 <script>
 
-let quantidade = 1;
+const API =
+    "https://diva-make-10.vercel.app/api/produtos";
 
-function alterarQuantidade(valor) {
+let produtosDaLoja = [];
+
+async function carregarProdutos() {
+
+    const lista =
+        document.getElementById("lista-produtos");
+
+    try {
+
+        const resposta =
+            await fetch(API);
+
+        if (!resposta.ok) {
+            throw new Error(
+                "Erro ao buscar produtos"
+            );
+        }
+
+        const produtos =
+            await resposta.json();
+
+        produtosDaLoja =
+            produtos.filter(produto =>
+                produto.ativo !== false &&
+                String(produto.subcategoria || "")
+                    .trim()
+                    .toLowerCase() ===
+                    "nécessaire"
+            );
+
+        if (produtosDaLoja.length === 0) {
+
+            lista.innerHTML = `
+                <p class="mensagem">
+                    Nenhuma Nécessaire disponível no momento. 💗
+                </p>
+            `;
+
+            return;
+        }
+
+        lista.innerHTML = "";
+
+        produtosDaLoja.forEach(produto => {
+
+            lista.innerHTML += `
+                <div class="produto">
+
+                    ${
+                        produto.imagem
+                        ? `
+                            <img
+                                src="${produto.imagem}"
+                                alt="${produto.nome}"
+                            >
+                          `
+                        : ""
+                    }
+
+                    <h3>
+                        ${produto.nome}
+                    </h3>
+
+                    <div class="preco">
+                        R$ ${Number(produto.preco)
+                            .toFixed(2)
+                            .replace(".", ",")}
+                    </div>
+
+                    <div class="quantidade">
+
+                        <button
+                            onclick="alterarQuantidade(${produto.id}, -1)"
+                        >
+                            −
+                        </button>
+
+                        <span id="quantidade-${produto.id}">
+                            1
+                        </span>
+
+                        <button
+                            onclick="alterarQuantidade(${produto.id}, 1)"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                    <button
+                        class="adicionar"
+                        onclick="adicionarCarrinho(${produto.id})"
+                    >
+                        🛒 Adicionar ao carrinho
+                    </button>
+
+                </div>
+            `;
+
+        });
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        lista.innerHTML = `
+            <p class="mensagem">
+                Não foi possível carregar os produtos. 💗
+            </p>
+        `;
+
+    }
+}
+
+function alterarQuantidade(id, valor) {
+
+    const elemento =
+        document.getElementById(
+            "quantidade-" + id
+        );
+
+    let quantidade =
+        Number(elemento.textContent);
 
     quantidade += valor;
 
@@ -223,31 +383,71 @@ function alterarQuantidade(valor) {
         quantidade = 1;
     }
 
-    document.getElementById("quantidade").textContent = quantidade;
+    elemento.textContent =
+        quantidade;
 }
 
-function adicionarCarrinho() {
+function adicionarCarrinho(id) {
 
-    const produto = {
-        nome: "Nécessaire",
-        preco: 10,
-        quantidade: quantidade
+    const produto =
+        produtosDaLoja.find(
+            item => Number(item.id) === Number(id)
+        );
+
+    if (!produto) {
+        return;
+    }
+
+    const quantidadeElemento =
+        document.getElementById(
+            "quantidade-" + id
+        );
+
+    const quantidade =
+        Number(quantidadeElemento.textContent);
+
+    const itemCarrinho = {
+
+        id: produto.id,
+
+        nome: produto.nome,
+
+        preco: Number(produto.preco),
+
+        imagem: produto.imagem || "",
+
+        categoria: produto.categoria,
+
+        subcategoria:
+            produto.subcategoria,
+
+        quantidade:
+            quantidade
+
     };
 
     let carrinho =
-        JSON.parse(localStorage.getItem("carrinho")) || [];
+        JSON.parse(
+            localStorage.getItem("carrinho")
+        ) || [];
 
-    const produtoExistente = carrinho.find(
-        item => item.nome === produto.nome
-    );
+    const produtoExistente =
+        carrinho.find(
+            item =>
+                Number(item.id) ===
+                Number(produto.id)
+        );
 
     if (produtoExistente) {
 
-        produtoExistente.quantidade += produto.quantidade;
+        produtoExistente.quantidade +=
+            quantidade;
 
     } else {
 
-        carrinho.push(produto);
+        carrinho.push(
+            itemCarrinho
+        );
 
     }
 
@@ -258,9 +458,14 @@ function adicionarCarrinho() {
 
     alert(
         quantidade +
-        "x Nécessaire foi adicionada ao carrinho! 💗"
+        "x " +
+        produto.nome +
+        " foi adicionada ao carrinho! 💗"
     );
+
 }
+
+carregarProdutos();
 
 </script>
 
