@@ -5,7 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Diva Make 10</title>
+/* =========================
+   BARRA DE PESQUISA
+   ========================= */
 
+.pesquisa-produtos {
+    padding: 25px 15px 10px;
+    text-align: center;
+}
+
+.pesquisa-produtos h2 {
+    color: #d90068;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.barra-pesquisa {
+    max-width: 650px;
+    margin: 0 auto;
+    background: white;
+    border: 2px solid #ffd1e3;
+    border-radius: 35px;
+    padding: 5px 10px 5px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.barra-pesquisa span {
+    font-size: 22px;
+}
+
+.barra-pesquisa input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    padding: 12px 5px;
+    color: #333;
+}
+
+.barra-pesquisa input::placeholder {
+    color: #999;
+}
+
+.barra-pesquisa button {
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    background: #e60073;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.barra-pesquisa button:hover {
+    opacity: 0.85;
+}
 <style>
 
 
@@ -823,7 +882,34 @@ document.addEventListener("DOMContentLoaded", atualizarContadorCarrinho);
 
 </div>
 
+<!-- PESQUISA DE PRODUTOS -->
 
+<section class="pesquisa-produtos">
+
+    <h2>🔍 Encontre seu produto</h2>
+
+    <div class="barra-pesquisa">
+
+        <span>🔍</span>
+
+        <input
+            type="text"
+            id="campoPesquisa"
+            placeholder="Digite o nome do produto..."
+            autocomplete="off"
+        >
+
+        <button
+            type="button"
+            id="limparPesquisa"
+            onclick="limparPesquisa()"
+        >
+            ✕
+        </button>
+
+    </div>
+
+</section>
 <!-- CATEGORIAS -->
 
 <h2 class="titulo">💗 NOSSAS CATEGORIAS 💗</h2>
